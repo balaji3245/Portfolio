@@ -1,13 +1,18 @@
 # Portfolio
 
-A modern frontend portfolio site built with React, Vite, and Tailwind CSS.
+A modern frontend portfolio website built with React, Vite, and Tailwind CSS.
 
-## Features
+## Overview
 
-- Responsive single-page portfolio layout
-- Animated sections using `framer-motion`
-- Icon support with `lucide-react`
-- Smooth scroll and section-based design
+This project is a personal portfolio template showcasing work, skills, experience, and contact information in a clean one-page layout. It includes animated sections, icon support, and a responsive design that works across desktop and mobile devices.
+
+## What’s included
+
+- Responsive portfolio sections for hero, about, skills, projects, experience, and contact
+- Smooth scroll and animated entrance effects using `framer-motion`
+- Icon set powered by `lucide-react`
+- Theme-ready styling with Tailwind CSS
+- Fast tooling with Vite for development and production builds
 
 ## Tech stack
 
@@ -17,7 +22,7 @@ A modern frontend portfolio site built with React, Vite, and Tailwind CSS.
 - Framer Motion
 - Lucide React
 
-## Setup
+## Run locally
 
 1. Install dependencies:
 
@@ -31,19 +36,35 @@ npm install
 npm run dev
 ```
 
-3. Build for production:
+3. Open the app
+
+Visit the URL shown in the terminal, usually `http://localhost:5173`.
+
+## Build and preview
+
+Build the production version:
 
 ```bash
 npm run build
 ```
 
-4. Preview the production build:
+Preview the production build locally:
 
 ```bash
 npm run preview
 ```
 
-## Notes
+## Customize this portfolio
 
-- The project uses `vite` for fast development and build tooling.
-- Replace `PORTFOLIO` content with your own work, skills, and contact details as needed.
+- Update the project data in `src/data/portfolio.js`
+- Change section text in `src/sections/*`
+- Adjust styling in `src/styles/index.css`
+- Add or remove portfolio items and experience entries
+
+## Author
+
+- Created by **Balaji Chaughule**
+
+## License
+
+This repo includes a custom proprietary license. See `LICENSE.md` for details.
