@@ -5,4 +5,6 @@ This project is created by Balaji Chaughule.
 Permission is granted to view and read this repository only.
 No one may copy, reuse, distribute, modify, or use this code for any purpose without explicit written permission from Balaji Chaughule.
 
+Unauthorized use, reproduction, or distribution of this code may result in legal action by the author.
+
 All rights reserved.
