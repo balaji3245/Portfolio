@@ -65,6 +65,23 @@ npm run preview
 
 - Created by **Balaji Chaughule**
 
+## Back-end API
+
+This project now includes a small Python back-end deployed via Vercel serverless functions.
+
+### Available endpoints
+
+- `GET /api/hello` — returns a simple JSON greeting from the Python backend
+- `POST /api/contact` — accepts JSON with `name` and `message`, then returns a confirmation response
+
+Example request:
+
+```bash
+curl -X POST https://portfolio-ka34x9v2o-balaji3245-6776s-projects.vercel.app/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Balaji","message":"Hello from frontend!"}'
+```
+
 ## License
 
 This repo includes a custom proprietary license. See `LICENSE.md` for details.
