@@ -81,3 +81,5 @@ GitHub Pages can only serve static sites. If you want to keep the Python backend
 ## License
 
 This repo includes a custom proprietary license. See `LICENSE.md` for details.
+
+> GitHub Pages deployment has been enabled and a new build has been triggered.
