@@ -65,32 +65,18 @@ npm run preview
 
 - Created by **Balaji Chaughule**
 
-## Back-end API
+## GitHub Pages deployment
 
-This project now includes a small Python back-end deployed via Vercel serverless functions. Contact form submissions are saved to MongoDB.
+This project is now set up to deploy the frontend to GitHub Pages using GitHub Actions.
 
-### Available endpoints
+### How it deploys
+- On every push to `main`, GitHub Actions builds the site with `npm run build`
+- The static files are published to the `gh-pages` branch
+- GitHub Pages serves the built site from `dist`
 
-- `GET /api/hello` — returns a simple JSON greeting from the Python backend
-- `POST /api/contact` — accepts JSON with `name` and `message`, saves the message to MongoDB, and returns a confirmation response
+### Notes about the backend
 
-### MongoDB setup
-
-1. Create a MongoDB Atlas cluster or use your own MongoDB deployment.
-2. Create a database and a `contacts` collection.
-3. Add the following environment variables to your Vercel project:
-   - `MONGODB_URI`
-   - `MONGODB_DB` (optional, defaults to `portfolio_db`)
-   - `MONGODB_COLLECTION` (optional, defaults to `contacts`)
-4. Use the example `.env.example` file locally.
-
-Example request:
-
-```bash
-curl -X POST https://portfolio-ka34x9v2o-balaji3245-6776s-projects.vercel.app/api/contact \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Balaji","message":"Hello from frontend!"}'
-```
+GitHub Pages can only serve static sites. If you want to keep the Python backend, it must be hosted separately on a server or service that supports Python serverless functions.
 
 ## License
 
