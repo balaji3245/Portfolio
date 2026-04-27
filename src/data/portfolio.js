@@ -11,6 +11,7 @@ export const profile = {
     "Learning, building, and improving through public GitHub projects across TypeScript, JavaScript, HTML, CSS, Tailwind, SCSS, and interactive web experiments, while steadily growing into backend systems.",
   socials: {
     github: "https://github.com/balaji3245",
+    instagram: "https://www.instagram.com/chaughule_balaji_/?utm_source=ig_web_button_share_sheet",
     linkedin: "https://www.linkedin.com/in/chaug",
     email: "mailto:chaughulebalaji09@gmail.com",
   },

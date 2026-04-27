@@ -61,17 +61,15 @@ export default function Projects() {
                   <Github className="h-4 w-4" />
                   GitHub
                 </a>
-                {project.live ? (
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan via-violet to-pink px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-95 sm:w-auto"
-                  >
-                    Live Demo
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                ) : null}
+                <a
+                  href={project.live || project.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan via-violet to-pink px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-95 sm:w-auto"
+                >
+                  {project.live ? "Live Demo" : "View Site"}
+                  <ExternalLink className="h-4 w-4" />
+                </a>
               </div>
             </motion.article>
           ))}

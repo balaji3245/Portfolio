@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Briefcase, Github, Linkedin, Mail, MapPin, Phone, Send, UserRound } from "lucide-react";
+import { Briefcase, Github, Instagram, Linkedin, Mail, MapPin, Phone, Send, UserRound } from "lucide-react";
 import { usePortfolioContent } from "../context/PortfolioContent.jsx";
 import SectionHeader from "../components/SectionHeader.jsx";
 import { fadeUp } from "../utils/motion.js";
@@ -18,6 +18,7 @@ export default function Contact() {
 
   const socials = [
     { label: "GitHub", href: profile.socials.github, icon: Github },
+    { label: "Instagram", href: profile.socials.instagram, icon: Instagram },
     { label: "LinkedIn", href: profile.socials.linkedin, icon: Linkedin },
     { label: "Email", href: profile.socials.email, icon: Mail },
   ];

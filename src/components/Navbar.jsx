@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Github, Instagram, Mail, Menu, X } from "lucide-react";
 import { usePortfolioContent } from "../context/PortfolioContent.jsx";
 
 export default function Navbar() {
@@ -46,12 +46,33 @@ export default function Navbar() {
           ))}
         </div>
 
-        <a
-          href="#contact"
-          className="hidden rounded-full border border-cyan/40 bg-cyan/10 px-4 py-2 text-sm font-semibold text-cyan transition hover:bg-cyan/15 md:inline-flex"
-        >
-          Contact Me
-        </a>
+        <div className="hidden items-center gap-2 md:flex">
+          <a
+            href={profile.socials.github}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center rounded-full border border-line bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-cyan/40 hover:bg-white/10"
+            aria-label="GitHub"
+          >
+            <Github className="h-4 w-4" />
+          </a>
+          <a
+            href={profile.socials.instagram}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center rounded-full border border-line bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-cyan/40 hover:bg-white/10"
+            aria-label="Instagram"
+          >
+            <Instagram className="h-4 w-4" />
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex items-center justify-center rounded-full border border-cyan/40 bg-cyan/10 px-4 py-2 text-sm font-semibold text-cyan transition hover:bg-cyan/15"
+            aria-label="Contact"
+          >
+            <Mail className="h-4 w-4" />
+          </a>
+        </div>
 
         <button
           type="button"
