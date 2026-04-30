@@ -74,10 +74,6 @@ This project is now set up to deploy the frontend to GitHub Pages using GitHub A
 - The static files are published to the `gh-pages` branch
 - GitHub Pages serves the built site from `dist`
 
-### Notes about the backend
-
-GitHub Pages can only serve static sites. If you want to keep the Python backend, it must be hosted separately on a server or service that supports Python serverless functions.
-
 ## License
 
 This repo includes a custom proprietary license. See `LICENSE.md` for details.
