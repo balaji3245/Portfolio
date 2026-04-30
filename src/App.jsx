@@ -11,9 +11,11 @@ import Footer from "./components/Footer.jsx";
 import ScrollBackground from "./components/ScrollBackground.jsx";
 
 export default function App() {
-  const isAdminPage =
-    typeof window !== "undefined" &&
-    window.location.pathname.replace(/\/$/, "") === "/admin";
+  const pathname =
+    typeof window !== "undefined"
+      ? window.location.pathname.replace(/\/$/, "")
+      : "";
+  const isAdminPage = pathname.endsWith("/admin") || pathname === "/admin";
 
   return (
     <PortfolioContentProvider>
