@@ -91,7 +91,7 @@
         "Shell"
       ],
       "github": "https://github.com/balaji3245/shreesai",
-      "live": "",
+      "live": "https://shreesai-web.vercel.app/",
       "category": "web app",
       "accent": "from-cyan-300 via-blue-400 to-violet-400"
     },
@@ -105,7 +105,7 @@
         "CSS"
       ],
       "github": "https://github.com/balaji3245/JSPM",
-      "live": "",
+      "live": "https://jspm-tawny.vercel.app/",
       "category": "web app",
       "accent": "from-emerald-300 via-cyan-300 to-blue-400"
     },
@@ -160,7 +160,7 @@
         "JavaScript"
       ],
       "github": "https://github.com/balaji3245/brandx-info",
-      "live": "",
+      "live": "https://brandx-info.vercel.app/",
       "category": "brand site",
       "accent": "from-slate-300 via-sky-300 to-cyan-300"
     }
@@ -263,36 +263,5 @@
       "body": "Studying BCS while using public GitHub work to convert learning into working interfaces and a stronger backend foundation."
     }
   ],
-  "contactSubmissions": [
-    {
-      "id": "1778402728039-3crvw0u1",
-      "name": "Nsnsn",
-      "email": "chaugulebalaji40@gmail.com",
-      "phone": "",
-      "message": "Jsjsj",
-      "pageUrl": "https://portfolio-balaji-chaughule.vercel.app/",
-      "submittedAt": "2026-05-10T08:45:28.039Z",
-      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
-    },
-    {
-      "id": "1778402710828-l8nn7uze",
-      "name": "Balaji Chaugule",
-      "email": "chaugulebalaji40@gmail.com",
-      "phone": "",
-      "message": "Nsnsnsn",
-      "pageUrl": "https://portfolio-balaji-chaughule.vercel.app/",
-      "submittedAt": "2026-05-10T08:45:10.828Z",
-      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
-    },
-    {
-      "id": "1778402701521-21sszyil",
-      "name": "Balaji Chaugule",
-      "email": "chaugulebalaji40@gmail.com",
-      "phone": "",
-      "message": "Nznzns",
-      "pageUrl": "https://portfolio-balaji-chaughule.vercel.app/",
-      "submittedAt": "2026-05-10T08:45:01.521Z",
-      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
-    }
-  ]
+  "contactSubmissions": []
 }
