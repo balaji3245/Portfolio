@@ -79,7 +79,7 @@ export default function Hero() {
           : stats[0].value;
 
         setGithubStats([
-          { value: totalRepos, label: "total repo" },
+            { value: totalRepos, label: "public repositories" },
           { value: journeyYear, label: "GitHub journey started" },
           {
             value: languageShortNames[language] || language || stats[2].value,
@@ -113,7 +113,7 @@ export default function Hero() {
           const totalRepos = Array.isArray(repos) ? String(repos.length) : stats[0].value;
 
           setGithubStats([
-            { value: totalRepos, label: "total repo" },
+          { value: totalRepos, label: "public repositories" },
             { value: journeyYear, label: "GitHub journey started" },
             {
               value: languageShortNames[language] || language || stats[2].value,
@@ -144,7 +144,7 @@ export default function Hero() {
         >
           <motion.div
             variants={fadeUp}
-            className="inline-flex max-w-full items-center gap-2 rounded-full border border-cyan/20 bg-cyan/10 px-3 py-2 text-xs font-medium text-cyan sm:px-4 sm:text-sm"
+            className="inline-flex max-w-full items-center gap-2 rounded-full border border-cyan/20 bg-cyan/10 px-3 py-2 text-xs font-semibold text-cyan sm:px-4 sm:text-sm"
           >
             <Sparkles className="h-4 w-4" />
             Aspiring backend developer
@@ -152,14 +152,14 @@ export default function Hero() {
 
           <motion.h1
             variants={fadeUp}
-            className="mt-5 break-words text-3xl font-extrabold tracking-tight text-white sm:mt-6 sm:text-5xl lg:text-6xl"
+            className="mt-5 max-w-3xl break-words text-4xl font-extrabold tracking-tight text-white sm:mt-6 sm:text-6xl lg:text-7xl"
           >
             <span className="text-gradient">{profile.name}</span>
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
-            className="mt-5 max-w-xl text-xs leading-6 text-slate-300 sm:mt-6 sm:text-base sm:leading-7"
+            className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:mt-6 sm:text-lg sm:leading-8"
           >
             {profile.tagline}
           </motion.p>
@@ -174,8 +174,8 @@ export default function Hero() {
           <motion.div variants={fadeUp} className="mt-8 grid max-w-2xl gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4">
             {githubStats.map((item) => (
               <div key={item.label} className="glass rounded-2xl p-4 sm:rounded-3xl">
-                <p className="text-xl font-bold text-white sm:text-2xl">{item.value}</p>
-                <p className="mt-1 text-xs text-slate-400 sm:text-sm">{item.label}</p>
+                <p className="text-2xl font-bold text-white sm:text-3xl">{item.value}</p>
+                <p className="mt-1 text-xs font-medium uppercase text-slate-400 sm:text-[13px]">{item.label}</p>
               </div>
             ))}
           </motion.div>
@@ -188,16 +188,16 @@ export default function Hero() {
           className="relative"
         >
           <div className="absolute inset-0 aurora rounded-[2.5rem]" />
-          <div className="glass relative overflow-hidden rounded-[1.75rem] p-4 shadow-depth sm:rounded-[2.5rem] sm:p-5">
-            <div className="grid gap-4 rounded-[1.5rem] border border-line bg-ink/70 p-4 sm:gap-5 sm:rounded-[2rem] sm:p-5">
-              <div className="flex items-center gap-4 rounded-[1.25rem] border border-line bg-white/5 p-4 sm:rounded-[1.5rem]">
+          <div className="glass relative overflow-hidden rounded-[1.25rem] p-4 shadow-depth sm:rounded-[1.75rem] sm:p-5">
+            <div className="grid gap-4 rounded-[1rem] border border-line bg-ink/70 p-4 sm:gap-5 sm:rounded-[1.25rem] sm:p-5">
+              <div className="flex items-center gap-4 rounded-xl border border-line bg-white/5 p-4">
                 <img
                   src={profile.photo}
                   alt={`${profile.name} profile`}
                   className="h-20 w-20 shrink-0 rounded-2xl border border-line object-cover sm:h-24 sm:w-24"
                 />
                 <div className="min-w-0">
-                  <p className="text-2xl font-bold text-white">{profile.name}</p>
+                  <p className="text-xl font-bold text-white sm:text-2xl">{profile.name}</p>
                   <p className="mt-1 text-sm font-medium text-cyan">{profile.role}</p>
                 </div>
               </div>
@@ -209,10 +209,10 @@ export default function Hero() {
               ].map(({ icon: Icon, label, value }) => (
                 <div
                   key={label}
-                  className="rounded-[1.25rem] border border-line bg-white/5 p-4 sm:rounded-[1.5rem]"
+                  className="rounded-xl border border-line bg-white/5 p-4"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-cyan/25 to-violet/25 text-cyan">
+                    <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-cyan/10 text-cyan">
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="min-w-0">

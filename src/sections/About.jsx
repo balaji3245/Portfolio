@@ -13,7 +13,7 @@ export default function About() {
       <div className="section-shell">
         <SectionHeader
           eyebrow="About"
-          title="A practical builder with a backend-first direction"
+          title="A practical builder growing toward backend engineering"
           text={profile.summary}
         />
 
@@ -28,7 +28,7 @@ export default function About() {
             <motion.article
               key={point.title}
               variants={fadeUp}
-              className="glass rounded-[1.5rem] p-5 sm:rounded-[2rem] sm:p-6"
+              className="glass rounded-2xl p-5 transition hover:-translate-y-1 hover:border-cyan/30 sm:p-6"
             >
               <h3 className="text-lg font-bold text-white sm:text-xl">{point.title}</h3>
               <p className="mt-3 leading-7 text-slate-300">{point.text}</p>
@@ -41,7 +41,7 @@ export default function About() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="glass mt-6 rounded-[1.5rem] p-4 sm:mt-8 sm:rounded-[2rem] sm:p-5"
+          className="glass mt-6 rounded-2xl p-4 sm:mt-8 sm:p-5"
         >
           <div className="flex flex-wrap justify-center gap-3">
             {techBadges.map((badge) => (

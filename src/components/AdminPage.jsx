@@ -401,9 +401,16 @@ export default function AdminPage() {
     { label: "Skill items", value: countSkills(draft.skillGroups), icon: Layers3 },
     { label: "Journey items", value: draft.timeline.length, icon: ScrollText },
   ];
+  const adminSections = [
+    ["Profile", "#profile"],
+    ["Messages", "#messages"],
+    ["Projects", "#projects"],
+    ["Skills", "#skills"],
+    ["Journey", "#journey"],
+  ];
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(69,216,255,0.08),transparent_22%),radial-gradient(circle_at_top_right,rgba(157,124,255,0.12),transparent_24%),#070915] px-4 py-8 text-slate-100 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(69,216,255,0.06),transparent_22%),radial-gradient(circle_at_top_right,rgba(157,124,255,0.08),transparent_24%),#070915] px-4 py-8 text-slate-100 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <header className="admin-panel p-5 sm:p-6">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
@@ -417,17 +424,21 @@ export default function AdminPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan">
                   Portfolio Admin
                 </p>
-                <h1 className="mt-2 text-3xl font-bold tracking-tight text-white">
-                  Simple content editor
+                <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  Portfolio control room
                 </h1>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
-                  Open one section at a time, edit the content, save it to GitHub, then preview the site.
+                  Edit content, review messages, keep project details fresh, and publish the portfolio from one focused workspace.
                 </p>
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-line bg-white/5 px-3 py-2 text-xs font-semibold text-slate-300">
+              <span className={`rounded-full border px-3 py-2 text-xs font-semibold ${
+                status === defaultStatus || status.includes("Saved") || status.includes("complete")
+                  ? "border-emerald-400/20 bg-emerald-400/10 text-emerald-200"
+                  : "border-amber-300/20 bg-amber-300/10 text-amber-100"
+              }`}>
                 {status}
               </span>
               <label className="min-w-[12rem]">
@@ -454,7 +465,7 @@ export default function AdminPage() {
               </button>
               <button
                 type="button"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan via-violet to-pink px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex items-center gap-2 rounded-full bg-cyan px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
                 onClick={handleSave}
                 disabled={saving}
               >
@@ -475,6 +486,18 @@ export default function AdminPage() {
               </div>
             ))}
           </div>
+
+          <nav className="mt-5 flex gap-2 overflow-x-auto border-t border-line pt-4">
+            {adminSections.map(([label, href]) => (
+              <a
+                key={href}
+                href={href}
+                className="shrink-0 rounded-full border border-line bg-white/5 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:border-cyan/40 hover:text-white"
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
         </header>
 
         <div className="mt-6 grid gap-6">

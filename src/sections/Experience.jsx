@@ -13,8 +13,8 @@ export default function Experience() {
       <div className="section-shell">
         <SectionHeader
           eyebrow="Journey"
-          title="How the learning path is taking shape"
-          text="A timeline of where the focus has been and what each phase has added to the portfolio."
+          title="A steady path from UI practice to backend depth"
+          text="A quick timeline of what each phase has added: stronger interface work, clearer structure, and a more serious backend direction."
         />
 
         <motion.div
@@ -32,7 +32,7 @@ export default function Experience() {
                 variants={fadeUp}
                 className={`relative grid gap-4 sm:grid-cols-2 ${index % 2 === 0 ? "" : "sm:[&>div:first-child]:col-start-2"}`}
               >
-                <div className={`ml-14 rounded-[2rem] p-6 glass sm:ml-0 ${index % 2 === 0 ? "sm:mr-8" : "sm:ml-8"}`}>
+                <div className={`ml-14 rounded-2xl p-6 glass sm:ml-0 ${index % 2 === 0 ? "sm:mr-8" : "sm:ml-8"}`}>
                   <p className="font-mono text-xs font-semibold uppercase tracking-[0.26em] text-cyan">
                     {item.period}
                   </p>

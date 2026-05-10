@@ -6,9 +6,9 @@ export const profile = {
   photo: "https://avatars.githubusercontent.com/u/215246117?v=4",
   githubUsername: "balaji3245",
   tagline:
-    "BCS student learning backend development while building responsive websites, dashboards, Tailwind layouts, and creative browser projects on GitHub.",
+    "BCS student and aspiring backend developer building clean web interfaces, practical dashboards, and API-minded projects in public.",
   summary:
-    "Learning, building, and improving through public GitHub projects across TypeScript, JavaScript, HTML, CSS, Tailwind, SCSS, and interactive web experiments, while steadily growing into backend systems.",
+    "I use every project to improve the fundamentals: readable structure, responsive UI, clear data flow, and dependable implementation habits. My current path is frontend delivery today with steady progress toward backend APIs and service logic.",
   socials: {
     github: "https://github.com/balaji3245",
     instagram: "https://www.instagram.com/chaughule_balaji_/?utm_source=ig_web_button_share_sheet",
@@ -28,20 +28,20 @@ export const navItems = [
 export const aboutPoints = [
   {
     title: "Learning by building",
-    text: "I use portfolio projects as a lab for layout, interactions, data thinking, and cleaner engineering habits.",
+    text: "I turn coursework and self-learning into shipped GitHub projects, with attention to layout, interaction details, and maintainable structure.",
   },
   {
     title: "Backend curiosity",
-    text: "My direction is backend development, especially APIs, service logic, and systems that stay dependable under pressure.",
+    text: "My focus is moving toward Node.js, Express, REST APIs, data modeling, and server-side logic that is simple to reason about.",
   },
   {
     title: "Public progress",
-    text: "GitHub is where I document growth through real projects instead of waiting for perfect case studies.",
+    text: "I keep my progress visible through public repositories so each project shows a clearer version of how I think and build.",
   },
 ];
 
 export const stats = [
-  { value: "17", label: "total repo" },
+  { value: "17", label: "public repositories" },
   { value: "2025", label: "GitHub journey started" },
   { value: "TS", label: "latest repo language" },
 ];
@@ -62,7 +62,7 @@ export const projects = [
   {
     title: "Tailwind Bundle Files",
     description:
-      "A TypeScript-first Tailwind bundle with reusable sections, structured assets, and polished landing-page UI patterns.",
+      "A TypeScript-first Tailwind bundle organized around reusable sections, clean asset structure, and production-style landing page patterns.",
     tech: ["TypeScript", "HTML", "Tailwind CSS", "JavaScript"],
     github: "https://github.com/balaji3245/tailwind-bundle-files",
     live: "",
@@ -72,7 +72,7 @@ export const projects = [
   {
     title: "JSPM College Admission Inquiry",
     description:
-      "A college admission inquiry website with responsive sections, Tailwind styling, content structure, and JavaScript-driven interactions.",
+      "A responsive admission inquiry website for a college flow, built with structured sections, Tailwind styling, and JavaScript interactions.",
     tech: ["JavaScript", "HTML", "CSS", "Tailwind CSS"],
     github: "https://github.com/balaji3245/Registration-form-of-JSPM-collage",
     live: "",
@@ -82,7 +82,7 @@ export const projects = [
   {
     title: "Three.js Hand Tracking",
     description:
-      "A browser-based hand tracking demo combining webcam input, full-screen layout work, and interactive visual experimentation.",
+      "A browser experiment combining webcam input, hand tracking concepts, full-screen canvas composition, and interactive visual feedback.",
     tech: ["HTML", "Three.js", "JavaScript", "Webcam API"],
     github: "https://github.com/balaji3245/threejs-handtracking",
     live: "",
@@ -92,7 +92,7 @@ export const projects = [
   {
     title: "Cards UI",
     description:
-      "A compact card-based frontend exercise focused on clean CSS styling, layout rhythm, and visual component presentation.",
+      "A compact component exercise focused on CSS card systems, spacing rhythm, visual hierarchy, and reusable UI presentation.",
     tech: ["CSS", "HTML", "UI Layout"],
     github: "https://github.com/balaji3245/CARDS",
     live: "",
@@ -102,7 +102,7 @@ export const projects = [
   {
     title: "Headphone Landing Page",
     description:
-      "A product-style landing page centered on CSS styling, visual hierarchy, and focused single-page presentation work.",
+      "A product landing page practice project focused on hero composition, visual hierarchy, CSS styling, and focused single-page presentation.",
     tech: ["CSS", "HTML", "Product UI"],
     github: "https://github.com/balaji3245/HEADPHONE",
     live: "",
@@ -112,7 +112,7 @@ export const projects = [
   {
     title: "Car Landing Page",
     description:
-      "A simple vehicle-themed landing page project showing structure, hero composition, and core frontend page-building practice.",
+      "A vehicle-themed landing page showing page structure, hero layout, responsive sections, and core frontend implementation practice.",
     tech: ["HTML", "CSS", "JavaScript"],
     github: "https://github.com/balaji3245/CAR",
     live: "",
@@ -124,7 +124,7 @@ export const projects = [
 export const skillGroups = [
   {
     title: "Frontend",
-    description: "Responsive layouts, landing pages, dashboards, and practical browser interfaces.",
+    description: "Responsive interfaces, landing pages, dashboard layouts, and reusable component structure.",
     skills: [
       { name: "HTML", level: 88 },
       { name: "CSS", level: 84 },
@@ -134,7 +134,7 @@ export const skillGroups = [
   },
   {
     title: "Backend Path",
-    description: "Building toward APIs, server logic, data flow, and production-ready patterns.",
+    description: "API design basics, server-side logic, data flow, and reliable request handling.",
     skills: [
       { name: "Node.js", level: 62 },
       { name: "Express", level: 58 },
@@ -144,7 +144,7 @@ export const skillGroups = [
   },
   {
     title: "Creative Tools",
-    description: "Version control, UI tooling, TypeScript practice, and interactive web experiments.",
+    description: "Git workflows, TypeScript practice, UI tooling, and interactive browser experiments.",
     skills: [
       { name: "GitHub", level: 82 },
       { name: "TypeScript", level: 70 },
@@ -157,8 +157,8 @@ export const skillGroups = [
 export const highlights = [
   "17 public repositories",
   "TypeScript and Tailwind practice",
-  "Responsive landing pages",
-  "Dashboard UI builds",
+  "Responsive UI delivery",
+  "Dashboard interface builds",
   "Interactive web demos",
   "Backend learning path",
 ];
@@ -167,22 +167,22 @@ export const timeline = [
   {
     period: "Now",
     title: "Aspiring backend developer",
-    body: "Growing backend fundamentals while continuing to publish frontend projects and UI experiments on GitHub.",
+    body: "Strengthening Node.js, Express, API thinking, and data-flow fundamentals while continuing to publish practical frontend work.",
   },
   {
     period: "2026",
     title: "Tailwind bundle and stronger UI structure",
-    body: "Pushed a TypeScript-heavy Tailwind bundle project and kept sharpening reusable sections, layout structure, and visual polish.",
+    body: "Built a TypeScript-heavy Tailwind bundle and improved reusable sections, component spacing, and design consistency.",
   },
   {
     period: "2025",
     title: "Frontend project streak on GitHub",
-    body: "Built college, dashboard, restaurant, landing page, and experiment-style projects using HTML, CSS, JavaScript, SCSS, and Tailwind.",
+    body: "Built college, dashboard, restaurant, landing page, and experiment projects using HTML, CSS, JavaScript, SCSS, and Tailwind.",
   },
   {
     period: "BCS",
     title: "Computer science learning path",
-    body: "Studying BCS and using public GitHub projects to turn learning into working interfaces and a gradual backend path.",
+    body: "Studying BCS while using public GitHub work to convert learning into working interfaces and a stronger backend foundation.",
   },
 ];
 

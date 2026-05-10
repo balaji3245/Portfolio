@@ -20,8 +20,8 @@ export default function Skills() {
       <div className="section-shell">
         <SectionHeader
           eyebrow="Skills"
-          title="Core tools I use now and the backend path I'm building toward"
-          text="This is where the current strength of the portfolio sits: UI delivery, project structure, and a steady move toward backend depth."
+          title="Current stack and backend growth path"
+          text="The portfolio currently shows strong UI delivery and project structure, while the learning path is moving deeper into APIs, Node.js, and data flow."
         />
 
         <motion.div
@@ -38,10 +38,10 @@ export default function Skills() {
               <motion.article
                 key={group.title}
                 variants={fadeUp}
-                className="glass rounded-[1.5rem] p-5 sm:rounded-[2rem] sm:p-6"
+                className="glass rounded-2xl p-5 sm:p-6"
               >
                 <div className="flex items-start gap-4">
-                  <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-cyan/20 to-violet/20 text-cyan">
+                  <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-cyan/10 text-cyan">
                     <Icon className="h-5 w-5" />
                   </div>
                   <div className="min-w-0">

@@ -80,8 +80,8 @@ export default function Contact() {
       <div className="section-shell">
         <SectionHeader
           eyebrow="Contact"
-          title="Let's build something clean, useful, and reliable"
-          text="I'm open to learning opportunities, collaborations, internships, and projects where I can keep sharpening both frontend execution and backend thinking."
+          title="Open to internships, collaborations, and real project work"
+          text="I am looking for opportunities where I can contribute, learn from feedback, and keep improving both frontend execution and backend thinking."
         />
 
         <motion.div
@@ -89,9 +89,9 @@ export default function Contact() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="glass mx-auto grid max-w-5xl gap-4 rounded-[1.5rem] p-4 sm:gap-5 sm:rounded-[2rem] sm:p-6 lg:grid-cols-[0.9fr_1.1fr]"
+          className="glass mx-auto grid max-w-5xl gap-4 rounded-2xl p-4 sm:gap-5 sm:p-6 lg:grid-cols-[0.9fr_1.1fr]"
         >
-          <div className="rounded-[1.25rem] border border-line bg-white/5 p-5 sm:rounded-[1.75rem] sm:p-6">
+          <div className="rounded-xl border border-line bg-white/5 p-5 sm:p-6">
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.26em] text-cyan">
               Reach out
             </p>
@@ -107,7 +107,7 @@ export default function Contact() {
               </div>
             </div>
             <p className="mt-4 leading-7 text-slate-300">
-              The easiest way to contact me is through the links here. I'm especially interested in real-world learning and backend-oriented work.
+              The easiest way to contact me is through the links here. I am especially interested in real-world learning, internships, and backend-oriented work.
             </p>
 
             <div className="mt-6 grid gap-3">
@@ -143,7 +143,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="rounded-[1.25rem] border border-line bg-white/5 p-5 sm:rounded-[1.75rem] sm:p-6">
+          <div className="rounded-xl border border-line bg-white/5 p-5 sm:p-6">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan">
@@ -151,8 +151,8 @@ export default function Contact() {
                 </p>
                 <h3 className="mt-2 text-xl font-bold text-white sm:text-2xl">Send me a message</h3>
                 <p className="mt-3 max-w-lg leading-7 text-slate-300">
-                  Share your idea, internship opening, or collaboration plan. I will get the
-                  message pre-filled in email so it is easy to send.
+                  Share your idea, internship opening, or collaboration plan. The message will be
+                  saved in the admin inbox so I can follow up cleanly.
                 </p>
               </div>
 

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
 import { usePortfolioContent } from "../context/PortfolioContent.jsx";
 import SectionHeader from "../components/SectionHeader.jsx";
 import { fadeUp, stagger } from "../utils/motion.js";
@@ -14,8 +14,8 @@ export default function Projects() {
       <div className="section-shell">
         <SectionHeader
           eyebrow="Projects"
-          title="Selected work from public experiments and portfolio builds"
-          text="A mix of UI systems, API-inspired thinking, and practical web projects that show how I learn by shipping."
+          title="Selected projects with clear structure and practical UI work"
+          text="A focused set of public repositories showing responsive interfaces, component thinking, and steady movement toward backend-ready project structure."
         />
 
         <motion.div
@@ -29,16 +29,19 @@ export default function Projects() {
             <motion.article
               key={project.title}
               variants={fadeUp}
-              className="glass rounded-[1.5rem] p-5 sm:rounded-[2rem] sm:p-6"
+              className="group relative overflow-hidden rounded-2xl border border-line bg-[rgba(13,17,35,0.78)] p-5 shadow-depth transition hover:-translate-y-1 hover:border-cyan/35 sm:p-6"
             >
+              <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${project.accent || "from-cyan-300 via-violet-300 to-pink"}`} />
+
               <div className="mb-5 flex items-center justify-between gap-3">
-                <span className="rounded-full border border-cyan/20 bg-cyan/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-cyan">
+                <span className="rounded-full border border-cyan/20 bg-cyan/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan">
                   {project.category}
                 </span>
+                <ArrowUpRight className="h-5 w-5 text-slate-500 transition group-hover:text-cyan" />
               </div>
 
               <h3 className="text-xl font-bold text-white sm:text-2xl">{project.title}</h3>
-              <p className="mt-4 leading-7 text-slate-300 sm:min-h-[7rem]">{project.description}</p>
+              <p className="mt-4 leading-7 text-slate-300 sm:min-h-[8rem]">{project.description}</p>
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {project.tech.map((item) => (
