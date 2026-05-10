@@ -47,14 +47,17 @@ export const stats = [
 ];
 
 export const techBadges = [
-  "TypeScript",
   "HTML",
   "CSS",
   "JavaScript",
+  "React",
+  "Vite",
+  "TypeScript",
   "Tailwind CSS",
   "Three.js",
   "SCSS",
   "Bootstrap",
+  "PocketBase",
   "Git",
 ];
 
@@ -123,33 +126,36 @@ export const projects = [
 
 export const skillGroups = [
   {
-    title: "Frontend",
-    description: "Responsive interfaces, landing pages, dashboard layouts, and reusable component structure.",
+    title: "Frontend Foundations",
+    description:
+      "Strongest GitHub footprint: static sites, landing pages, dashboards, forms, and responsive page structure.",
     skills: [
-      { name: "HTML", level: 88 },
-      { name: "CSS", level: 84 },
-      { name: "JavaScript", level: 78 },
+      { name: "HTML", level: 92 },
+      { name: "CSS", level: 88 },
+      { name: "JavaScript", level: 82 },
+      { name: "Responsive UI", level: 86 },
+    ],
+  },
+  {
+    title: "Modern Web Stack",
+    description:
+      "Visible in React/Vite apps, TypeScript-heavy Tailwind work, and component-based college and portfolio projects.",
+    skills: [
+      { name: "React", level: 76 },
+      { name: "Vite", level: 74 },
+      { name: "TypeScript", level: 72 },
       { name: "Tailwind CSS", level: 78 },
     ],
   },
   {
-    title: "Backend Path",
-    description: "API design basics, server-side logic, data flow, and reliable request handling.",
+    title: "Tools and Experiments",
+    description:
+      "Supporting skills from public repos: SCSS/Bootstrap templates, Three.js experiments, GitHub workflows, and PocketBase exploration.",
     skills: [
-      { name: "Node.js", level: 62 },
-      { name: "Express", level: 58 },
-      { name: "REST APIs", level: 64 },
-      { name: "Data Modeling", level: 56 },
-    ],
-  },
-  {
-    title: "Creative Tools",
-    description: "Git workflows, TypeScript practice, UI tooling, and interactive browser experiments.",
-    skills: [
-      { name: "GitHub", level: 82 },
-      { name: "TypeScript", level: 70 },
-      { name: "Three.js", level: 58 },
-      { name: "Bootstrap", level: 70 },
+      { name: "GitHub", level: 84 },
+      { name: "SCSS / Bootstrap", level: 68 },
+      { name: "Three.js", level: 56 },
+      { name: "PocketBase", level: 52 },
     ],
   },
 ];

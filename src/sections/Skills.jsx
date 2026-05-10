@@ -5,9 +5,9 @@ import SectionHeader from "../components/SectionHeader.jsx";
 import { fadeUp, stagger } from "../utils/motion.js";
 
 const iconMap = {
-  Frontend: Code2,
-  "Backend Path": Server,
-  "Creative Tools": GitBranch,
+  "Frontend Foundations": Code2,
+  "Modern Web Stack": Server,
+  "Tools and Experiments": GitBranch,
 };
 
 export default function Skills() {
@@ -20,8 +20,8 @@ export default function Skills() {
       <div className="section-shell">
         <SectionHeader
           eyebrow="Skills"
-          title="Current stack and backend growth path"
-          text="The portfolio currently shows strong UI delivery and project structure, while the learning path is moving deeper into APIs, Node.js, and data flow."
+          title="Skills mapped to my public GitHub work"
+          text="The strongest evidence is frontend delivery across HTML, CSS, JavaScript, React/Vite, and Tailwind, with early backend-facing exploration through PocketBase and project data flow."
         />
 
         <motion.div
