@@ -249,6 +249,19 @@ export default function AdminPage() {
     }));
   };
 
+  const clearContactSubmissions = () => {
+    if (!window.confirm("Delete all contact messages from the admin panel?")) {
+      return;
+    }
+
+    updateDraft((current) => ({
+      ...current,
+      contactSubmissions: [],
+    }));
+    setSubmissionSearch("");
+    setSelectedSubmissionId("");
+  };
+
   const handleSave = async () => {
     if (!adminPassword.trim()) {
       setStatus("Enter admin password");
@@ -414,6 +427,7 @@ export default function AdminPage() {
             description="Messages submitted from the portfolio contact form."
           >
             <ContactInbox
+              onClearAll={clearContactSubmissions}
               onRemove={removeContactSubmission}
               onSearchChange={setSubmissionSearch}
               onSelect={setSelectedSubmissionId}
@@ -770,7 +784,7 @@ function EmptyState({ text }) {
   );
 }
 
-function ContactInbox({ onRemove, onSearchChange, onSelect, search, selectedId, submissions }) {
+function ContactInbox({ onClearAll, onRemove, onSearchChange, onSelect, search, selectedId, submissions }) {
   const normalizedSearch = search.trim().toLowerCase();
   const filteredSubmissions = normalizedSearch
     ? submissions.filter((submission) =>
@@ -798,8 +812,17 @@ function ContactInbox({ onRemove, onSearchChange, onSelect, search, selectedId, 
       <div className="border-b border-line bg-black/10 lg:border-b-0 lg:border-r">
         <div className="border-b border-line p-4">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-sm font-semibold text-white">{submissions.length} messages</p>
-            <p className="text-xs text-slate-400">{filteredSubmissions.length} shown</p>
+            <div>
+              <p className="text-sm font-semibold text-white">{submissions.length} messages</p>
+              <p className="mt-1 text-xs text-slate-400">{filteredSubmissions.length} shown</p>
+            </div>
+            <button
+              type="button"
+              onClick={onClearAll}
+              className="inline-flex h-9 items-center justify-center rounded-full border border-pink/20 bg-pink/10 px-3 text-xs font-semibold text-pink transition hover:bg-pink/20"
+            >
+              Clear all
+            </button>
           </div>
           <label className="mt-3 flex min-h-11 items-center gap-3 rounded-xl border border-line bg-white/5 px-3 transition focus-within:border-cyan/50 focus-within:ring-4 focus-within:ring-cyan/10">
             <Search size={16} className="shrink-0 text-slate-400" />
