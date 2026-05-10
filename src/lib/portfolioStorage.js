@@ -1,6 +1,7 @@
 import {
   highlights,
   navItems,
+  aboutPoints,
   profile,
   projects,
   skillGroups,
@@ -15,6 +16,7 @@ export const PORTFOLIO_STORAGE_KEY = "balaji-portfolio-content-v1";
 export const defaultPortfolioContent = {
   profile,
   navItems,
+  aboutPoints,
   stats,
   techBadges,
   projects,
@@ -39,6 +41,7 @@ export function mergePortfolioContent(content = {}) {
       },
     },
     navItems: Array.isArray(content.navItems) ? content.navItems : defaultPortfolioContent.navItems,
+    aboutPoints: Array.isArray(content.aboutPoints) ? content.aboutPoints : defaultPortfolioContent.aboutPoints,
     stats: Array.isArray(content.stats) ? content.stats : defaultPortfolioContent.stats,
     techBadges: Array.isArray(content.techBadges) ? content.techBadges : defaultPortfolioContent.techBadges,
     projects: Array.isArray(content.projects) ? content.projects : defaultPortfolioContent.projects,

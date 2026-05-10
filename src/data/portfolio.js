@@ -25,6 +25,21 @@ export const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
+export const aboutPoints = [
+  {
+    title: "Learning by building",
+    text: "I use portfolio projects as a lab for layout, interactions, data thinking, and cleaner engineering habits.",
+  },
+  {
+    title: "Backend curiosity",
+    text: "My direction is backend development, especially APIs, service logic, and systems that stay dependable under pressure.",
+  },
+  {
+    title: "Public progress",
+    text: "GitHub is where I document growth through real projects instead of waiting for perfect case studies.",
+  },
+];
+
 export const stats = [
   { value: "17", label: "total repo" },
   { value: "2025", label: "GitHub journey started" },

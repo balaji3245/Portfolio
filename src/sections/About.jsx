@@ -3,24 +3,9 @@ import { usePortfolioContent } from "../context/PortfolioContent.jsx";
 import SectionHeader from "../components/SectionHeader.jsx";
 import { fadeUp, stagger } from "../utils/motion.js";
 
-const points = [
-  {
-    title: "Learning by building",
-    text: "I use portfolio projects as a lab for layout, interactions, data thinking, and cleaner engineering habits.",
-  },
-  {
-    title: "Backend curiosity",
-    text: "My direction is backend development, especially APIs, service logic, and systems that stay dependable under pressure.",
-  },
-  {
-    title: "Public progress",
-    text: "GitHub is where I document growth through real projects instead of waiting for perfect case studies.",
-  },
-];
-
 export default function About() {
   const {
-    content: { profile, techBadges },
+    content: { aboutPoints, profile, techBadges },
   } = usePortfolioContent();
 
   return (
@@ -39,7 +24,7 @@ export default function About() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          {points.map((point) => (
+          {aboutPoints.map((point) => (
             <motion.article
               key={point.title}
               variants={fadeUp}

@@ -61,6 +61,8 @@ export default function AdminPage() {
   const [selectedSkillGroupIndex, setSelectedSkillGroupIndex] = useState(0);
   const [selectedTimelineIndex, setSelectedTimelineIndex] = useState(0);
   const [selectedStatIndex, setSelectedStatIndex] = useState(0);
+  const [selectedNavIndex, setSelectedNavIndex] = useState(0);
+  const [selectedAboutPointIndex, setSelectedAboutPointIndex] = useState(0);
 
   useEffect(() => {
     setDraft(content);
@@ -85,7 +87,16 @@ export default function AdminPage() {
     setSelectedSkillGroupIndex((index) => Math.min(index, Math.max(draft.skillGroups.length - 1, 0)));
     setSelectedTimelineIndex((index) => Math.min(index, Math.max(draft.timeline.length - 1, 0)));
     setSelectedStatIndex((index) => Math.min(index, Math.max(draft.stats.length - 1, 0)));
-  }, [draft.projects.length, draft.skillGroups.length, draft.timeline.length, draft.stats.length]);
+    setSelectedNavIndex((index) => Math.min(index, Math.max(draft.navItems.length - 1, 0)));
+    setSelectedAboutPointIndex((index) => Math.min(index, Math.max((draft.aboutPoints || []).length - 1, 0)));
+  }, [
+    draft.projects.length,
+    draft.skillGroups.length,
+    draft.timeline.length,
+    draft.stats.length,
+    draft.navItems.length,
+    draft.aboutPoints,
+  ]);
 
   const updateDraft = (updater) => {
     setDraft((current) => updater(current));
@@ -246,6 +257,64 @@ export default function AdminPage() {
       contactSubmissions: (current.contactSubmissions || []).filter(
         (submission) => submission.id !== id,
       ),
+    }));
+  };
+
+  const updateNavItem = (index, field, value) => {
+    updateDraft((current) => ({
+      ...current,
+      navItems: current.navItems.map((item, itemIndex) =>
+        itemIndex === index ? { ...item, [field]: value } : item,
+      ),
+    }));
+  };
+
+  const addNavItem = () => {
+    const nextIndex = draft.navItems.length;
+
+    updateDraft((current) => ({
+      ...current,
+      navItems: [...current.navItems, { label: "New Link", href: "#contact" }],
+    }));
+    setSelectedNavIndex(nextIndex);
+  };
+
+  const removeNavItem = (index) => {
+    updateDraft((current) => ({
+      ...current,
+      navItems: current.navItems.filter((_, itemIndex) => itemIndex !== index),
+    }));
+  };
+
+  const updateAboutPoint = (index, field, value) => {
+    updateDraft((current) => ({
+      ...current,
+      aboutPoints: (current.aboutPoints || []).map((point, pointIndex) =>
+        pointIndex === index ? { ...point, [field]: value } : point,
+      ),
+    }));
+  };
+
+  const addAboutPoint = () => {
+    const nextIndex = (draft.aboutPoints || []).length;
+
+    updateDraft((current) => ({
+      ...current,
+      aboutPoints: [
+        ...(current.aboutPoints || []),
+        {
+          title: "New about point",
+          text: "Short supporting detail.",
+        },
+      ],
+    }));
+    setSelectedAboutPointIndex(nextIndex);
+  };
+
+  const removeAboutPoint = (index) => {
+    updateDraft((current) => ({
+      ...current,
+      aboutPoints: (current.aboutPoints || []).filter((_, pointIndex) => pointIndex !== index),
     }));
   };
 
@@ -434,6 +503,36 @@ export default function AdminPage() {
               search={submissionSearch}
               selectedId={selectedSubmissionId}
               submissions={draft.contactSubmissions || []}
+            />
+          </SectionBlock>
+
+          <SectionBlock
+            id="navigation"
+            title="Navigation"
+            description="Control the top navbar labels and anchor links."
+            action={<AddButton label="Add Link" onClick={addNavItem} />}
+          >
+            <NavEditor
+              items={draft.navItems}
+              onChange={updateNavItem}
+              onRemove={removeNavItem}
+              onSelect={setSelectedNavIndex}
+              selectedIndex={selectedNavIndex}
+            />
+          </SectionBlock>
+
+          <SectionBlock
+            id="about-cards"
+            title="About cards"
+            description="Control the three About section cards shown below the intro."
+            action={<AddButton label="Add Card" onClick={addAboutPoint} />}
+          >
+            <AboutCardsEditor
+              points={draft.aboutPoints || []}
+              onChange={updateAboutPoint}
+              onRemove={removeAboutPoint}
+              onSelect={setSelectedAboutPointIndex}
+              selectedIndex={selectedAboutPointIndex}
             />
           </SectionBlock>
 
@@ -651,6 +750,82 @@ function HeroEditor({ onSelect, onStatChange, onTechBadgesChange, selectedIndex,
           <CsvField label="Tech Badges" value={techBadges} onChange={onTechBadgesChange} />
         </div>
       ) : null}
+    </ContentWorkspace>
+  );
+}
+
+function NavEditor({ items, onChange, onRemove, onSelect, selectedIndex }) {
+  const selectedItem = items[selectedIndex] || items[0];
+
+  return (
+    <ContentWorkspace
+      list={
+        <div className="max-h-[24rem] overflow-y-auto">
+          {items.map((item, index) => (
+            <ListButton key={`${item.label}-${index}`} active={index === selectedIndex} onClick={() => onSelect(index)}>
+              <p className="truncate text-sm font-semibold text-white">{item.label || `Link ${index + 1}`}</p>
+              <p className="mt-1 truncate text-xs text-cyan">{item.href || "No href"}</p>
+            </ListButton>
+          ))}
+        </div>
+      }
+      minHeight="min-h-[20rem]"
+    >
+      {selectedItem ? (
+        <div className="grid gap-4">
+          <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan">Selected nav link</p>
+              <h3 className="mt-2 text-2xl font-bold text-white">{selectedItem.label || `Link ${selectedIndex + 1}`}</h3>
+            </div>
+            <DangerButton label="Remove Link" onClick={() => onRemove(selectedIndex)} />
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Field label="Label" value={selectedItem.label} onChange={(value) => onChange(selectedIndex, "label", value)} />
+            <Field label="Href" value={selectedItem.href} onChange={(value) => onChange(selectedIndex, "href", value)} />
+          </div>
+        </div>
+      ) : (
+        <EmptyState text="Add a nav link to start editing." />
+      )}
+    </ContentWorkspace>
+  );
+}
+
+function AboutCardsEditor({ onChange, onRemove, onSelect, points, selectedIndex }) {
+  const selectedPoint = points[selectedIndex] || points[0];
+
+  return (
+    <ContentWorkspace
+      list={
+        <div className="max-h-[26rem] overflow-y-auto">
+          {points.map((point, index) => (
+            <ListButton key={`${point.title}-${index}`} active={index === selectedIndex} onClick={() => onSelect(index)}>
+              <p className="truncate text-sm font-semibold text-white">{point.title || `Card ${index + 1}`}</p>
+              <p className="mt-1 max-h-10 overflow-hidden text-xs leading-5 text-slate-400">{point.text}</p>
+            </ListButton>
+          ))}
+        </div>
+      }
+      minHeight="min-h-[22rem]"
+    >
+      {selectedPoint ? (
+        <div className="grid gap-4">
+          <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan">Selected about card</p>
+              <h3 className="mt-2 text-2xl font-bold text-white">{selectedPoint.title || `Card ${selectedIndex + 1}`}</h3>
+            </div>
+            <DangerButton label="Remove Card" onClick={() => onRemove(selectedIndex)} />
+          </div>
+          <div className="grid gap-4">
+            <Field label="Title" value={selectedPoint.title} onChange={(value) => onChange(selectedIndex, "title", value)} />
+            <TextArea label="Text" value={selectedPoint.text} onChange={(value) => onChange(selectedIndex, "text", value)} />
+          </div>
+        </div>
+      ) : (
+        <EmptyState text="Add an about card to start editing." />
+      )}
     </ContentWorkspace>
   );
 }
