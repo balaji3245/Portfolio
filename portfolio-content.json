@@ -81,8 +81,37 @@
   ],
   "projects": [
     {
+      "title": "Shree Sai Web App",
+      "description": "A JavaScript-heavy web app with a structured frontend workspace, PocketBase files, migrations, hooks, and product/category data flow.",
+      "tech": [
+        "JavaScript",
+        "PocketBase",
+        "CSS",
+        "HTML",
+        "Shell"
+      ],
+      "github": "https://github.com/balaji3245/shreesai",
+      "live": "",
+      "category": "web app",
+      "accent": "from-cyan-300 via-blue-400 to-violet-400"
+    },
+    {
+      "title": "JSPM College Website",
+      "description": "A React and Vite college website with component-based sections for courses, gallery, notices, facilities, contact, and page interactions.",
+      "tech": [
+        "React",
+        "Vite",
+        "JavaScript",
+        "CSS"
+      ],
+      "github": "https://github.com/balaji3245/JSPM",
+      "live": "",
+      "category": "web app",
+      "accent": "from-emerald-300 via-cyan-300 to-blue-400"
+    },
+    {
       "title": "Tailwind Bundle Files",
-      "description": "A TypeScript-first Tailwind bundle organized around reusable sections, clean asset structure, and production-style landing page patterns.",
+      "description": "A TypeScript-first Tailwind bundle organized around reusable sections, asset structure, and production-style landing page templates.",
       "tech": [
         "TypeScript",
         "HTML",
@@ -91,74 +120,48 @@
       ],
       "github": "https://github.com/balaji3245/tailwind-bundle-files",
       "live": "",
-      "category": "Templet",
-      "accent": "from-cyan-300 via-blue-400 to-violet-400"
-    },
-    {
-      "title": "JSPM College Admission Inquiry",
-      "description": "A responsive admission inquiry website for a college flow, built with structured sections, Tailwind styling, and JavaScript interactions.",
-      "tech": [
-        "JavaScript",
-        "HTML",
-        "CSS",
-        "Tailwind CSS"
-      ],
-      "github": "https://github.com/balaji3245/Registration-form-of-JSPM-collage",
-      "live": "",
-      "category": "web app",
-      "accent": "from-emerald-300 via-cyan-300 to-blue-400"
-    },
-    {
-      "title": "Three.js Hand Tracking",
-      "description": "A browser experiment combining webcam input, hand tracking concepts, full-screen canvas composition, and interactive visual feedback.",
-      "tech": [
-        "HTML",
-        "Three.js",
-        "JavaScript",
-        "Webcam API"
-      ],
-      "github": "https://github.com/balaji3245/threejs-handtracking",
-      "live": "",
-      "category": "experiment",
+      "category": "template",
       "accent": "from-violet-300 via-fuchsia-300 to-cyan-300"
     },
     {
-      "title": "Cards UI",
-      "description": "A compact component exercise focused on CSS card systems, spacing rhythm, visual hierarchy, and reusable UI presentation.",
+      "title": "FoodMart",
+      "description": "A large food and grocery storefront interface with responsive HTML sections, custom CSS, visual assets, and JavaScript enhancements.",
       "tech": [
-        "CSS",
         "HTML",
-        "UI Layout"
+        "CSS",
+        "JavaScript",
+        "Storefront UI"
       ],
-      "github": "https://github.com/balaji3245/CARDS",
+      "github": "https://github.com/balaji3245/FoodMart",
       "live": "",
-      "category": "ui concept",
+      "category": "ecommerce UI",
       "accent": "from-blue-300 via-cyan-300 to-violet-300"
     },
     {
-      "title": "Headphone Landing Page",
-      "description": "A product landing page practice project focused on hero composition, visual hierarchy, CSS styling, and focused single-page presentation.",
+      "title": "School Management System",
+      "description": "A multi-page school management dashboard with attendance, classes, fees, messages, settings, students, teachers, and timetable screens.",
       "tech": [
-        "CSS",
         "HTML",
-        "Product UI"
+        "JavaScript",
+        "CSS",
+        "Dashboard UI"
       ],
-      "github": "https://github.com/balaji3245/HEADPHONE",
+      "github": "https://github.com/balaji3245/School-management-system-",
       "live": "",
-      "category": "landing page",
+      "category": "dashboard",
       "accent": "from-amber-300 via-orange-300 to-rose-300"
     },
     {
-      "title": "Car Landing Page",
-      "description": "A vehicle-themed landing page showing page structure, hero layout, responsive sections, and core frontend implementation practice.",
+      "title": "BrandX Info",
+      "description": "A recent brand information website with clean static structure, focused pages, custom styling, and lightweight JavaScript behavior.",
       "tech": [
         "HTML",
         "CSS",
         "JavaScript"
       ],
-      "github": "https://github.com/balaji3245/CAR",
+      "github": "https://github.com/balaji3245/brandx-info",
       "live": "",
-      "category": "landing page",
+      "category": "brand site",
       "accent": "from-slate-300 via-sky-300 to-cyan-300"
     }
   ],
