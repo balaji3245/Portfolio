@@ -1,0 +1,208 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Briefcase, Github, Instagram, Linkedin, Mail, MapPin, Phone, Send, UserRound } from "lucide-react";
+import { usePortfolioContent } from "../context/PortfolioContent.jsx";
+import SectionHeader from "../components/SectionHeader.jsx";
+import { fadeUp } from "../utils/motion.js";
+
+export default function Contact() {
+  const {
+    content: { profile },
+  } = usePortfolioContent();
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const socials = [
+    { label: "GitHub", href: profile.socials.github, icon: Github },
+    { label: "Instagram", href: profile.socials.instagram, icon: Instagram },
+    { label: "LinkedIn", href: profile.socials.linkedin, icon: Linkedin },
+    { label: "Email", href: profile.socials.email, icon: Mail },
+  ];
+  const details = [
+    { label: "Name", value: profile.name, icon: UserRound },
+    { label: "Role", value: profile.role, icon: Briefcase },
+    { label: "Location", value: profile.location, icon: MapPin },
+    { label: "Email", value: profile.email, icon: Mail },
+  ];
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setForm((current) => ({ ...current, [name]: value }));
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const subject = encodeURIComponent(`Portfolio contact from ${form.name || "a visitor"}`);
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\nMobile: ${form.phone}\n\nMessage:\n${form.message}`,
+    );
+
+    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+  }
+
+  return (
+    <section id="contact" className="py-20 sm:py-24">
+      <div className="section-shell">
+        <SectionHeader
+          eyebrow="Contact"
+          title="Let's build something clean, useful, and reliable"
+          text="I'm open to learning opportunities, collaborations, internships, and projects where I can keep sharpening both frontend execution and backend thinking."
+        />
+
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="glass mx-auto grid max-w-5xl gap-4 rounded-[1.5rem] p-4 sm:gap-5 sm:rounded-[2rem] sm:p-6 lg:grid-cols-[0.9fr_1.1fr]"
+        >
+          <div className="rounded-[1.25rem] border border-line bg-white/5 p-5 sm:rounded-[1.75rem] sm:p-6">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.26em] text-cyan">
+              Reach out
+            </p>
+            <div className="mt-4 flex items-center gap-4">
+              <img
+                src={profile.photo}
+                alt={`${profile.name} profile`}
+                className="h-16 w-16 shrink-0 rounded-2xl border border-line object-cover sm:h-20 sm:w-20"
+              />
+              <div className="min-w-0">
+                <h3 className="text-xl font-bold text-white sm:text-2xl">{profile.name}</h3>
+                <p className="mt-1 text-sm text-cyan">{profile.role}</p>
+              </div>
+            </div>
+            <p className="mt-4 leading-7 text-slate-300">
+              The easiest way to contact me is through the links here. I'm especially interested in real-world learning and backend-oriented work.
+            </p>
+
+            <div className="mt-6 grid gap-3">
+              {details.map(({ label, value, icon: Icon }) => (
+                <div
+                  key={label}
+                  className="flex items-start gap-3 rounded-2xl border border-line bg-white/5 p-3"
+                >
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-cyan/10 text-cyan">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs uppercase tracking-[0.18em] text-slate-400">{label}</p>
+                    <p className="mt-1 break-words text-sm font-medium text-slate-100">{value}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              {socials.map(({ label, href, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={href.startsWith("http") ? "noreferrer" : undefined}
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-line bg-white/5 px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:border-cyan/40 hover:bg-white/10 sm:w-auto"
+                >
+                  <Icon className="h-4 w-4" />
+                  {label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-[1.25rem] border border-line bg-white/5 p-5 sm:rounded-[1.75rem] sm:p-6">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan">
+                  Ready to talk
+                </p>
+                <h3 className="mt-2 text-xl font-bold text-white sm:text-2xl">Send me a message</h3>
+                <p className="mt-3 max-w-lg leading-7 text-slate-300">
+                  Share your idea, internship opening, or collaboration plan. I will get the
+                  message pre-filled in email so it is easy to send.
+                </p>
+              </div>
+
+            </div>
+
+            <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+              <div className="grid gap-4">
+                <label className="block">
+                  <span className="mb-2 block text-sm font-medium text-slate-200">Your name</span>
+                  <div className="flex min-h-12 items-center gap-3 rounded-xl border border-line bg-white/5 px-4 transition focus-within:border-cyan/50 focus-within:ring-4 focus-within:ring-cyan/10">
+                    <UserRound className="h-4 w-4 shrink-0 text-slate-400" />
+                    <input
+                      type="text"
+                      name="name"
+                      value={form.name}
+                      onChange={handleChange}
+                      placeholder="Enter your name"
+                      className="w-full bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-500"
+                    />
+                  </div>
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-medium text-slate-200">Email address</span>
+                  <div className="flex min-h-12 items-center gap-3 rounded-xl border border-line bg-white/5 px-4 transition focus-within:border-cyan/50 focus-within:ring-4 focus-within:ring-cyan/10">
+                    <Mail className="h-4 w-4 shrink-0 text-slate-400" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder="you@example.com"
+                      className="w-full bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-500"
+                    />
+                  </div>
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-medium text-slate-200">Mobile number</span>
+                  <div className="flex min-h-12 items-center gap-3 rounded-xl border border-line bg-white/5 px-4 transition focus-within:border-cyan/50 focus-within:ring-4 focus-within:ring-cyan/10">
+                    <Phone className="h-4 w-4 shrink-0 text-slate-400" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={form.phone}
+                      onChange={handleChange}
+                      placeholder="+91 98765 43210"
+                      className="w-full bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-500"
+                    />
+                  </div>
+                </label>
+              </div>
+
+              <label className="block">
+                <span className="mb-2 block text-sm font-medium text-slate-200">Message</span>
+                <div className="rounded-2xl border border-line bg-white/5 p-4 transition focus-within:border-cyan/50 focus-within:ring-4 focus-within:ring-cyan/10">
+                  <textarea
+                    name="message"
+                    value={form.message}
+                    onChange={handleChange}
+                    placeholder="Tell me a little about your project, role, or opportunity."
+                    rows="4"
+                    className="w-full resize-none bg-transparent text-sm leading-6 text-slate-100 outline-none placeholder:text-slate-500"
+                  />
+                </div>
+              </label>
+
+              <div className="flex justify-center pt-2">
+                <button
+                  type="submit"
+                  className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan via-violet to-pink px-6 text-sm font-semibold text-white shadow-glow transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-cyan focus:ring-offset-2 focus:ring-offset-ink sm:w-auto"
+                >
+                  <Send className="h-4 w-4" />
+                  Send Message
+                </button>
+              </div>
+            </form>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

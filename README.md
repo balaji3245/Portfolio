@@ -1,32 +1,46 @@
 # Portfolio
 
-A cinematic one-page BrandX landing page built with Vite, HTML, CSS, and JavaScript.
+A modern frontend portfolio website built with React, Vite, and Tailwind CSS.
 
 ## Overview
 
-This project is a responsive frontend website with animated sections, interactive service cards, a custom cursor, a FAQ accordion, and production-ready static output for Vercel.
+This project is a personal portfolio template showcasing work, skills, experience, and contact information in a clean one-page layout. It includes animated sections, icon support, and a responsive design that works across desktop and mobile devices.
 
-## Tech Stack
+## What’s included
 
+- Responsive portfolio sections for hero, about, skills, projects, experience, and contact
+- Smooth scroll and animated entrance effects using `framer-motion`
+- Icon set powered by `lucide-react`
+- Theme-ready styling with Tailwind CSS
+- Fast tooling with Vite for development and production builds
+
+## Tech stack
+
+- React 18
 - Vite
-- HTML
-- CSS
-- JavaScript
-- Phosphor Icons CDN
+- Tailwind CSS
+- Framer Motion
+- Lucide React
 
-## Run Locally
+## Run locally
 
-Install dependencies:
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-Start the development server:
+2. Start the development server:
 
 ```bash
 npm run dev
 ```
+
+3. Open the app
+
+Visit the URL shown in the terminal, usually `http://localhost:5173`.
+
+## Build and preview
 
 Build the production version:
 
@@ -34,30 +48,34 @@ Build the production version:
 npm run build
 ```
 
-Preview the production build:
+Preview the production build locally:
 
 ```bash
 npm run preview
 ```
 
-## Deployment
+## Customize this portfolio
 
-Vercel is configured to:
+- Update the project data in `src/data/portfolio.js`
+- Change section text in `src/sections/*`
+- Adjust styling in `src/styles/index.css`
+- Add or remove portfolio items and experience entries
 
-- run `npm run build`
-- publish the `dist` output directory
-- rewrite unknown routes to `index.html` for single-page navigation support
+## Author
 
-GitHub Actions runs `npm ci` and `npm run build` on pushes and pull requests to `main`.
+- Created by **Balaji Chaughule**
 
-## Main Files
+## GitHub Pages deployment
 
-- `index.html` - page markup
-- `style.css` - full responsive styling
-- `script.js` - animations and interactions
-- `vercel.json` - Vercel deployment settings
-- `.github/workflows/ci.yml` - GitHub build check
+This project is now set up to deploy the frontend to GitHub Pages using GitHub Actions.
+
+### How it deploys
+- On every push to `main`, GitHub Actions builds the site with `npm run build`
+- The static files are published to the `gh-pages` branch
+- GitHub Pages serves the built site from `dist`
 
 ## License
 
-See `LICENSE.md` for license details.
+This repo includes a custom proprietary license. See `LICENSE.md` for details.
+
+> GitHub Pages deployment has been enabled and a new build has been triggered.
