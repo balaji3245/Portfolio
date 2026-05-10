@@ -1,0 +1,246 @@
+{
+  "profile": {
+    "name": "Balaji C",
+    "role": "Aspiring Backend Developer",
+    "location": "Latur, Maharashtra, India",
+    "email": "chaughulebalaji09@gmail.com",
+    "photo": "https://avatars.githubusercontent.com/u/215246117?v=4",
+    "githubUsername": "balaji3245",
+    "tagline": "BCS student learning backend development while building responsive websites, dashboards, Tailwind layouts, and creative browser projects on GitHub.",
+    "summary": "Learning, building, and improving through public GitHub projects across TypeScript, JavaScript, HTML, CSS, Tailwind, SCSS, and interactive web experiments, while steadily growing into backend systems.",
+    "socials": {
+      "github": "https://github.com/balaji3245",
+      "instagram": "https://www.instagram.com/chaughule_balaji_/?utm_source=ig_web_button_share_sheet",
+      "linkedin": "https://www.linkedin.com/in/chaug",
+      "email": "mailto:chaughulebalaji09@gmail.com"
+    }
+  },
+  "navItems": [
+    {
+      "label": "About",
+      "href": "#about"
+    },
+    {
+      "label": "Projects",
+      "href": "#projects"
+    },
+    {
+      "label": "Skills",
+      "href": "#skills"
+    },
+    {
+      "label": "Journey",
+      "href": "#experience"
+    },
+    {
+      "label": "Contact",
+      "href": "#contact"
+    }
+  ],
+  "stats": [
+    {
+      "value": "10",
+      "label": "public GitHub repos"
+    },
+    {
+      "value": "2025",
+      "label": "GitHub journey started"
+    },
+    {
+      "value": "TS",
+      "label": "latest repo language"
+    }
+  ],
+  "techBadges": [
+    "TypeScript",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Tailwind CSS",
+    "Three.js",
+    "SCSS",
+    "Bootstrap",
+    "Git"
+  ],
+  "projects": [
+    {
+      "title": "Tailwind Bundle Files",
+      "description": "A TypeScript-first Tailwind bundle with reusable sections, structured assets, and polished landing-page UI patterns.",
+      "tech": [
+        "TypeScript",
+        "HTML",
+        "Tailwind CSS",
+        "JavaScript"
+      ],
+      "github": "https://github.com/balaji3245/tailwind-bundle-files",
+      "live": "",
+      "category": "template",
+      "accent": "from-cyan-300 via-blue-400 to-violet-400"
+    },
+    {
+      "title": "JSPM College Admission Inquiry",
+      "description": "A college admission inquiry website with responsive sections, Tailwind styling, content structure, and JavaScript-driven interactions.",
+      "tech": [
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "Tailwind CSS"
+      ],
+      "github": "https://github.com/balaji3245/Registration-form-of-JSPM-collage",
+      "live": "",
+      "category": "web app",
+      "accent": "from-emerald-300 via-cyan-300 to-blue-400"
+    },
+    {
+      "title": "Three.js Hand Tracking",
+      "description": "A browser-based hand tracking demo combining webcam input, full-screen layout work, and interactive visual experimentation.",
+      "tech": [
+        "HTML",
+        "Three.js",
+        "JavaScript",
+        "Webcam API"
+      ],
+      "github": "https://github.com/balaji3245/threejs-handtracking",
+      "live": "",
+      "category": "experiment",
+      "accent": "from-violet-300 via-fuchsia-300 to-cyan-300"
+    },
+    {
+      "title": "Cards UI",
+      "description": "A compact card-based frontend exercise focused on clean CSS styling, layout rhythm, and visual component presentation.",
+      "tech": [
+        "CSS",
+        "HTML",
+        "UI Layout"
+      ],
+      "github": "https://github.com/balaji3245/CARDS",
+      "live": "",
+      "category": "ui concept",
+      "accent": "from-blue-300 via-cyan-300 to-violet-300"
+    },
+    {
+      "title": "Headphone Landing Page",
+      "description": "A product-style landing page centered on CSS styling, visual hierarchy, and focused single-page presentation work.",
+      "tech": [
+        "CSS",
+        "HTML",
+        "Product UI"
+      ],
+      "github": "https://github.com/balaji3245/HEADPHONE",
+      "live": "",
+      "category": "landing page",
+      "accent": "from-amber-300 via-orange-300 to-rose-300"
+    },
+    {
+      "title": "Car Landing Page",
+      "description": "A simple vehicle-themed landing page project showing structure, hero composition, and core frontend page-building practice.",
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "github": "https://github.com/balaji3245/CAR",
+      "live": "",
+      "category": "landing page",
+      "accent": "from-slate-300 via-sky-300 to-cyan-300"
+    }
+  ],
+  "skillGroups": [
+    {
+      "title": "Frontend",
+      "description": "Responsive layouts, landing pages, dashboards, and practical browser interfaces.",
+      "skills": [
+        {
+          "name": "HTML",
+          "level": 88
+        },
+        {
+          "name": "CSS",
+          "level": 84
+        },
+        {
+          "name": "JavaScript",
+          "level": 78
+        },
+        {
+          "name": "Tailwind CSS",
+          "level": 78
+        }
+      ]
+    },
+    {
+      "title": "Backend Path",
+      "description": "Building toward APIs, server logic, data flow, and production-ready patterns.",
+      "skills": [
+        {
+          "name": "Node.js",
+          "level": 62
+        },
+        {
+          "name": "Express",
+          "level": 58
+        },
+        {
+          "name": "REST APIs",
+          "level": 64
+        },
+        {
+          "name": "Data Modeling",
+          "level": 56
+        }
+      ]
+    },
+    {
+      "title": "Creative Tools",
+      "description": "Version control, UI tooling, TypeScript practice, and interactive web experiments.",
+      "skills": [
+        {
+          "name": "GitHub",
+          "level": 82
+        },
+        {
+          "name": "TypeScript",
+          "level": 70
+        },
+        {
+          "name": "Three.js",
+          "level": 58
+        },
+        {
+          "name": "Bootstrap",
+          "level": 70
+        }
+      ]
+    }
+  ],
+  "highlights": [
+    "10 public repositories",
+    "TypeScript and Tailwind practice",
+    "Responsive landing pages",
+    "Dashboard UI builds",
+    "Interactive web demos",
+    "Backend learning path"
+  ],
+  "timeline": [
+    {
+      "period": "Now",
+      "title": "Aspiring backend developer",
+      "body": "Growing backend fundamentals while continuing to publish frontend projects and UI experiments on GitHub."
+    },
+    {
+      "period": "2026",
+      "title": "Tailwind bundle and stronger UI structure",
+      "body": "Pushed a TypeScript-heavy Tailwind bundle project and kept sharpening reusable sections, layout structure, and visual polish."
+    },
+    {
+      "period": "2025",
+      "title": "Frontend project streak on GitHub",
+      "body": "Built college, dashboard, restaurant, landing page, and experiment-style projects using HTML, CSS, JavaScript, SCSS, and Tailwind."
+    },
+    {
+      "period": "BCS",
+      "title": "Computer science learning path",
+      "body": "Studying BCS and using public GitHub projects to turn learning into working interfaces and a gradual backend path."
+    }
+  ]
+}
