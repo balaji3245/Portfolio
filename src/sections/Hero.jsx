@@ -10,6 +10,54 @@ const languageShortNames = {
   TypeScript: "TS",
 };
 
+function getGithubNextPage(linkHeader) {
+  if (!linkHeader) {
+    return null;
+  }
+
+  const nextLink = linkHeader
+    .split(",")
+    .map((link) => link.trim())
+    .find((link) => link.endsWith('rel="next"'));
+
+  return nextLink?.match(/<([^>]+)>/)?.[1] || null;
+}
+
+async function loadAllPublicRepos(username, signal) {
+  const repos = [];
+  let url = `https://api.github.com/users/${username}/repos?type=owner&sort=pushed&direction=desc&per_page=100`;
+
+  while (url) {
+    const response = await fetch(url, {
+      cache: "no-store",
+      signal,
+    });
+
+    if (!response.ok) {
+      throw new Error("GitHub repositories request failed");
+    }
+
+    const pageRepos = await response.json();
+    repos.push(...(Array.isArray(pageRepos) ? pageRepos : []));
+    url = getGithubNextPage(response.headers.get("Link"));
+  }
+
+  return repos;
+}
+
+async function loadGithubStatsFromApi(username, signal) {
+  const response = await fetch(`/api/github-stats?username=${encodeURIComponent(username)}`, {
+    cache: "no-store",
+    signal,
+  });
+
+  if (!response.ok) {
+    throw new Error("Portfolio GitHub stats request failed");
+  }
+
+  return response.json();
+}
+
 export default function Hero() {
   const {
     content: { profile, stats },
@@ -21,33 +69,13 @@ export default function Hero() {
 
     async function loadGithubStats() {
       try {
-        const [userResponse, reposResponse] = await Promise.all([
-          fetch(`https://api.github.com/users/${profile.githubUsername}`, {
-            cache: "no-store",
-            signal: controller.signal,
-          }),
-          fetch(
-            `https://api.github.com/users/${profile.githubUsername}/repos?sort=pushed&direction=desc&per_page=1`,
-            {
-              cache: "no-store",
-              signal: controller.signal,
-            },
-          ),
-        ]);
-
-        if (!userResponse.ok || !reposResponse.ok) {
-          return;
-        }
-
-        const user = await userResponse.json();
-        const repos = await reposResponse.json();
-        const latestRepo = Array.isArray(repos) ? repos[0] : null;
-        const language = latestRepo?.language || stats[2].value;
-        const journeyYear = user.created_at
-          ? String(new Date(user.created_at).getFullYear())
+        const apiStats = await loadGithubStatsFromApi(profile.githubUsername, controller.signal);
+        const language = apiStats.latestLanguage || stats[2].value;
+        const journeyYear = apiStats.createdAt
+          ? String(new Date(apiStats.createdAt).getFullYear())
           : stats[1].value;
-        const totalRepos = Number.isFinite(user.public_repos)
-          ? String(user.public_repos)
+        const totalRepos = Number.isFinite(apiStats.totalRepos)
+          ? String(apiStats.totalRepos)
           : stats[0].value;
 
         setGithubStats([
@@ -58,9 +86,44 @@ export default function Hero() {
             label: "latest repo language",
           },
         ]);
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          setGithubStats(stats);
+      } catch (apiError) {
+        if (apiError.name === "AbortError") {
+          return;
+        }
+
+        try {
+          const [userResponse, repos] = await Promise.all([
+            fetch(`https://api.github.com/users/${profile.githubUsername}`, {
+              cache: "no-store",
+              signal: controller.signal,
+            }),
+            loadAllPublicRepos(profile.githubUsername, controller.signal),
+          ]);
+
+          if (!userResponse.ok) {
+            return;
+          }
+
+          const user = await userResponse.json();
+          const latestRepo = Array.isArray(repos) ? repos[0] : null;
+          const language = latestRepo?.language || stats[2].value;
+          const journeyYear = user.created_at
+            ? String(new Date(user.created_at).getFullYear())
+            : stats[1].value;
+          const totalRepos = Array.isArray(repos) ? String(repos.length) : stats[0].value;
+
+          setGithubStats([
+            { value: totalRepos, label: "total repo" },
+            { value: journeyYear, label: "GitHub journey started" },
+            {
+              value: languageShortNames[language] || language || stats[2].value,
+              label: "latest repo language",
+            },
+          ]);
+        } catch (error) {
+          if (error.name !== "AbortError") {
+            setGithubStats(stats);
+          }
         }
       }
     }

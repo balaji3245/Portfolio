@@ -26,7 +26,7 @@ export const navItems = [
 ];
 
 export const stats = [
-  { value: "12", label: "total repo" },
+  { value: "17", label: "total repo" },
   { value: "2025", label: "GitHub journey started" },
   { value: "TS", label: "latest repo language" },
 ];
@@ -140,7 +140,7 @@ export const skillGroups = [
 ];
 
 export const highlights = [
-  "12 public repositories",
+  "17 public repositories",
   "TypeScript and Tailwind practice",
   "Responsive landing pages",
   "Dashboard UI builds",

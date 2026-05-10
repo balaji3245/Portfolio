@@ -39,7 +39,7 @@
   ],
   "stats": [
     {
-      "value": "12",
+      "value": "17",
       "label": "total repo"
     },
     {
@@ -214,7 +214,7 @@
     }
   ],
   "highlights": [
-    "12 public repositories",
+    "17 public repositories",
     "TypeScript and Tailwind practice",
     "Responsive landing pages",
     "Dashboard UI builds",
