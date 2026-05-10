@@ -14,7 +14,10 @@ export default function Contact() {
     email: "",
     phone: "",
     message: "",
+    company: "",
   });
+  const [submitStatus, setSubmitStatus] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const socials = [
     { label: "GitHub", href: profile.socials.github, icon: Github },
@@ -34,15 +37,42 @@ export default function Contact() {
     setForm((current) => ({ ...current, [name]: value }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
+    setSubmitting(true);
+    setSubmitStatus("Sending message...");
 
-    const subject = encodeURIComponent(`Portfolio contact from ${form.name || "a visitor"}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nMobile: ${form.phone}\n\nMessage:\n${form.message}`,
-    );
+    try {
+      const response = await fetch("/api/contact-submissions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          ...form,
+          pageUrl: window.location.href,
+        }),
+      });
+      const data = await response.json().catch(() => ({}));
 
-    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+      if (!response.ok) {
+        throw new Error(data.error || "Message could not be sent.");
+      }
+
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+        company: "",
+      });
+      setSubmitStatus("Message sent successfully.");
+    } catch (error) {
+      setSubmitStatus(error.message || "Message could not be sent.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -129,6 +159,18 @@ export default function Contact() {
             </div>
 
             <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+              <label className="hidden">
+                <span>Company</span>
+                <input
+                  type="text"
+                  name="company"
+                  value={form.company}
+                  onChange={handleChange}
+                  tabIndex="-1"
+                  autoComplete="off"
+                />
+              </label>
+
               <div className="grid gap-4">
                 <label className="block">
                   <span className="mb-2 block text-sm font-medium text-slate-200">Your name</span>
@@ -139,6 +181,7 @@ export default function Contact() {
                       name="name"
                       value={form.name}
                       onChange={handleChange}
+                      required
                       placeholder="Enter your name"
                       className="w-full bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-500"
                     />
@@ -154,6 +197,7 @@ export default function Contact() {
                       name="email"
                       value={form.email}
                       onChange={handleChange}
+                      required
                       placeholder="you@example.com"
                       className="w-full bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-500"
                     />
@@ -183,6 +227,7 @@ export default function Contact() {
                     name="message"
                     value={form.message}
                     onChange={handleChange}
+                    required
                     placeholder="Tell me a little about your project, role, or opportunity."
                     rows="4"
                     className="w-full resize-none bg-transparent text-sm leading-6 text-slate-100 outline-none placeholder:text-slate-500"
@@ -193,12 +238,16 @@ export default function Contact() {
               <div className="flex justify-center pt-2">
                 <button
                   type="submit"
+                  disabled={submitting}
                   className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan via-violet to-pink px-6 text-sm font-semibold text-white shadow-glow transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-cyan focus:ring-offset-2 focus:ring-offset-ink sm:w-auto"
                 >
                   <Send className="h-4 w-4" />
-                  Send Message
+                  {submitting ? "Sending" : "Send Message"}
                 </button>
               </div>
+              {submitStatus ? (
+                <p className="text-center text-sm font-medium text-slate-300">{submitStatus}</p>
+              ) : null}
             </form>
           </div>
         </motion.div>

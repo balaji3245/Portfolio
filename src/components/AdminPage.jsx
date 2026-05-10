@@ -4,12 +4,12 @@ import {
   Download,
   Eye,
   FolderKanban,
+  Inbox,
   Layers3,
   Plus,
   RotateCcw,
   Save,
   ScrollText,
-  Tag,
   Trash2,
 } from "lucide-react";
 import { usePortfolioContent } from "../context/PortfolioContent.jsx";
@@ -33,6 +33,19 @@ const splitCsv = (value) =>
 
 const countSkills = (groups) =>
   groups.reduce((total, group) => total + group.skills.length, 0);
+
+function formatSubmissionDate(value) {
+  const date = new Date(value);
+
+  if (!value || Number.isNaN(date.getTime())) {
+    return "Unknown time";
+  }
+
+  return new Intl.DateTimeFormat("en-IN", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
+}
 
 export default function AdminPage() {
   const { content, resetContent, saveContent } = usePortfolioContent();
@@ -193,6 +206,15 @@ export default function AdminPage() {
     }));
   };
 
+  const removeContactSubmission = (id) => {
+    updateDraft((current) => ({
+      ...current,
+      contactSubmissions: (current.contactSubmissions || []).filter(
+        (submission) => submission.id !== id,
+      ),
+    }));
+  };
+
   const handleSave = async () => {
     if (!adminPassword.trim()) {
       setStatus("Enter admin password");
@@ -259,9 +281,9 @@ export default function AdminPage() {
 
   const overviewItems = [
     { label: "Projects", value: draft.projects.length, icon: FolderKanban },
+    { label: "Messages", value: (draft.contactSubmissions || []).length, icon: Inbox },
     { label: "Skill items", value: countSkills(draft.skillGroups), icon: Layers3 },
     { label: "Journey items", value: draft.timeline.length, icon: ScrollText },
-    { label: "Tech badges", value: draft.techBadges.length, icon: Tag },
   ];
 
   return (
@@ -395,6 +417,64 @@ export default function AdminPage() {
               <Field label="LinkedIn Link" value={draft.profile.socials.linkedin} onChange={(value) => updateSocial("linkedin", value)} />
               <Field label="Email Link" value={draft.profile.socials.email} onChange={(value) => updateSocial("email", value)} />
             </div>
+          </SectionBlock>
+
+          <SectionBlock
+            id="messages"
+            title="Contact messages"
+            description="Messages submitted from the portfolio contact form."
+          >
+            {(draft.contactSubmissions || []).length ? (
+              <div className="grid gap-3">
+                {(draft.contactSubmissions || []).map((submission, index) => (
+                  <AccordionEditor
+                    key={submission.id || `${submission.email}-${index}`}
+                    title={submission.name || `Message ${index + 1}`}
+                    subtitle={`${submission.email || "No email"} - ${formatSubmissionDate(
+                      submission.submittedAt,
+                    )}`}
+                    defaultOpen={index === 0}
+                  >
+                    <div className="grid gap-4">
+                      <div className="flex flex-wrap items-start justify-between gap-3 rounded-2xl border border-line bg-white/[0.03] px-4 py-3">
+                        <div>
+                          <p className="text-sm font-semibold text-white">
+                            {submission.name || "Unknown sender"}
+                          </p>
+                          <p className="mt-1 text-xs text-slate-400">
+                            {formatSubmissionDate(submission.submittedAt)}
+                          </p>
+                        </div>
+                        <DangerButton
+                          label="Remove Message"
+                          onClick={() => removeContactSubmission(submission.id)}
+                        />
+                      </div>
+
+                      <div className="grid gap-3 md:grid-cols-2">
+                        <InfoLine label="Email" value={submission.email} href={`mailto:${submission.email}`} />
+                        <InfoLine label="Mobile" value={submission.phone || "Not provided"} />
+                        <InfoLine label="Page" value={submission.pageUrl || "Not captured"} href={submission.pageUrl} />
+                        <InfoLine label="Browser" value={submission.userAgent || "Not captured"} />
+                      </div>
+
+                      <div className="rounded-2xl border border-line bg-white/[0.03] p-4">
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                          Message
+                        </p>
+                        <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-100">
+                          {submission.message || "No message"}
+                        </p>
+                      </div>
+                    </div>
+                  </AccordionEditor>
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-line bg-white/[0.03] p-5 text-sm text-slate-400">
+                No contact messages yet.
+              </div>
+            )}
           </SectionBlock>
 
           <SectionBlock
@@ -607,6 +687,30 @@ function TextArea({ label, onChange, value }) {
         className="admin-area"
       />
     </label>
+  );
+}
+
+function InfoLine({ href, label, value }) {
+  const content = value || "Not provided";
+
+  return (
+    <div className="min-w-0 rounded-2xl border border-line bg-white/[0.03] p-4">
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+        {label}
+      </p>
+      {href ? (
+        <a
+          href={href}
+          target={href.startsWith("http") ? "_blank" : undefined}
+          rel={href.startsWith("http") ? "noreferrer" : undefined}
+          className="mt-2 block break-words text-sm font-medium text-cyan transition hover:text-white"
+        >
+          {content}
+        </a>
+      ) : (
+        <p className="mt-2 break-words text-sm font-medium text-slate-100">{content}</p>
+      )}
+    </div>
   );
 }
 

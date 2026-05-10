@@ -170,3 +170,5 @@ export const timeline = [
     body: "Studying BCS and using public GitHub projects to turn learning into working interfaces and a gradual backend path.",
   },
 ];
+
+export const contactSubmissions = [];

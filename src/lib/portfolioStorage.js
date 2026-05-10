@@ -7,6 +7,7 @@ import {
   stats,
   techBadges,
   timeline,
+  contactSubmissions,
 } from "../data/portfolio.js";
 
 export const PORTFOLIO_STORAGE_KEY = "balaji-portfolio-content-v1";
@@ -20,6 +21,7 @@ export const defaultPortfolioContent = {
   skillGroups,
   highlights,
   timeline,
+  contactSubmissions,
 };
 
 const cloneContent = (content) => JSON.parse(JSON.stringify(content));
@@ -43,6 +45,9 @@ export function mergePortfolioContent(content = {}) {
     skillGroups: Array.isArray(content.skillGroups) ? content.skillGroups : defaultPortfolioContent.skillGroups,
     highlights: Array.isArray(content.highlights) ? content.highlights : defaultPortfolioContent.highlights,
     timeline: Array.isArray(content.timeline) ? content.timeline : defaultPortfolioContent.timeline,
+    contactSubmissions: Array.isArray(content.contactSubmissions)
+      ? content.contactSubmissions
+      : defaultPortfolioContent.contactSubmissions,
   };
 }
 
