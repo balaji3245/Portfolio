@@ -127,7 +127,7 @@ export default function Contact() {
               ))}
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap justify-end gap-3">
               {socials.map(({ label, href, icon: Icon }) => (
                 <a
                   key={label}
