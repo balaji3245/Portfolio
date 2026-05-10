@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  ChevronRight,
   Download,
   Eye,
   FolderKanban,
@@ -58,6 +57,10 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [selectedSubmissionId, setSelectedSubmissionId] = useState("");
   const [submissionSearch, setSubmissionSearch] = useState("");
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+  const [selectedSkillGroupIndex, setSelectedSkillGroupIndex] = useState(0);
+  const [selectedTimelineIndex, setSelectedTimelineIndex] = useState(0);
+  const [selectedStatIndex, setSelectedStatIndex] = useState(0);
 
   useEffect(() => {
     setDraft(content);
@@ -76,6 +79,13 @@ export default function AdminPage() {
       setSelectedSubmissionId(submissions[0].id || "");
     }
   }, [draft.contactSubmissions, selectedSubmissionId]);
+
+  useEffect(() => {
+    setSelectedProjectIndex((index) => Math.min(index, Math.max(draft.projects.length - 1, 0)));
+    setSelectedSkillGroupIndex((index) => Math.min(index, Math.max(draft.skillGroups.length - 1, 0)));
+    setSelectedTimelineIndex((index) => Math.min(index, Math.max(draft.timeline.length - 1, 0)));
+    setSelectedStatIndex((index) => Math.min(index, Math.max(draft.stats.length - 1, 0)));
+  }, [draft.projects.length, draft.skillGroups.length, draft.timeline.length, draft.stats.length]);
 
   const updateDraft = (updater) => {
     setDraft((current) => updater(current));
@@ -118,6 +128,8 @@ export default function AdminPage() {
   };
 
   const addProject = () => {
+    const nextIndex = draft.projects.length;
+
     updateDraft((current) => ({
       ...current,
       projects: [
@@ -133,6 +145,7 @@ export default function AdminPage() {
         },
       ],
     }));
+    setSelectedProjectIndex(nextIndex);
   };
 
   const removeProject = (index) => {
@@ -204,6 +217,8 @@ export default function AdminPage() {
   };
 
   const addTimelineItem = () => {
+    const nextIndex = draft.timeline.length;
+
     updateDraft((current) => ({
       ...current,
       timeline: [
@@ -215,6 +230,7 @@ export default function AdminPage() {
         },
       ],
     }));
+    setSelectedTimelineIndex(nextIndex);
   };
 
   const removeTimelineItem = (index) => {
@@ -385,56 +401,11 @@ export default function AdminPage() {
             title="Profile and links"
             description="Basic identity, photo, GitHub username, and social links."
           >
-            <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_280px]">
-              <div className="grid gap-4 md:grid-cols-2">
-                <Field label="Name" value={draft.profile.name} onChange={(value) => updateProfile("name", value)} />
-                <Field label="Role" value={draft.profile.role} onChange={(value) => updateProfile("role", value)} />
-                <Field label="Location" value={draft.profile.location} onChange={(value) => updateProfile("location", value)} />
-                <Field label="Email" value={draft.profile.email} onChange={(value) => updateProfile("email", value)} />
-                <Field label="Photo URL" value={draft.profile.photo} onChange={(value) => updateProfile("photo", value)} />
-                <Field
-                  label="GitHub Username"
-                  value={draft.profile.githubUsername}
-                  onChange={(value) => updateProfile("githubUsername", value)}
-                />
-                <TextArea
-                  label="Tagline"
-                  value={draft.profile.tagline}
-                  onChange={(value) => updateProfile("tagline", value)}
-                />
-                <TextArea
-                  label="Summary"
-                  value={draft.profile.summary}
-                  onChange={(value) => updateProfile("summary", value)}
-                />
-              </div>
-
-              <div className="rounded-2xl border border-line bg-white/5 p-5">
-                <img
-                  src={draft.profile.photo}
-                  alt={`${draft.profile.name} preview`}
-                  className="mx-auto h-24 w-24 rounded-full border border-cyan/30 object-cover p-0.5"
-                />
-                <h3 className="mt-4 text-center text-xl font-bold text-white">
-                  {draft.profile.name}
-                </h3>
-                <p className="mt-1 text-center text-sm text-slate-300">
-                  {draft.profile.role}
-                </p>
-                <p className="mt-1 text-center text-sm text-slate-400">
-                  {draft.profile.location}
-                </p>
-                <div className="mt-4 rounded-2xl border border-line bg-white/5 px-4 py-3 text-sm text-slate-300">
-                  Hero stats still auto-refresh from the GitHub username above.
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 grid gap-4 md:grid-cols-3">
-              <Field label="GitHub Link" value={draft.profile.socials.github} onChange={(value) => updateSocial("github", value)} />
-              <Field label="LinkedIn Link" value={draft.profile.socials.linkedin} onChange={(value) => updateSocial("linkedin", value)} />
-              <Field label="Email Link" value={draft.profile.socials.email} onChange={(value) => updateSocial("email", value)} />
-            </div>
+            <ProfileEditor
+              profile={draft.profile}
+              onProfileChange={updateProfile}
+              onSocialChange={updateSocial}
+            />
           </SectionBlock>
 
           <SectionBlock
@@ -457,64 +428,29 @@ export default function AdminPage() {
             title="Hero fallback and badges"
             description="These fallback stats appear if GitHub data is unavailable. Tech badges power the About section."
           >
-            <div className="grid gap-4 lg:grid-cols-3">
-              {draft.stats.map((stat, index) => (
-                <div key={`${stat.label}-${index}`} className="rounded-2xl border border-line bg-white/5 p-4">
-                  <Field label="Value" value={stat.value} onChange={(value) => updateStat(index, "value", value)} />
-                  <div className="mt-3">
-                    <Field label="Label" value={stat.label} onChange={(value) => updateStat(index, "label", value)} />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-5">
-              <CsvField
-                label="Tech Badges"
-                value={draft.techBadges}
-                onChange={(value) => updateDraft((current) => ({ ...current, techBadges: value }))}
-              />
-            </div>
+            <HeroEditor
+              onSelect={setSelectedStatIndex}
+              onStatChange={updateStat}
+              onTechBadgesChange={(value) => updateDraft((current) => ({ ...current, techBadges: value }))}
+              selectedIndex={selectedStatIndex}
+              stats={draft.stats}
+              techBadges={draft.techBadges}
+            />
           </SectionBlock>
 
           <SectionBlock
             id="projects"
             title="Projects"
-            description="Each card stays collapsed until you need it. Add, edit, then save."
+            description="Select a project from the list, edit the details, then save."
             action={<AddButton label="Add Project" onClick={addProject} />}
           >
-            <div className="grid gap-3">
-              {draft.projects.map((project, index) => (
-                <AccordionEditor
-                  key={`${project.title}-${index}`}
-                  title={project.title || `Project ${index + 1}`}
-                  subtitle={`${project.category || "project"} • ${(project.tech || []).slice(0, 3).join(", ") || "No tech tags yet"}`}
-                  defaultOpen={index === 0}
-                >
-                  <div className="mb-4 flex items-center justify-between gap-3 rounded-2xl border border-line bg-white/[0.03] px-4 py-3">
-                    <div>
-                      <p className="text-sm font-semibold text-white">{project.title || `Project ${index + 1}`}</p>
-                      <p className="text-xs text-slate-400">{project.github || "Add a GitHub URL"}</p>
-                    </div>
-                    <DangerButton label="Remove Project" onClick={() => removeProject(index)} />
-                  </div>
-
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <Field label="Title" value={project.title} onChange={(value) => updateProject(index, "title", value)} />
-                    <Field label="Category" value={project.category} onChange={(value) => updateProject(index, "category", value)} />
-                    <Field label="GitHub URL" value={project.github} onChange={(value) => updateProject(index, "github", value)} />
-                    <Field label="Live Demo URL" value={project.live || ""} onChange={(value) => updateProject(index, "live", value)} />
-                    <SelectField label="Accent" value={project.accent} options={accentOptions} onChange={(value) => updateProject(index, "accent", value)} />
-                    <CsvField label="Tech tags" value={project.tech} onChange={(value) => updateProject(index, "tech", value)} />
-                    <TextArea
-                      label="Description"
-                      value={project.description}
-                      onChange={(value) => updateProject(index, "description", value)}
-                    />
-                  </div>
-                </AccordionEditor>
-              ))}
-            </div>
+            <ProjectsEditor
+              onProjectChange={updateProject}
+              onRemove={removeProject}
+              onSelect={setSelectedProjectIndex}
+              projects={draft.projects}
+              selectedIndex={selectedProjectIndex}
+            />
           </SectionBlock>
 
           <SectionBlock
@@ -522,79 +458,30 @@ export default function AdminPage() {
             title="Skills"
             description="Edit each group separately. Skill percentages should stay between 0 and 100."
           >
-            <div className="grid gap-3">
-              {draft.skillGroups.map((group, groupIndex) => (
-                <AccordionEditor
-                  key={`${group.title}-${groupIndex}`}
-                  title={group.title}
-                  subtitle={`${group.skills.length} skills`}
-                  defaultOpen={groupIndex === 0}
-                >
-                  <div className="flex flex-col gap-4">
-                    <div className="grid gap-4 md:grid-cols-2">
-                      <Field label="Group Title" value={group.title} onChange={(value) => updateSkillGroup(groupIndex, "title", value)} />
-                      <Field
-                        label="Group Description"
-                        value={group.description}
-                        onChange={(value) => updateSkillGroup(groupIndex, "description", value)}
-                      />
-                    </div>
-
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <p className="text-sm text-slate-400">
-                        Skill items inside this group
-                      </p>
-                      <AddButton label="Add Skill" onClick={() => addSkill(groupIndex)} />
-                    </div>
-
-                    <div className="grid gap-3">
-                      {group.skills.map((skill, skillIndex) => (
-                        <div
-                          key={`${skill.name}-${skillIndex}`}
-                          className="grid gap-3 rounded-2xl border border-line bg-white/[0.03] p-3 md:grid-cols-[minmax(0,1fr)_130px_auto] md:items-end"
-                        >
-                          <Field label="Skill" value={skill.name} onChange={(value) => updateSkill(groupIndex, skillIndex, "name", value)} />
-                          <Field
-                            label="Level"
-                            type="number"
-                            value={skill.level}
-                            onChange={(value) => updateSkill(groupIndex, skillIndex, "level", value)}
-                          />
-                          <DangerButton label="Remove Skill" onClick={() => removeSkill(groupIndex, skillIndex)} />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </AccordionEditor>
-              ))}
-            </div>
+            <SkillsEditor
+              groups={draft.skillGroups}
+              onAddSkill={addSkill}
+              onGroupChange={updateSkillGroup}
+              onRemoveSkill={removeSkill}
+              onSelect={setSelectedSkillGroupIndex}
+              onSkillChange={updateSkill}
+              selectedIndex={selectedSkillGroupIndex}
+            />
           </SectionBlock>
 
           <SectionBlock
             id="journey"
             title="Journey"
-            description="Timeline items are also collapsed, so the page stays easy to scan."
+            description="Select a timeline item from the list, edit the details, then save."
             action={<AddButton label="Add Item" onClick={addTimelineItem} />}
           >
-            <div className="grid gap-3">
-              {draft.timeline.map((item, index) => (
-                <AccordionEditor
-                  key={`${item.period}-${index}`}
-                  title={item.title}
-                  subtitle={item.period}
-                  defaultOpen={index === 0}
-                >
-                  <div className="mb-4 flex justify-end">
-                    <DangerButton label="Remove Item" onClick={() => removeTimelineItem(index)} />
-                  </div>
-                  <div className="grid gap-4 md:grid-cols-[180px_1fr]">
-                    <Field label="Period" value={item.period} onChange={(value) => updateTimeline(index, "period", value)} />
-                    <Field label="Title" value={item.title} onChange={(value) => updateTimeline(index, "title", value)} />
-                    <TextArea label="Body" value={item.body} onChange={(value) => updateTimeline(index, "body", value)} />
-                  </div>
-                </AccordionEditor>
-              ))}
-            </div>
+            <JourneyEditor
+              onRemove={removeTimelineItem}
+              onSelect={setSelectedTimelineIndex}
+              onTimelineChange={updateTimeline}
+              selectedIndex={selectedTimelineIndex}
+              timeline={draft.timeline}
+            />
           </SectionBlock>
         </div>
       </div>
@@ -617,23 +504,30 @@ function SectionBlock({ action, children, description, id, title }) {
   );
 }
 
-function AccordionEditor({ children, defaultOpen = false, subtitle, title }) {
+function ContentWorkspace({ children, list, minHeight = "min-h-[30rem]" }) {
   return (
-    <details
-      open={defaultOpen}
-      className="editor-disclosure group rounded-2xl border border-line bg-white/[0.03]"
-    >
-      <summary className="flex cursor-pointer items-center justify-between gap-4 px-4 py-4">
-        <div>
-          <h3 className="text-base font-semibold text-white">{title}</h3>
-          <p className="mt-1 text-sm text-slate-400">{subtitle}</p>
-        </div>
-        <ChevronRight size={18} className="editor-chevron shrink-0 text-slate-400 transition" />
-      </summary>
-      <div className="border-t border-line px-4 py-4">
-        {children}
+    <div className={`grid ${minHeight} overflow-hidden rounded-2xl border border-line bg-white/[0.03] lg:grid-cols-[320px_minmax(0,1fr)]`}>
+      <div className="border-b border-line bg-black/10 p-2 lg:border-b-0 lg:border-r">
+        {list}
       </div>
-    </details>
+      <div className="min-w-0 p-4 sm:p-5">{children}</div>
+    </div>
+  );
+}
+
+function ListButton({ active, children, onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`mb-2 w-full rounded-xl border p-3 text-left transition ${
+        active
+          ? "border-cyan/40 bg-cyan/10"
+          : "border-transparent bg-white/[0.03] hover:border-line hover:bg-white/[0.06]"
+      }`}
+    >
+      {children}
+    </button>
   );
 }
 
@@ -662,6 +556,217 @@ function TextArea({ label, onChange, value }) {
         className="admin-area"
       />
     </label>
+  );
+}
+
+function ProfileEditor({ onProfileChange, onSocialChange, profile }) {
+  const list = (
+    <div>
+      {[
+        ["Identity", profile.name, profile.role],
+        ["Contact", profile.email, profile.location],
+        ["Social links", profile.socials.github, profile.socials.linkedin],
+      ].map(([title, lineOne, lineTwo]) => (
+        <ListButton key={title} active={title === "Identity"}>
+          <p className="text-sm font-semibold text-white">{title}</p>
+          <p className="mt-1 truncate text-xs text-cyan">{lineOne}</p>
+          <p className="mt-1 truncate text-xs text-slate-400">{lineTwo}</p>
+        </ListButton>
+      ))}
+      <div className="rounded-xl border border-line bg-white/[0.03] p-4">
+        <img
+          src={profile.photo}
+          alt={`${profile.name} preview`}
+          className="mx-auto h-20 w-20 rounded-full border border-cyan/30 object-cover p-0.5"
+        />
+        <p className="mt-3 truncate text-center text-sm font-semibold text-white">{profile.name}</p>
+        <p className="mt-1 truncate text-center text-xs text-slate-400">{profile.role}</p>
+      </div>
+    </div>
+  );
+
+  return (
+    <ContentWorkspace list={list}>
+      <div className="grid gap-4 md:grid-cols-2">
+        <Field label="Name" value={profile.name} onChange={(value) => onProfileChange("name", value)} />
+        <Field label="Role" value={profile.role} onChange={(value) => onProfileChange("role", value)} />
+        <Field label="Location" value={profile.location} onChange={(value) => onProfileChange("location", value)} />
+        <Field label="Email" value={profile.email} onChange={(value) => onProfileChange("email", value)} />
+        <Field label="Photo URL" value={profile.photo} onChange={(value) => onProfileChange("photo", value)} />
+        <Field label="GitHub Username" value={profile.githubUsername} onChange={(value) => onProfileChange("githubUsername", value)} />
+        <TextArea label="Tagline" value={profile.tagline} onChange={(value) => onProfileChange("tagline", value)} />
+        <TextArea label="Summary" value={profile.summary} onChange={(value) => onProfileChange("summary", value)} />
+        <Field label="GitHub Link" value={profile.socials.github} onChange={(value) => onSocialChange("github", value)} />
+        <Field label="LinkedIn Link" value={profile.socials.linkedin} onChange={(value) => onSocialChange("linkedin", value)} />
+        <Field label="Instagram Link" value={profile.socials.instagram} onChange={(value) => onSocialChange("instagram", value)} />
+        <Field label="Email Link" value={profile.socials.email} onChange={(value) => onSocialChange("email", value)} />
+      </div>
+    </ContentWorkspace>
+  );
+}
+
+function HeroEditor({ onSelect, onStatChange, onTechBadgesChange, selectedIndex, stats, techBadges }) {
+  const selectedStat = stats[selectedIndex] || stats[0];
+
+  return (
+    <ContentWorkspace
+      list={
+        <div>
+          {stats.map((stat, index) => (
+            <ListButton key={`${stat.label}-${index}`} active={index === selectedIndex} onClick={() => onSelect(index)}>
+              <div className="flex items-center justify-between gap-3">
+                <p className="truncate text-sm font-semibold text-white">{stat.label}</p>
+                <p className="text-lg font-bold text-cyan">{stat.value}</p>
+              </div>
+            </ListButton>
+          ))}
+          <div className="rounded-xl border border-line bg-white/[0.03] p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Badges</p>
+            <p className="mt-2 text-sm text-slate-300">{techBadges.length} tech badges</p>
+          </div>
+        </div>
+      }
+      minHeight="min-h-[22rem]"
+    >
+      {selectedStat ? (
+        <div className="grid gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
+            <Field label="Value" value={selectedStat.value} onChange={(value) => onStatChange(selectedIndex, "value", value)} />
+            <Field label="Label" value={selectedStat.label} onChange={(value) => onStatChange(selectedIndex, "label", value)} />
+          </div>
+          <CsvField label="Tech Badges" value={techBadges} onChange={onTechBadgesChange} />
+        </div>
+      ) : null}
+    </ContentWorkspace>
+  );
+}
+
+function ProjectsEditor({ onProjectChange, onRemove, onSelect, projects, selectedIndex }) {
+  const selectedProject = projects[selectedIndex] || projects[0];
+
+  return (
+    <ContentWorkspace
+      list={
+        <div className="max-h-[31rem] overflow-y-auto">
+          {projects.map((project, index) => (
+            <ListButton key={`${project.title}-${index}`} active={index === selectedIndex} onClick={() => onSelect(index)}>
+              <p className="truncate text-sm font-semibold text-white">{project.title || `Project ${index + 1}`}</p>
+              <p className="mt-1 truncate text-xs text-cyan">{project.category || "project"}</p>
+              <p className="mt-1 truncate text-xs text-slate-400">{(project.tech || []).slice(0, 3).join(", ") || "No tech tags"}</p>
+            </ListButton>
+          ))}
+        </div>
+      }
+    >
+      {selectedProject ? (
+        <div className="grid gap-4">
+          <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan">Selected project</p>
+              <h3 className="mt-2 text-2xl font-bold text-white">{selectedProject.title || `Project ${selectedIndex + 1}`}</h3>
+            </div>
+            <DangerButton label="Remove Project" onClick={() => onRemove(selectedIndex)} />
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Field label="Title" value={selectedProject.title} onChange={(value) => onProjectChange(selectedIndex, "title", value)} />
+            <Field label="Category" value={selectedProject.category} onChange={(value) => onProjectChange(selectedIndex, "category", value)} />
+            <Field label="GitHub URL" value={selectedProject.github} onChange={(value) => onProjectChange(selectedIndex, "github", value)} />
+            <Field label="Live Demo URL" value={selectedProject.live || ""} onChange={(value) => onProjectChange(selectedIndex, "live", value)} />
+            <SelectField label="Accent" value={selectedProject.accent} options={accentOptions} onChange={(value) => onProjectChange(selectedIndex, "accent", value)} />
+            <CsvField label="Tech tags" value={selectedProject.tech} onChange={(value) => onProjectChange(selectedIndex, "tech", value)} />
+            <TextArea label="Description" value={selectedProject.description} onChange={(value) => onProjectChange(selectedIndex, "description", value)} />
+          </div>
+        </div>
+      ) : (
+        <EmptyState text="Add a project to start editing." />
+      )}
+    </ContentWorkspace>
+  );
+}
+
+function SkillsEditor({ groups, onAddSkill, onGroupChange, onRemoveSkill, onSelect, onSkillChange, selectedIndex }) {
+  const selectedGroup = groups[selectedIndex] || groups[0];
+
+  return (
+    <ContentWorkspace
+      list={
+        <div>
+          {groups.map((group, index) => (
+            <ListButton key={`${group.title}-${index}`} active={index === selectedIndex} onClick={() => onSelect(index)}>
+              <p className="truncate text-sm font-semibold text-white">{group.title}</p>
+              <p className="mt-1 text-xs text-cyan">{group.skills.length} skills</p>
+              <p className="mt-1 truncate text-xs text-slate-400">{group.description}</p>
+            </ListButton>
+          ))}
+        </div>
+      }
+    >
+      {selectedGroup ? (
+        <div className="grid gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
+            <Field label="Group Title" value={selectedGroup.title} onChange={(value) => onGroupChange(selectedIndex, "title", value)} />
+            <Field label="Group Description" value={selectedGroup.description} onChange={(value) => onGroupChange(selectedIndex, "description", value)} />
+          </div>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
+            <p className="text-sm text-slate-400">Skill items inside this group</p>
+            <AddButton label="Add Skill" onClick={() => onAddSkill(selectedIndex)} />
+          </div>
+          <div className="grid gap-3">
+            {selectedGroup.skills.map((skill, skillIndex) => (
+              <div key={`${skill.name}-${skillIndex}`} className="grid gap-3 rounded-2xl border border-line bg-white/[0.03] p-3 md:grid-cols-[minmax(0,1fr)_130px_auto] md:items-end">
+                <Field label="Skill" value={skill.name} onChange={(value) => onSkillChange(selectedIndex, skillIndex, "name", value)} />
+                <Field label="Level" type="number" value={skill.level} onChange={(value) => onSkillChange(selectedIndex, skillIndex, "level", value)} />
+                <DangerButton label="Remove Skill" onClick={() => onRemoveSkill(selectedIndex, skillIndex)} />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </ContentWorkspace>
+  );
+}
+
+function JourneyEditor({ onRemove, onSelect, onTimelineChange, selectedIndex, timeline }) {
+  const selectedItem = timeline[selectedIndex] || timeline[0];
+
+  return (
+    <ContentWorkspace
+      list={
+        <div className="max-h-[28rem] overflow-y-auto">
+          {timeline.map((item, index) => (
+            <ListButton key={`${item.period}-${index}`} active={index === selectedIndex} onClick={() => onSelect(index)}>
+              <p className="truncate text-sm font-semibold text-white">{item.title}</p>
+              <p className="mt-1 text-xs text-cyan">{item.period}</p>
+              <p className="mt-1 max-h-10 overflow-hidden text-xs leading-5 text-slate-400">{item.body}</p>
+            </ListButton>
+          ))}
+        </div>
+      }
+      minHeight="min-h-[24rem]"
+    >
+      {selectedItem ? (
+        <div className="grid gap-4">
+          <div className="flex justify-end">
+            <DangerButton label="Remove Item" onClick={() => onRemove(selectedIndex)} />
+          </div>
+          <div className="grid gap-4 md:grid-cols-[180px_1fr]">
+            <Field label="Period" value={selectedItem.period} onChange={(value) => onTimelineChange(selectedIndex, "period", value)} />
+            <Field label="Title" value={selectedItem.title} onChange={(value) => onTimelineChange(selectedIndex, "title", value)} />
+            <TextArea label="Body" value={selectedItem.body} onChange={(value) => onTimelineChange(selectedIndex, "body", value)} />
+          </div>
+        </div>
+      ) : (
+        <EmptyState text="Add a journey item to start editing." />
+      )}
+    </ContentWorkspace>
+  );
+}
+
+function EmptyState({ text }) {
+  return (
+    <div className="grid h-full place-items-center rounded-2xl border border-line bg-white/[0.03] p-6 text-center text-sm text-slate-400">
+      {text}
+    </div>
   );
 }
 
