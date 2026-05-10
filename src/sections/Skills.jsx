@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { Code2, GitBranch, Server } from "lucide-react";
 import { usePortfolioContent } from "../context/PortfolioContent.jsx";
 import SectionHeader from "../components/SectionHeader.jsx";
@@ -52,18 +53,7 @@ export default function Skills() {
 
                 <div className="mt-6 grid gap-5 sm:mt-7">
                   {group.skills.map((skill) => (
-                    <div key={skill.name}>
-                      <div className="mb-2 flex items-center justify-between gap-4">
-                        <span className="text-sm font-medium text-slate-200">{skill.name}</span>
-                        <span className="font-mono text-xs text-cyan">{skill.level}%</span>
-                      </div>
-                      <div className="h-2.5 overflow-hidden rounded-full bg-white/10">
-                        <div
-                          className="h-full rounded-full bg-gradient-to-r from-cyan via-violet to-pink"
-                          style={{ width: `${Math.max(0, Math.min(Number(skill.level) || 0, 100))}%` }}
-                        />
-                      </div>
-                    </div>
+                    <SkillBar key={skill.name} skill={skill} />
                   ))}
                 </div>
               </motion.article>
@@ -72,5 +62,28 @@ export default function Skills() {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+function SkillBar({ skill }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { amount: 0.35, once: true });
+  const level = Math.max(0, Math.min(Number(skill.level) || 0, 100));
+
+  return (
+    <div ref={ref}>
+      <div className="mb-2 flex items-center justify-between gap-4">
+        <span className="text-sm font-medium text-slate-200">{skill.name}</span>
+        <span className="font-mono text-xs text-cyan">{level}%</span>
+      </div>
+      <div className="h-2.5 overflow-hidden rounded-full bg-white/10">
+        <motion.div
+          className="h-full rounded-full bg-gradient-to-r from-cyan via-violet to-pink"
+          initial={{ width: 0 }}
+          animate={{ width: inView ? `${level}%` : 0 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        />
+      </div>
+    </div>
   );
 }
