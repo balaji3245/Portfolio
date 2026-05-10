@@ -88,7 +88,7 @@
       ],
       "github": "https://github.com/balaji3245/tailwind-bundle-files",
       "live": "",
-      "category": "template",
+      "category": "Templet",
       "accent": "from-cyan-300 via-blue-400 to-violet-400"
     },
     {
@@ -187,8 +187,8 @@
       "description": "API design basics, server-side logic, data flow, and reliable request handling.",
       "skills": [
         {
-          "name": "Node.js",
-          "level": 62
+          "name": "Python",
+          "level": 25
         },
         {
           "name": "Express",
