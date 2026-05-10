@@ -58,12 +58,9 @@ export default function Skills() {
                         <span className="font-mono text-xs text-cyan">{skill.level}%</span>
                       </div>
                       <div className="h-2.5 overflow-hidden rounded-full bg-white/10">
-                        <motion.div
+                        <div
                           className="h-full rounded-full bg-gradient-to-r from-cyan via-violet to-pink"
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true, margin: "-100px" }}
-                          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                          style={{ width: `${Math.max(0, Math.min(Number(skill.level) || 0, 100))}%` }}
                         />
                       </div>
                     </div>
