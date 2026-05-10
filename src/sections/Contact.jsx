@@ -134,10 +134,11 @@ export default function Contact() {
                   href={href}
                   target={href.startsWith("http") ? "_blank" : undefined}
                   rel={href.startsWith("http") ? "noreferrer" : undefined}
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-line bg-white/5 px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:border-cyan/40 hover:bg-white/10 sm:w-auto"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-white/5 text-slate-100 transition hover:border-cyan/40 hover:bg-white/10 hover:text-cyan"
+                  aria-label={label}
+                  title={label}
                 >
                   <Icon className="h-4 w-4" />
-                  {label}
                 </a>
               ))}
             </div>
