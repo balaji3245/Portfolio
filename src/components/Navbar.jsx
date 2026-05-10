@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Instagram, Mail, Menu, X } from "lucide-react";
+import { Github, Instagram, Menu, X } from "lucide-react";
 import { usePortfolioContent } from "../context/PortfolioContent.jsx";
 
 export default function Navbar() {
@@ -64,13 +64,6 @@ export default function Navbar() {
             aria-label="Instagram"
           >
             <Instagram className="h-4 w-4" />
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center rounded-full border border-cyan/40 bg-cyan/10 px-4 py-2 text-sm font-semibold text-cyan transition hover:bg-cyan/15"
-            aria-label="Contact"
-          >
-            <Mail className="h-4 w-4" />
           </a>
         </div>
 
