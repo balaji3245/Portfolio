@@ -23,11 +23,13 @@ export default function Hero() {
       try {
         const [userResponse, reposResponse] = await Promise.all([
           fetch(`https://api.github.com/users/${profile.githubUsername}`, {
+            cache: "no-store",
             signal: controller.signal,
           }),
           fetch(
             `https://api.github.com/users/${profile.githubUsername}/repos?sort=pushed&direction=desc&per_page=1`,
             {
+              cache: "no-store",
               signal: controller.signal,
             },
           ),
@@ -44,12 +46,12 @@ export default function Hero() {
         const journeyYear = user.created_at
           ? String(new Date(user.created_at).getFullYear())
           : stats[1].value;
-        const publicRepos = Number.isFinite(user.public_repos)
+        const totalRepos = Number.isFinite(user.public_repos)
           ? String(user.public_repos)
           : stats[0].value;
 
         setGithubStats([
-          { value: publicRepos, label: "public GitHub repos" },
+          { value: totalRepos, label: "total repo" },
           { value: journeyYear, label: "GitHub journey started" },
           {
             value: languageShortNames[language] || language || stats[2].value,

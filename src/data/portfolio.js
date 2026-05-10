@@ -26,7 +26,7 @@ export const navItems = [
 ];
 
 export const stats = [
-  { value: "10", label: "public GitHub repos" },
+  { value: "10", label: "total repo" },
   { value: "2025", label: "GitHub journey started" },
   { value: "TS", label: "latest repo language" },
 ];
