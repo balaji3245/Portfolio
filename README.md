@@ -61,6 +61,20 @@ npm run preview
 - Adjust styling in `src/styles/index.css`
 - Add or remove portfolio items and experience entries
 
+## Admin GitHub storage
+
+The `/admin` page can save portfolio content to a JSON file in GitHub through the Vercel serverless API at `api/portfolio-content.js`.
+
+Add these environment variables in Vercel:
+
+- `PORTFOLIO_ADMIN_PASSWORD` - password used in the admin panel
+- `GITHUB_CONTENT_TOKEN` - GitHub personal access token with repo content write access
+- `GITHUB_CONTENT_REPO` - optional, defaults to `balaji3245/Portfolio`
+- `GITHUB_CONTENT_BRANCH` - optional, defaults to `main`
+- `GITHUB_CONTENT_PATH` - optional, defaults to `portfolio-content.json`
+
+After saving from `/admin`, the API commits `portfolio-content.json` to GitHub. The public site reads that JSON at runtime, so the same content can appear across devices.
+
 ## Author
 
 - Created by **Balaji Chaughule**

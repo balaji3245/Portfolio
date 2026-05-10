@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import {
+  loadPortfolioContent,
   readPortfolioContent,
   resetPortfolioContent,
   savePortfolioContent,
@@ -10,15 +11,36 @@ const PortfolioContentContext = createContext(null);
 export function PortfolioContentProvider({ children }) {
   const [content, setContent] = useState(() => readPortfolioContent());
 
+  useEffect(() => {
+    let active = true;
+
+    loadPortfolioContent().then((remoteContent) => {
+      if (active) {
+        setContent(remoteContent);
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const value = {
     content,
-    saveContent(nextContent) {
-      const saved = savePortfolioContent(nextContent);
+    async saveContent(nextContent, options) {
+      const saved = await savePortfolioContent(nextContent, options);
       setContent(saved);
       return saved;
     },
-    resetContent() {
+    async resetContent(options) {
       const defaults = resetPortfolioContent();
+
+      if (options?.remote) {
+        const saved = await savePortfolioContent(defaults, options);
+        setContent(saved);
+        return saved;
+      }
+
       setContent(defaults);
       return defaults;
     },

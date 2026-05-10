@@ -38,6 +38,8 @@ export default function AdminPage() {
   const { content, resetContent, saveContent } = usePortfolioContent();
   const [draft, setDraft] = useState(content);
   const [status, setStatus] = useState(defaultStatus);
+  const [adminPassword, setAdminPassword] = useState("");
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     setDraft(content);
@@ -191,19 +193,54 @@ export default function AdminPage() {
     }));
   };
 
-  const handleSave = () => {
-    saveContent(draft);
-    setStatus("Saved to this browser");
+  const handleSave = async () => {
+    if (!adminPassword.trim()) {
+      setStatus("Enter admin password");
+      return;
+    }
+
+    setSaving(true);
+    setStatus("Saving to GitHub");
+
+    try {
+      const saved = await saveContent(draft, {
+        password: adminPassword.trim(),
+        remote: true,
+      });
+      setDraft(saved);
+      setStatus("Saved to GitHub");
+    } catch (error) {
+      setStatus(error.message || "Save failed");
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (!window.confirm("Reset portfolio content to defaults?")) {
       return;
     }
 
-    const defaults = resetContent();
-    setDraft(defaults);
-    setStatus("Reset to defaults");
+    if (!adminPassword.trim()) {
+      setStatus("Enter admin password");
+      return;
+    }
+
+    setSaving(true);
+    setStatus("Resetting GitHub content");
+
+    try {
+      const defaults = await resetContent({
+        password: adminPassword.trim(),
+        remote: true,
+      });
+      setDraft(defaults);
+      setStatus("Reset on GitHub");
+    } catch (error) {
+      setStatus(error.message || "Reset failed");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleExport = () => {
@@ -246,7 +283,7 @@ export default function AdminPage() {
                   Simple content editor
                 </h1>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
-                  Open one section at a time, edit the content, save it locally, then preview the site.
+                  Open one section at a time, edit the content, save it to GitHub, then preview the site.
                 </p>
               </div>
             </div>
@@ -255,6 +292,16 @@ export default function AdminPage() {
               <span className="rounded-full border border-line bg-white/5 px-3 py-2 text-xs font-semibold text-slate-300">
                 {status}
               </span>
+              <label className="min-w-[12rem]">
+                <span className="sr-only">Admin password</span>
+                <input
+                  type="password"
+                  value={adminPassword}
+                  onChange={(event) => setAdminPassword(event.target.value)}
+                  placeholder="Admin password"
+                  className="h-10 w-full rounded-full border border-line bg-white/5 px-4 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan/50 focus:ring-4 focus:ring-cyan/10"
+                />
+              </label>
               <a href="/" className="admin-action">
                 <Eye size={16} />
                 View Site
@@ -263,17 +310,18 @@ export default function AdminPage() {
                 <Download size={16} />
                 Export
               </button>
-              <button type="button" className="admin-action" onClick={handleReset}>
+              <button type="button" className="admin-action disabled:cursor-not-allowed disabled:opacity-60" onClick={handleReset} disabled={saving}>
                 <RotateCcw size={16} />
                 Reset
               </button>
               <button
                 type="button"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan via-violet to-pink px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-95"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan via-violet to-pink px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
                 onClick={handleSave}
+                disabled={saving}
               >
                 <Save size={16} />
-                Save Changes
+                {saving ? "Saving" : "Save Changes"}
               </button>
             </div>
           </div>
