@@ -6,9 +6,12 @@ import {
   FolderKanban,
   Inbox,
   Layers3,
+  Mail,
+  Phone,
   Plus,
   RotateCcw,
   Save,
+  Search,
   ScrollText,
   Trash2,
 } from "lucide-react";
@@ -53,11 +56,26 @@ export default function AdminPage() {
   const [status, setStatus] = useState(defaultStatus);
   const [adminPassword, setAdminPassword] = useState("");
   const [saving, setSaving] = useState(false);
+  const [selectedSubmissionId, setSelectedSubmissionId] = useState("");
+  const [submissionSearch, setSubmissionSearch] = useState("");
 
   useEffect(() => {
     setDraft(content);
     setStatus(defaultStatus);
   }, [content]);
+
+  useEffect(() => {
+    const submissions = draft.contactSubmissions || [];
+
+    if (!submissions.length) {
+      setSelectedSubmissionId("");
+      return;
+    }
+
+    if (!submissions.some((submission) => submission.id === selectedSubmissionId)) {
+      setSelectedSubmissionId(submissions[0].id || "");
+    }
+  }, [draft.contactSubmissions, selectedSubmissionId]);
 
   const updateDraft = (updater) => {
     setDraft((current) => updater(current));
@@ -424,57 +442,14 @@ export default function AdminPage() {
             title="Contact messages"
             description="Messages submitted from the portfolio contact form."
           >
-            {(draft.contactSubmissions || []).length ? (
-              <div className="grid gap-3">
-                {(draft.contactSubmissions || []).map((submission, index) => (
-                  <AccordionEditor
-                    key={submission.id || `${submission.email}-${index}`}
-                    title={submission.name || `Message ${index + 1}`}
-                    subtitle={`${submission.email || "No email"} - ${formatSubmissionDate(
-                      submission.submittedAt,
-                    )}`}
-                    defaultOpen={index === 0}
-                  >
-                    <div className="grid gap-4">
-                      <div className="flex flex-wrap items-start justify-between gap-3 rounded-2xl border border-line bg-white/[0.03] px-4 py-3">
-                        <div>
-                          <p className="text-sm font-semibold text-white">
-                            {submission.name || "Unknown sender"}
-                          </p>
-                          <p className="mt-1 text-xs text-slate-400">
-                            {formatSubmissionDate(submission.submittedAt)}
-                          </p>
-                        </div>
-                        <DangerButton
-                          label="Remove Message"
-                          onClick={() => removeContactSubmission(submission.id)}
-                        />
-                      </div>
-
-                      <div className="grid gap-3 md:grid-cols-2">
-                        <InfoLine label="Email" value={submission.email} href={`mailto:${submission.email}`} />
-                        <InfoLine label="Mobile" value={submission.phone || "Not provided"} />
-                        <InfoLine label="Page" value={submission.pageUrl || "Not captured"} href={submission.pageUrl} />
-                        <InfoLine label="Browser" value={submission.userAgent || "Not captured"} />
-                      </div>
-
-                      <div className="rounded-2xl border border-line bg-white/[0.03] p-4">
-                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                          Message
-                        </p>
-                        <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-100">
-                          {submission.message || "No message"}
-                        </p>
-                      </div>
-                    </div>
-                  </AccordionEditor>
-                ))}
-              </div>
-            ) : (
-              <div className="rounded-2xl border border-line bg-white/[0.03] p-5 text-sm text-slate-400">
-                No contact messages yet.
-              </div>
-            )}
+            <ContactInbox
+              onRemove={removeContactSubmission}
+              onSearchChange={setSubmissionSearch}
+              onSelect={setSelectedSubmissionId}
+              search={submissionSearch}
+              selectedId={selectedSubmissionId}
+              submissions={draft.contactSubmissions || []}
+            />
           </SectionBlock>
 
           <SectionBlock
@@ -690,14 +665,152 @@ function TextArea({ label, onChange, value }) {
   );
 }
 
-function InfoLine({ href, label, value }) {
+function ContactInbox({ onRemove, onSearchChange, onSelect, search, selectedId, submissions }) {
+  const normalizedSearch = search.trim().toLowerCase();
+  const filteredSubmissions = normalizedSearch
+    ? submissions.filter((submission) =>
+        [submission.name, submission.email, submission.phone, submission.message]
+          .join(" ")
+          .toLowerCase()
+          .includes(normalizedSearch),
+      )
+    : submissions;
+  const selectedSubmission =
+    filteredSubmissions.find((submission) => submission.id === selectedId) ||
+    filteredSubmissions[0] ||
+    null;
+
+  if (!submissions.length) {
+    return (
+      <div className="rounded-2xl border border-line bg-white/[0.03] p-5 text-sm text-slate-400">
+        No contact messages yet.
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid min-h-[34rem] overflow-hidden rounded-2xl border border-line bg-white/[0.03] lg:grid-cols-[340px_minmax(0,1fr)]">
+      <div className="border-b border-line bg-black/10 lg:border-b-0 lg:border-r">
+        <div className="border-b border-line p-4">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-sm font-semibold text-white">{submissions.length} messages</p>
+            <p className="text-xs text-slate-400">{filteredSubmissions.length} shown</p>
+          </div>
+          <label className="mt-3 flex min-h-11 items-center gap-3 rounded-xl border border-line bg-white/5 px-3 transition focus-within:border-cyan/50 focus-within:ring-4 focus-within:ring-cyan/10">
+            <Search size={16} className="shrink-0 text-slate-400" />
+            <span className="sr-only">Search messages</span>
+            <input
+              type="search"
+              value={search}
+              onChange={(event) => onSearchChange(event.target.value)}
+              placeholder="Search messages"
+              className="w-full bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-500"
+            />
+          </label>
+        </div>
+
+        <div className="max-h-[28rem] overflow-y-auto p-2">
+          {filteredSubmissions.length ? (
+            filteredSubmissions.map((submission, index) => {
+              const isSelected = selectedSubmission?.id === submission.id;
+
+              return (
+                <button
+                  key={submission.id || `${submission.email}-${index}`}
+                  type="button"
+                  onClick={() => onSelect(submission.id)}
+                  className={`mb-2 grid w-full gap-2 rounded-xl border p-3 text-left transition ${
+                    isSelected
+                      ? "border-cyan/40 bg-cyan/10"
+                      : "border-transparent bg-white/[0.03] hover:border-line hover:bg-white/[0.06]"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="min-w-0 truncate text-sm font-semibold text-white">
+                      {submission.name || "Unknown sender"}
+                    </p>
+                    <span className="shrink-0 text-[11px] text-slate-500">
+                      {formatSubmissionDate(submission.submittedAt)}
+                    </span>
+                  </div>
+                  <p className="truncate text-xs text-cyan">{submission.email || "No email"}</p>
+                  <p className="max-h-10 overflow-hidden text-xs leading-5 text-slate-400">
+                    {submission.message || "No message"}
+                  </p>
+                </button>
+              );
+            })
+          ) : (
+            <div className="rounded-xl border border-line bg-white/[0.03] p-4 text-sm text-slate-400">
+              No messages match your search.
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="min-w-0 p-4 sm:p-5">
+        {selectedSubmission ? (
+          <div className="grid h-full content-start gap-4">
+            <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4">
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan">
+                  Selected message
+                </p>
+                <h3 className="mt-2 break-words text-2xl font-bold text-white">
+                  {selectedSubmission.name || "Unknown sender"}
+                </h3>
+                <p className="mt-1 text-sm text-slate-400">
+                  {formatSubmissionDate(selectedSubmission.submittedAt)}
+                </p>
+              </div>
+              <DangerButton
+                label="Remove Message"
+                onClick={() => onRemove(selectedSubmission.id)}
+              />
+            </div>
+
+            <div className="grid gap-3 md:grid-cols-2">
+              <InfoLine
+                icon={Mail}
+                label="Email"
+                value={selectedSubmission.email}
+                href={selectedSubmission.email ? `mailto:${selectedSubmission.email}` : ""}
+              />
+              <InfoLine icon={Phone} label="Mobile" value={selectedSubmission.phone || "Not provided"} />
+              <InfoLine label="Page" value={selectedSubmission.pageUrl || "Not captured"} href={selectedSubmission.pageUrl} />
+              <InfoLine label="Browser" value={selectedSubmission.userAgent || "Not captured"} />
+            </div>
+
+            <div className="rounded-2xl border border-line bg-white/[0.03] p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                Message
+              </p>
+              <p className="mt-3 max-h-72 overflow-y-auto whitespace-pre-wrap text-sm leading-6 text-slate-100">
+                {selectedSubmission.message || "No message"}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="grid h-full place-items-center rounded-2xl border border-line bg-white/[0.03] p-6 text-center text-sm text-slate-400">
+            Select a message to view details.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function InfoLine({ href, icon: Icon, label, value }) {
   const content = value || "Not provided";
 
   return (
     <div className="min-w-0 rounded-2xl border border-line bg-white/[0.03] p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-        {label}
-      </p>
+      <div className="flex items-center gap-2">
+        {Icon ? <Icon size={14} className="shrink-0 text-cyan" /> : null}
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+          {label}
+        </p>
+      </div>
       {href ? (
         <a
           href={href}
