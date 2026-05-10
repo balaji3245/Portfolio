@@ -243,5 +243,16 @@
       "body": "Studying BCS and using public GitHub projects to turn learning into working interfaces and a gradual backend path."
     }
   ],
-  "contactSubmissions": []
+  "contactSubmissions": [
+    {
+      "id": "1778402701521-21sszyil",
+      "name": "Balaji Chaugule",
+      "email": "chaugulebalaji40@gmail.com",
+      "phone": "",
+      "message": "Nznzns",
+      "pageUrl": "https://portfolio-balaji-chaughule.vercel.app/",
+      "submittedAt": "2026-05-10T08:45:01.521Z",
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
+    }
+  ]
 }
