@@ -81,6 +81,20 @@
   ],
   "projects": [
     {
+      "title": "YJ DEVELOPERS Agency-Portfolio",
+      "description": "A premium agency portfolio website with an interactive project grid, admin panel, and integrated contact form storage. Built as a collaborative project.",
+      "tech": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Resend API"
+      ],
+      "github": "https://github.com/yjdevelopers21-hub/AGENCY-PORTFOLIO",
+      "live": "https://www.yjdeveloper.com/",
+      "category": "collaboration",
+      "accent": "from-indigo-400 via-purple-400 to-pink-400"
+    },
+    {
       "title": "Shree Sai Web App",
       "description": "A JavaScript-heavy web app with a structured frontend workspace, PocketBase files, migrations, hooks, and product/category data flow.",
       "tech": [
@@ -110,18 +124,18 @@
       "accent": "from-emerald-300 via-cyan-300 to-blue-400"
     },
     {
-      "title": "Tailwind Bundle Files",
-      "description": "A TypeScript-first Tailwind bundle organized around reusable sections, asset structure, and production-style landing page templates.",
+      "title": "School Management System",
+      "description": "A multi-page school management dashboard with attendance, classes, fees, messages, settings, students, teachers, and timetable screens.",
       "tech": [
-        "TypeScript",
         "HTML",
-        "Tailwind CSS",
-        "JavaScript"
+        "JavaScript",
+        "CSS",
+        "Dashboard UI"
       ],
-      "github": "https://github.com/balaji3245/tailwind-bundle-files",
-      "live": "https://balaji3245.github.io/tailwind-bundle-files/",
-      "category": "template",
-      "accent": "from-violet-300 via-fuchsia-300 to-cyan-300"
+      "github": "https://github.com/balaji3245/School-management-system-",
+      "live": "https://balaji3245.github.io/School-management-system-/",
+      "category": "dashboard",
+      "accent": "from-amber-300 via-orange-300 to-rose-300"
     },
     {
       "title": "FoodMart",
@@ -138,20 +152,6 @@
       "accent": "from-blue-300 via-cyan-300 to-violet-300"
     },
     {
-      "title": "School Management System",
-      "description": "A multi-page school management dashboard with attendance, classes, fees, messages, settings, students, teachers, and timetable screens.",
-      "tech": [
-        "HTML",
-        "JavaScript",
-        "CSS",
-        "Dashboard UI"
-      ],
-      "github": "https://github.com/balaji3245/School-management-system-",
-      "live": "https://balaji3245.github.io/School-management-system-/",
-      "category": "dashboard",
-      "accent": "from-amber-300 via-orange-300 to-rose-300"
-    },
-    {
       "title": "BrandX Info",
       "description": "A recent brand information website with clean static structure, focused pages, custom styling, and lightweight JavaScript behavior.",
       "tech": [
@@ -163,20 +163,6 @@
       "live": "https://brandx-info.vercel.app/",
       "category": "brand site",
       "accent": "from-slate-300 via-sky-300 to-cyan-300"
-    },
-    {
-      "title": "YJ DEVELOPERS Agency Portfolio",
-      "description": "A premium agency portfolio website with an interactive project grid, admin panel, and integrated contact form storage. Built as a collaborative project.",
-      "tech": [
-        "Next.js",
-        "TypeScript",
-        "Tailwind CSS",
-        "Resend API"
-      ],
-      "github": "https://github.com/yjdevelopers21-hub/AGENCY-PORTFOLIO",
-      "live": "https://www.yjdeveloper.com/",
-      "category": "collaboration",
-      "accent": "from-indigo-400 via-purple-400 to-pink-400"
     }
   ],
   "skillGroups": [
