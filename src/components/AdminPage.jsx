@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import {
+  ChevronDown,
+  ChevronUp,
   Download,
   Eye,
   FolderKanban,
@@ -166,6 +168,19 @@ export default function AdminPage() {
     }));
   };
 
+  const moveProject = (index, direction) => {
+    const nextIndex = index + direction;
+    if (nextIndex < 0 || nextIndex >= draft.projects.length) return;
+
+    updateDraft((current) => {
+      const projects = [...current.projects];
+      const [moved] = projects.splice(index, 1);
+      projects.splice(nextIndex, 0, moved);
+      return { ...current, projects };
+    });
+    setSelectedProjectIndex(nextIndex);
+  };
+
   const updateSkillGroup = (index, field, value) => {
     updateDraft((current) => ({
       ...current,
@@ -251,6 +266,19 @@ export default function AdminPage() {
     }));
   };
 
+  const moveTimelineItem = (index, direction) => {
+    const nextIndex = index + direction;
+    if (nextIndex < 0 || nextIndex >= draft.timeline.length) return;
+
+    updateDraft((current) => {
+      const items = [...current.timeline];
+      const [moved] = items.splice(index, 1);
+      items.splice(nextIndex, 0, moved);
+      return { ...current, timeline: items };
+    });
+    setSelectedTimelineIndex(nextIndex);
+  };
+
   const removeContactSubmission = (id) => {
     updateDraft((current) => ({
       ...current,
@@ -286,6 +314,19 @@ export default function AdminPage() {
     }));
   };
 
+  const moveNavItem = (index, direction) => {
+    const nextIndex = index + direction;
+    if (nextIndex < 0 || nextIndex >= draft.navItems.length) return;
+
+    updateDraft((current) => {
+      const items = [...current.navItems];
+      const [moved] = items.splice(index, 1);
+      items.splice(nextIndex, 0, moved);
+      return { ...current, navItems: items };
+    });
+    setSelectedNavIndex(nextIndex);
+  };
+
   const updateAboutPoint = (index, field, value) => {
     updateDraft((current) => ({
       ...current,
@@ -316,6 +357,20 @@ export default function AdminPage() {
       ...current,
       aboutPoints: (current.aboutPoints || []).filter((_, pointIndex) => pointIndex !== index),
     }));
+  };
+
+  const moveAboutPoint = (index, direction) => {
+    const points = draft.aboutPoints || [];
+    const nextIndex = index + direction;
+    if (nextIndex < 0 || nextIndex >= points.length) return;
+
+    updateDraft((current) => {
+      const newPoints = [...(current.aboutPoints || [])];
+      const [moved] = newPoints.splice(index, 1);
+      newPoints.splice(nextIndex, 0, moved);
+      return { ...current, aboutPoints: newPoints };
+    });
+    setSelectedAboutPointIndex(nextIndex);
   };
 
   const clearContactSubmissions = () => {
@@ -539,6 +594,7 @@ export default function AdminPage() {
               items={draft.navItems}
               onChange={updateNavItem}
               onRemove={removeNavItem}
+              onMove={moveNavItem}
               onSelect={setSelectedNavIndex}
               selectedIndex={selectedNavIndex}
             />
@@ -554,6 +610,7 @@ export default function AdminPage() {
               points={draft.aboutPoints || []}
               onChange={updateAboutPoint}
               onRemove={removeAboutPoint}
+              onMove={moveAboutPoint}
               onSelect={setSelectedAboutPointIndex}
               selectedIndex={selectedAboutPointIndex}
             />
@@ -583,6 +640,7 @@ export default function AdminPage() {
             <ProjectsEditor
               onProjectChange={updateProject}
               onRemove={removeProject}
+              onMove={moveProject}
               onSelect={setSelectedProjectIndex}
               projects={draft.projects}
               selectedIndex={selectedProjectIndex}
@@ -613,6 +671,7 @@ export default function AdminPage() {
           >
             <JourneyEditor
               onRemove={removeTimelineItem}
+              onMove={moveTimelineItem}
               onSelect={setSelectedTimelineIndex}
               onTimelineChange={updateTimeline}
               selectedIndex={selectedTimelineIndex}
@@ -777,7 +836,7 @@ function HeroEditor({ onSelect, onStatChange, onTechBadgesChange, selectedIndex,
   );
 }
 
-function NavEditor({ items, onChange, onRemove, onSelect, selectedIndex }) {
+function NavEditor({ items, onChange, onMove, onRemove, onSelect, selectedIndex }) {
   const selectedItem = items[selectedIndex] || items[0];
 
   return (
@@ -801,7 +860,10 @@ function NavEditor({ items, onChange, onRemove, onSelect, selectedIndex }) {
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan">Selected nav link</p>
               <h3 className="mt-2 text-2xl font-bold text-white">{selectedItem.label || `Link ${selectedIndex + 1}`}</h3>
             </div>
-            <DangerButton label="Remove Link" onClick={() => onRemove(selectedIndex)} />
+            <div className="flex items-center gap-2">
+              <MoveControls index={selectedIndex} max={items.length} onMove={onMove} />
+              <DangerButton label="Remove Link" onClick={() => onRemove(selectedIndex)} />
+            </div>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <Field label="Label" value={selectedItem.label} onChange={(value) => onChange(selectedIndex, "label", value)} />
@@ -815,7 +877,7 @@ function NavEditor({ items, onChange, onRemove, onSelect, selectedIndex }) {
   );
 }
 
-function AboutCardsEditor({ onChange, onRemove, onSelect, points, selectedIndex }) {
+function AboutCardsEditor({ onChange, onMove, onRemove, onSelect, points, selectedIndex }) {
   const selectedPoint = points[selectedIndex] || points[0];
 
   return (
@@ -839,7 +901,10 @@ function AboutCardsEditor({ onChange, onRemove, onSelect, points, selectedIndex 
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan">Selected about card</p>
               <h3 className="mt-2 text-2xl font-bold text-white">{selectedPoint.title || `Card ${selectedIndex + 1}`}</h3>
             </div>
-            <DangerButton label="Remove Card" onClick={() => onRemove(selectedIndex)} />
+            <div className="flex items-center gap-2">
+              <MoveControls index={selectedIndex} max={points.length} onMove={onMove} />
+              <DangerButton label="Remove Card" onClick={() => onRemove(selectedIndex)} />
+            </div>
           </div>
           <div className="grid gap-4">
             <Field label="Title" value={selectedPoint.title} onChange={(value) => onChange(selectedIndex, "title", value)} />
@@ -853,7 +918,7 @@ function AboutCardsEditor({ onChange, onRemove, onSelect, points, selectedIndex 
   );
 }
 
-function ProjectsEditor({ onProjectChange, onRemove, onSelect, projects, selectedIndex }) {
+function ProjectsEditor({ onMove, onProjectChange, onRemove, onSelect, projects, selectedIndex }) {
   const selectedProject = projects[selectedIndex] || projects[0];
 
   return (
@@ -877,7 +942,10 @@ function ProjectsEditor({ onProjectChange, onRemove, onSelect, projects, selecte
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan">Selected project</p>
               <h3 className="mt-2 text-2xl font-bold text-white">{selectedProject.title || `Project ${selectedIndex + 1}`}</h3>
             </div>
-            <DangerButton label="Remove Project" onClick={() => onRemove(selectedIndex)} />
+            <div className="flex items-center gap-2">
+              <MoveControls index={selectedIndex} max={projects.length} onMove={onMove} />
+              <DangerButton label="Remove Project" onClick={() => onRemove(selectedIndex)} />
+            </div>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <Field label="Title" value={selectedProject.title} onChange={(value) => onProjectChange(selectedIndex, "title", value)} />
@@ -938,7 +1006,7 @@ function SkillsEditor({ groups, onAddSkill, onGroupChange, onRemoveSkill, onSele
   );
 }
 
-function JourneyEditor({ onRemove, onSelect, onTimelineChange, selectedIndex, timeline }) {
+function JourneyEditor({ onMove, onRemove, onSelect, onTimelineChange, selectedIndex, timeline }) {
   const selectedItem = timeline[selectedIndex] || timeline[0];
 
   return (
@@ -958,8 +1026,15 @@ function JourneyEditor({ onRemove, onSelect, onTimelineChange, selectedIndex, ti
     >
       {selectedItem ? (
         <div className="grid gap-4">
-          <div className="flex justify-end">
-            <DangerButton label="Remove Item" onClick={() => onRemove(selectedIndex)} />
+          <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan">Selected item</p>
+              <h3 className="mt-2 text-2xl font-bold text-white">{selectedItem.title || `Item ${selectedIndex + 1}`}</h3>
+            </div>
+            <div className="flex items-center gap-2">
+              <MoveControls index={selectedIndex} max={timeline.length} onMove={onMove} />
+              <DangerButton label="Remove Item" onClick={() => onRemove(selectedIndex)} />
+            </div>
           </div>
           <div className="grid gap-4 md:grid-cols-[180px_1fr]">
             <Field label="Period" value={selectedItem.period} onChange={(value) => onTimelineChange(selectedIndex, "period", value)} />
@@ -1206,5 +1281,30 @@ function DangerButton({ label, onClick }) {
     >
       <Trash2 size={16} />
     </button>
+  );
+}
+
+function MoveControls({ index, max, onMove }) {
+  return (
+    <div className="flex items-center gap-1">
+      <button
+        type="button"
+        disabled={index <= 0}
+        onClick={() => onMove(index, -1)}
+        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white/5 text-slate-400 transition hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+        title="Move Up"
+      >
+        <ChevronUp size={16} />
+      </button>
+      <button
+        type="button"
+        disabled={index >= max - 1}
+        onClick={() => onMove(index, 1)}
+        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white/5 text-slate-400 transition hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+        title="Move Down"
+      >
+        <ChevronDown size={16} />
+      </button>
+    </div>
   );
 }
