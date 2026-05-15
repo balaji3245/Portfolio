@@ -163,6 +163,20 @@
       "live": "https://brandx-info.vercel.app/",
       "category": "brand site",
       "accent": "from-slate-300 via-sky-300 to-cyan-300"
+    },
+    {
+      "title": "YJ DEVELOPERS Agency Portfolio",
+      "description": "A premium agency portfolio website with an interactive project grid, admin panel, and integrated contact form storage. Built as a collaborative project.",
+      "tech": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Resend API"
+      ],
+      "github": "https://github.com/yjdevelopers21-hub/AGENCY-PORTFOLIO",
+      "live": "https://www.yjdeveloper.com/",
+      "category": "collaboration",
+      "accent": "from-indigo-400 via-purple-400 to-pink-400"
     }
   ],
   "skillGroups": [
