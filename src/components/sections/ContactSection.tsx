@@ -61,8 +61,8 @@ export function ContactSection() {
                 <Mail className="w-5 h-5" />
               </div>
               <h3 className="font-bold mb-2">Email</h3>
-              <p className="text-sm text-muted-foreground">contact@example.com</p>
-              <a href="mailto:contact@example.com" className="text-xs text-primary font-medium mt-2 inline-block hover:underline">
+              <p className="text-sm text-muted-foreground">chaughulebalaji09@gmail.com</p>
+              <a href="mailto:chaughulebalaji09@gmail.com" className="text-xs text-primary font-medium mt-2 inline-block hover:underline">
                 Send a message &rarr;
               </a>
             </div>
