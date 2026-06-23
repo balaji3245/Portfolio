@@ -4,7 +4,7 @@ import * as React from "react"
 import { Command } from "cmdk"
 import { Search, Folder, Terminal, User, FileText, Settings, X } from "lucide-react"
 
-export function CommandPalette({ open, setOpen }: { open: boolean, setOpen: (open: boolean) => void }) {
+export function CommandPalette({ open, setOpen }: { open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
