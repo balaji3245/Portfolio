@@ -16,6 +16,8 @@ export function ContactSection() {
     const formData = new FormData(e.currentTarget);
     // Replace this access key with your own from https://web3forms.com/
     formData.append("access_key", "470c923a-8f5f-4689-b332-60ca656a5e01");
+    formData.append("subject", "New Message from Portfolio Website");
+    formData.append("from_name", "Portfolio Contact Form");
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
