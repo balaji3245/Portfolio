@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Terminal, Search } from "lucide-react"
+import { Terminal } from "lucide-react"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { CommandPalette } from "@/components/ui/command-palette"
 
@@ -43,16 +43,6 @@ export function Navbar() {
 
             {/* Right side actions */}
             <div className="flex items-center gap-3">
-              <button 
-                onClick={() => setCmdOpen(true)}
-                className="hidden md:flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground bg-muted/50 hover:bg-muted border border-border rounded-lg transition-colors"
-              >
-                <Search className="h-4 w-4" />
-                <span>Search...</span>
-                <kbd className="hidden sm:inline-flex items-center gap-1 font-mono text-[10px] font-medium opacity-70">
-                  <span className="text-xs">⌘</span>K
-                </kbd>
-              </button>
               <ThemeToggle />
             </div>
           </div>

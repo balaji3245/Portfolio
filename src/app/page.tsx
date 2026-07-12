@@ -4,6 +4,7 @@ import { Hero } from "@/components/sections/Hero"
 import { ProfessionalSummary } from "@/components/sections/ProfessionalSummary"
 import { TechnicalSkillsMatrix } from "@/components/sections/TechnicalSkillsMatrix"
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline"
+import { Certifications } from "@/components/sections/Certifications"
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects"
 import { BackendArchitecture } from "@/components/sections/BackendArchitecture"
 import { ApiShowcase } from "@/components/sections/ApiShowcase"
@@ -13,6 +14,8 @@ import { SystemDesign } from "@/components/sections/SystemDesign"
 import { ProfessionalActivity } from "@/components/sections/ProfessionalActivity"
 import { TestimonialsBlog } from "@/components/sections/TestimonialsBlog"
 import { ContactSection } from "@/components/sections/ContactSection"
+
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton"
 
 export default function Home() {
   return (
@@ -24,6 +27,7 @@ export default function Home() {
           <ProfessionalSummary />
           <TechnicalSkillsMatrix />
           <ExperienceTimeline />
+          <Certifications />
           <FeaturedProjects />
           <BackendArchitecture />
           <ApiShowcase />
@@ -35,6 +39,7 @@ export default function Home() {
           <ContactSection />
         </div>
       </main>
+      <WhatsAppButton />
       <Footer />
     </>
   )

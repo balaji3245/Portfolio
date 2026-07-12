@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Terminal, Mail } from "lucide-react"
-import { FaGithub as Github, FaLinkedin as Linkedin, FaTwitter as Twitter } from "react-icons/fa"
+import { FaGithub as Github, FaLinkedin as Linkedin } from "react-icons/fa"
 
 export function Footer() {
   return (
@@ -23,10 +23,6 @@ export function Footer() {
               <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                 <Linkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
               </a>
               <a href="mailto:chaughulebalaji09@gmail.com" className="text-muted-foreground hover:text-foreground transition-colors">
                 <Mail className="h-5 w-5" />
