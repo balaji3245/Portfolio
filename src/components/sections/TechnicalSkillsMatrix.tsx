@@ -49,12 +49,12 @@ export function TechnicalSkillsMatrix() {
         <div className="mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Technical Skills Matrix</h2>
           <div className="w-20 h-1.5 bg-primary rounded-full mb-8" />
-          <p className="text-lg text-muted-foreground max-w-2xl">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
             A comprehensive overview of my technical expertise, categorized by domain. Proficiency is indicated by the proficiency bars based on years of active usage and project complexity.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 gap-4 sm:gap-8 lg:gap-12">
           {categories.map((category, idx) => (
             <motion.div 
               key={category.name}
@@ -62,23 +62,23 @@ export function TechnicalSkillsMatrix() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="bg-background rounded-2xl p-8 border border-border shadow-sm"
+              className="bg-background rounded-2xl p-4 sm:p-8 border border-border shadow-sm"
             >
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
-                <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-mono text-sm">
+              <h3 className="text-sm sm:text-xl font-bold mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 leading-tight">
+                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-mono text-xs sm:text-sm">
                   0{idx + 1}
                 </span>
                 {category.name}
               </h3>
               
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {category.skills.map((skill) => (
                   <div key={skill.name}>
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="font-medium text-sm">{skill.name}</span>
-                      <span className="text-xs text-muted-foreground font-mono">{skill.level}%</span>
+                    <div className="flex justify-between items-center mb-1 sm:mb-2">
+                      <span className="font-medium text-[10px] sm:text-sm leading-tight">{skill.name}</span>
+                      <span className="text-[9px] sm:text-xs text-muted-foreground font-mono">{skill.level}%</span>
                     </div>
-                    <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+                    <div className="h-1.5 sm:h-2 w-full bg-muted rounded-full overflow-hidden">
                       <motion.div 
                         initial={{ width: 0 }}
                         whileInView={{ width: `${skill.level}%` }}

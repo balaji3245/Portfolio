@@ -46,10 +46,10 @@ export function BackendArchitecture() {
   return (
     <section id="architecture" className="py-24 bg-background border-y border-border overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-16">
+        <div className="mb-16 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Architecture Approach</h2>
-          <div className="w-20 h-1.5 bg-primary rounded-full mb-8" />
-          <p className="text-lg text-muted-foreground max-w-2xl">
+          <div className="w-20 h-1.5 bg-primary rounded-full mx-auto mb-8" />
+          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
             My standard approach to building scalable, maintainable backend systems. Decoupling concerns allows for independent scaling and easier debugging.
           </p>
         </div>
@@ -58,7 +58,7 @@ export function BackendArchitecture() {
           {/* Vertical connecting line for desktop */}
           <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2" />
 
-          <div className="space-y-12 lg:space-y-0">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:block lg:space-y-0">
             {layers.map((layer, idx) => {
               const isEven = idx % 2 === 0
               return (
@@ -83,17 +83,17 @@ export function BackendArchitecture() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className={`w-full lg:w-1/2 ${isEven ? 'lg:pl-16' : 'lg:pr-16'} relative`}
+                    className={`w-full lg:w-1/2 ${isEven ? 'lg:pl-16' : 'lg:pr-16'} relative h-full`}
                   >
-                    <div className="bg-muted/30 border border-border rounded-2xl p-6 hover:border-primary/50 transition-colors group">
-                      <div className="flex items-start gap-4">
-                        <div className="p-3 bg-background border border-border rounded-xl group-hover:scale-110 transition-transform">
-                          {layer.icon}
+                    <div className="bg-muted/30 border border-border rounded-2xl p-4 sm:p-6 hover:border-primary/50 transition-colors group h-full flex flex-col">
+                      <div className="flex flex-col xl:flex-row items-start gap-3 sm:gap-4 flex-1">
+                        <div className="p-2 sm:p-3 bg-background border border-border rounded-xl group-hover:scale-110 transition-transform">
+                          <div className="scale-75 sm:scale-100">{layer.icon}</div>
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold mb-1">{layer.title}</h3>
-                          <div className="font-mono text-xs text-primary mb-3 font-semibold tracking-wider uppercase">{layer.desc}</div>
-                          <p className="text-sm text-muted-foreground leading-relaxed">
+                          <h3 className="text-sm sm:text-xl font-bold mb-1 leading-tight">{layer.title}</h3>
+                          <div className="font-mono text-[9px] sm:text-xs text-primary mb-2 sm:mb-3 font-semibold tracking-wider uppercase leading-tight">{layer.desc}</div>
+                          <p className="text-[10px] sm:text-sm text-muted-foreground leading-relaxed line-clamp-4">
                             {layer.details}
                           </p>
                         </div>

@@ -28,22 +28,19 @@ export function ProfessionalSummary() {
   ]
 
   return (
-    <section id="about" className="py-24 bg-background">
+    <section id="about" className="pt-16 pb-12 sm:py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Professional Summary</h2>
           <div className="w-20 h-1.5 bg-primary rounded-full mb-8" />
           <div className="prose prose-lg dark:prose-invert max-w-3xl text-muted-foreground leading-relaxed">
-            <p>
-              I am a Python Backend Engineer dedicated to building scalable, high-performance systems that power modern applications. My engineering philosophy centers on writing clean, maintainable code, making pragmatic architectural decisions, and solving complex data problems.
-            </p>
-            <p className="mt-4">
-              Over my career, I've architected APIs that handle thousands of requests per minute, optimized database queries to reduce latency by over 60%, and established CI/CD pipelines that streamline deployment workflows. I don't just write code—I build robust infrastructure that businesses can rely on.
+            <p className="line-clamp-3 md:line-clamp-none">
+              I am a Python Backend Engineer dedicated to building scalable systems and robust infrastructure. With expertise in architecting high-performance APIs, optimizing complex databases, and establishing CI/CD pipelines, I focus on writing clean, maintainable code that businesses can rely on.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {focuses.map((focus, i) => (
             <motion.div 
               key={focus.title}
@@ -51,13 +48,13 @@ export function ProfessionalSummary() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="p-6 rounded-2xl bg-muted/50 border border-border hover:border-primary/50 hover:bg-muted transition-colors group"
+              className="p-4 sm:p-6 rounded-2xl bg-muted/50 border border-border hover:border-primary/50 hover:bg-muted transition-colors group"
             >
-              <div className="w-12 h-12 bg-background rounded-xl border border-border flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-background rounded-xl border border-border flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform">
                 {focus.icon}
               </div>
-              <h3 className="text-xl font-bold mb-3">{focus.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <h3 className="text-sm sm:text-xl font-bold mb-2 sm:mb-3 leading-tight">{focus.title}</h3>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3 md:line-clamp-none">
                 {focus.desc}
               </p>
             </motion.div>

@@ -15,7 +15,7 @@ export function Hero() {
   ]
 
   return (
-    <section id="hero" className="relative min-h-[90vh] flex items-center pt-24 pb-12 overflow-hidden bg-grid-pattern">
+    <section id="hero" className="relative min-h-fit sm:min-h-[90vh] flex items-center pt-24 pb-0 sm:pb-12 overflow-hidden bg-grid-pattern">
       {/* Decorative background elements */}
       <div className="absolute inset-0 bg-background/80 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
@@ -45,24 +45,24 @@ export function Hero() {
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Chaughule</span>
             </h1>
 
-            <h2 className="text-2xl sm:text-3xl font-semibold text-muted-foreground mb-6 font-mono tracking-tight flex items-center gap-2">
+            <h2 className="text-lg sm:text-3xl font-semibold text-muted-foreground mb-6 font-mono tracking-tight flex items-center gap-2">
               &gt; Python Backend Developer<span className="animate-pulse">_</span>
             </h2>
 
-            <p className="text-lg text-muted-foreground mb-8 max-w-xl leading-relaxed">
+            <p className="text-base sm:text-lg text-muted-foreground mb-8 max-w-xl leading-relaxed line-clamp-3 md:line-clamp-none">
               I architect and build scalable backend systems, robust REST APIs, and reliable cloud infrastructure. Focused on performance, clean code, and database optimization.
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 mb-12">
-              <Button size="lg" className="font-semibold" onClick={() => window.open('/resume.pdf')}>
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6 sm:mb-12 w-full">
+              <Button size="lg" className="font-semibold px-6 sm:px-8" onClick={() => window.open('/resume.pdf')}>
                 <Download className="w-4 h-4 mr-2" />
-                Download Resume
+                <span className="hidden sm:inline">Download Resume</span>
+                <span className="sm:hidden">Resume</span>
               </Button>
-              <Button size="lg" variant="outline" className="bg-background/50 backdrop-blur-sm">
-                <Github className="w-4 h-4 mr-2" />
-                GitHub
-              </Button>
-              <div className="flex items-center gap-2 ml-2">
+              <div className="flex items-center gap-2 ml-auto">
+                <a href="#" className="p-2.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors border border-transparent hover:border-border">
+                  <Github className="w-5 h-5" />
+                </a>
                 <a href="#" className="p-2.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors border border-transparent hover:border-border">
                   <Linkedin className="w-5 h-5" />
                 </a>
@@ -72,16 +72,17 @@ export function Hero() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 w-full pt-8 border-t border-border">
+            <div className="grid grid-cols-4 gap-2 sm:gap-6 w-full pt-4 sm:pt-8 border-t border-border text-center sm:text-left">
               {stats.map((stat, i) => (
                 <motion.div 
                   key={stat.label}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 + (i * 0.1) }}
+                  className="flex flex-col items-center sm:items-start"
                 >
-                  <div className="text-2xl font-bold text-foreground font-mono">{stat.value}</div>
-                  <div className="text-xs text-muted-foreground mt-1 font-medium">{stat.label}</div>
+                  <div className="text-lg sm:text-2xl font-bold text-foreground font-mono">{stat.value}</div>
+                  <div className="text-[10px] sm:text-xs text-muted-foreground mt-1 font-medium leading-tight">{stat.label}</div>
                 </motion.div>
               ))}
             </div>

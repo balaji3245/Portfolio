@@ -2,13 +2,14 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Terminal } from "lucide-react"
+import { Terminal, Menu, X } from "lucide-react"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { CommandPalette } from "@/components/ui/command-palette"
 
 export function Navbar() {
   const [cmdOpen, setCmdOpen] = React.useState(false)
   const [scrolled, setScrolled] = React.useState(false)
+  const [menuOpen, setMenuOpen] = React.useState(false)
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -42,8 +43,35 @@ export function Navbar() {
             </nav>
 
             {/* Right side actions */}
-            <div className="flex items-center gap-3">
-              <ThemeToggle />
+            <div className="flex items-center gap-3 relative">
+              {/* Desktop Theme Toggle */}
+              <div className="hidden md:block">
+                <ThemeToggle />
+              </div>
+
+              {/* Mobile 3-Dots Menu */}
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="p-2 -mr-2 rounded-full hover:bg-muted transition-colors flex md:hidden items-center justify-center text-foreground"
+                aria-label="Menu"
+              >
+                {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+
+              {menuOpen && (
+                <div className="absolute top-14 right-0 w-56 bg-background border border-border rounded-xl shadow-lg p-2 flex flex-col z-50 origin-top-right animate-in fade-in zoom-in duration-200 md:hidden">
+                  <div className="flex items-center justify-between px-3 py-2 border-b border-border mb-2">
+                    <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Navigation</span>
+                    <div className="scale-90 origin-right">
+                      <ThemeToggle />
+                    </div>
+                  </div>
+                  <Link href="#about" onClick={() => setMenuOpen(false)} className="px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted/80 rounded-md transition-colors">Experience</Link>
+                  <Link href="#skills" onClick={() => setMenuOpen(false)} className="px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted/80 rounded-md transition-colors">Stack</Link>
+                  <Link href="#projects" onClick={() => setMenuOpen(false)} className="px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted/80 rounded-md transition-colors">Projects</Link>
+                  <Link href="#contact" onClick={() => setMenuOpen(false)} className="px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted/80 rounded-md transition-colors">Contact</Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

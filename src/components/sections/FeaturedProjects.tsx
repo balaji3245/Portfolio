@@ -1,12 +1,15 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
-import { ExternalLink, Database, Network, Lock, Zap } from "lucide-react"
+import { ExternalLink, Database, Network, Lock, Zap, ChevronDown, ChevronUp } from "lucide-react"
 import { FaGithub as Github } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
 export function FeaturedProjects() {
+  const [showAll, setShowAll] = useState(false)
+
   const projects = [
     {
       title: "E-Commerce Backend API",
@@ -103,16 +106,16 @@ export function FeaturedProjects() {
   return (
     <section id="projects" className="py-24 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-16">
+        <div className="mb-16 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Backend Projects</h2>
-          <div className="w-20 h-1.5 bg-primary rounded-full mb-8" />
-          <p className="text-lg text-muted-foreground max-w-2xl">
+          <div className="w-20 h-1.5 bg-primary rounded-full mx-auto mb-8" />
+          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
             A selection of production-grade systems I've architected and built. Focus on scalability, security, and clean architecture.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {projects.map((project, idx) => (
+          {(showAll ? projects : projects.slice(0, 2)).map((project, idx) => (
             <motion.div 
               key={project.title}
               initial={{ opacity: 0, y: 20 }}
@@ -121,50 +124,50 @@ export function FeaturedProjects() {
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               className="group bg-background rounded-2xl border border-border overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1 hover:border-primary/30 flex flex-col"
             >
-              <div className="p-8 flex-1 flex flex-col">
-                <div className="flex justify-between items-start mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-muted/50 border border-border flex items-center justify-center">
-                    {project.icon}
+              <div className="p-4 sm:p-8 flex-1 flex flex-col">
+                <div className="flex justify-between items-start mb-4 sm:mb-6">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-muted/50 border border-border flex items-center justify-center">
+                    <div className="scale-75 sm:scale-100">{project.icon}</div>
                   </div>
-                  <div className="flex gap-2">
-                    <a href={project.github} className="text-muted-foreground hover:text-foreground transition-colors p-2 rounded-full hover:bg-muted">
-                      <Github className="w-5 h-5" />
+                  <div className="flex gap-1 sm:gap-2">
+                    <a href={project.github} className="text-muted-foreground hover:text-foreground transition-colors p-1.5 sm:p-2 rounded-full hover:bg-muted">
+                      <Github className="w-4 h-4 sm:w-5 sm:h-5" />
                     </a>
-                    <a href={project.live} className="text-muted-foreground hover:text-foreground transition-colors p-2 rounded-full hover:bg-muted">
-                      <ExternalLink className="w-5 h-5" />
+                    <a href={project.live} className="text-muted-foreground hover:text-foreground transition-colors p-1.5 sm:p-2 rounded-full hover:bg-muted">
+                      <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
                     </a>
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">{project.title}</h3>
-                <p className="text-muted-foreground mb-6 line-clamp-2">{project.description}</p>
+                <h3 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-3 group-hover:text-primary transition-colors leading-tight">{project.title}</h3>
+                <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 line-clamp-2">{project.description}</p>
 
-                <div className="space-y-4 mb-6 flex-1">
+                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6 flex-1">
                   <div>
-                    <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-1 font-mono">The Problem</h4>
-                    <p className="text-sm text-muted-foreground">{project.problem}</p>
+                    <h4 className="text-[10px] sm:text-xs font-semibold text-foreground uppercase tracking-wider mb-1 font-mono">The Problem</h4>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{project.problem}</p>
                   </div>
                   <div>
-                    <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-1 font-mono">Architecture</h4>
-                    <p className="text-sm text-muted-foreground">{project.architecture}</p>
+                    <h4 className="text-[10px] sm:text-xs font-semibold text-foreground uppercase tracking-wider mb-1 font-mono">Architecture</h4>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{project.architecture}</p>
                   </div>
                 </div>
 
-                <div className="mb-6">
-                  <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-2 font-mono">Key Achievements</h4>
+                <div className="mb-4 sm:mb-6">
+                  <h4 className="text-[10px] sm:text-xs font-semibold text-foreground uppercase tracking-wider mb-1.5 sm:mb-2 font-mono">Key Achievements</h4>
                   <ul className="space-y-1">
                     {project.achievements.map((ach, i) => (
-                      <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                        <span className="text-primary mt-1 text-[10px]">▶</span>
+                      <li key={i} className="text-xs sm:text-sm text-muted-foreground flex items-start gap-1.5 sm:gap-2">
+                        <span className="text-primary mt-0.5 sm:mt-1 text-[8px] sm:text-[10px]">▶</span>
                         {ach}
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mt-auto pt-6 border-t border-border">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-auto pt-4 sm:pt-6 border-t border-border">
                   {project.techStack.map(tech => (
-                    <Badge key={tech} variant="secondary" className="font-mono text-[10px]">
+                    <Badge key={tech} variant="secondary" className="font-mono text-[9px] sm:text-[10px] px-1.5 sm:px-2.5 py-0 sm:py-0.5">
                       {tech}
                     </Badge>
                   ))}
@@ -173,6 +176,22 @@ export function FeaturedProjects() {
             </motion.div>
           ))}
         </div>
+
+        {projects.length > 2 && (
+          <div className="mt-8 flex justify-center">
+            <Button 
+              variant="outline" 
+              onClick={() => setShowAll(!showAll)}
+              className="group h-7 px-3 text-xs rounded-full"
+            >
+              {showAll ? (
+                <>View Less <ChevronUp className="w-4 h-4 ml-2 group-hover:-translate-y-1 transition-transform" /></>
+              ) : (
+                <>View More <ChevronDown className="w-4 h-4 ml-2 group-hover:translate-y-1 transition-transform" /></>
+              )}
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   )

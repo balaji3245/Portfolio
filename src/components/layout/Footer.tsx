@@ -12,7 +12,7 @@ export function Footer() {
               <Terminal className="h-5 w-5 text-primary" />
               <span className="font-mono font-bold text-lg tracking-tight">balaji<span className="text-muted-foreground">.dev</span></span>
             </Link>
-            <p className="text-sm text-muted-foreground max-w-xs mb-6 leading-relaxed">
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-xs mb-4 sm:mb-6 leading-relaxed">
               Python Backend Engineer building robust APIs, scalable microservices, and reliable cloud infrastructure.
             </p>
             <div className="flex gap-4">
@@ -31,31 +31,32 @@ export function Footer() {
             </div>
           </div>
           
-          <div>
-            <h3 className="font-semibold mb-4 text-foreground">Navigation</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="#about" className="hover:text-primary transition-colors">About</Link></li>
-              <li><Link href="#skills" className="hover:text-primary transition-colors">Skills</Link></li>
-              <li><Link href="#projects" className="hover:text-primary transition-colors">Projects</Link></li>
-              <li><Link href="#architecture" className="hover:text-primary transition-colors">Architecture</Link></li>
-              <li><Link href="#contact" className="hover:text-primary transition-colors">Contact</Link></li>
-            </ul>
-          </div>
+          <div className="grid grid-cols-2 col-span-1 md:col-span-2 gap-4 sm:gap-8">
+            <div>
+              <h3 className="font-semibold text-sm sm:text-base mb-3 sm:mb-4 text-foreground">Navigation</h3>
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
+                <li><Link href="#about" className="hover:text-primary transition-colors">About</Link></li>
+                <li><Link href="#skills" className="hover:text-primary transition-colors">Skills</Link></li>
+                <li><Link href="#projects" className="hover:text-primary transition-colors">Projects</Link></li>
+                <li><Link href="#architecture" className="hover:text-primary transition-colors">Architecture</Link></li>
+                <li><Link href="#contact" className="hover:text-primary transition-colors">Contact</Link></li>
+              </ul>
+            </div>
 
-          <div>
-            <h3 className="font-semibold mb-4 text-foreground">Tech Stack</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Python & Django/FastAPI</li>
-              <li>PostgreSQL & Redis</li>
-              <li>Docker & CI/CD</li>
-              <li>AWS & Cloud Deployment</li>
-              <li>Next.js (Portfolio)</li>
-            </ul>
+            <div>
+              <h3 className="font-semibold text-sm sm:text-base mb-3 sm:mb-4 text-foreground">Tech Stack</h3>
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
+                <li>Python & Django/FastAPI</li>
+                <li>PostgreSQL & Redis</li>
+                <li>Docker & CI/CD</li>
+                <li>AWS & Cloud Deployment</li>
+                <li>Next.js (Portfolio)</li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} Balaji Chaughule. All rights reserved.</p>
-          <p>Designed for recruiters and engineers. Not an AI template.</p>
+        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-border text-center text-[10px] sm:text-xs text-muted-foreground">
+          <p>© {new Date().getFullYear()} Balaji Chaughule</p>
         </div>
       </div>
     </footer>

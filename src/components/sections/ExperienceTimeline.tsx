@@ -49,12 +49,12 @@ export function ExperienceTimeline() {
         <div className="mb-16 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Experience Timeline</h2>
           <div className="w-20 h-1.5 bg-primary rounded-full mx-auto mb-8" />
-          <p className="text-lg text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             My professional journey from learning fundamentals to engineering production backend systems.
           </p>
         </div>
 
-        <div className="relative border-l-2 border-muted ml-3 md:ml-6 space-y-12 pb-8">
+        <div className="relative border-l-2 border-muted ml-3 md:ml-6 space-y-6 sm:space-y-12 pb-8">
           {experiences.map((exp, idx) => (
             <motion.div 
               key={exp.id}
@@ -65,28 +65,28 @@ export function ExperienceTimeline() {
               className="relative pl-8 md:pl-12"
             >
               {/* Timeline dot */}
-              <div className="absolute -left-[21px] top-1 w-10 h-10 rounded-full bg-background border-2 border-border flex items-center justify-center shadow-sm">
-                {exp.icon}
+              <div className="absolute -left-[17px] sm:-left-[21px] top-1 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-background border-2 border-border flex items-center justify-center shadow-sm">
+                <div className="scale-75 sm:scale-100">{exp.icon}</div>
               </div>
 
-              <div className="bg-muted/30 border border-border rounded-2xl p-6 md:p-8 hover:border-primary/30 transition-colors">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+              <div className="bg-muted/30 border border-border rounded-2xl p-4 sm:p-6 md:p-8 hover:border-primary/30 transition-colors">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 sm:gap-4 mb-3 sm:mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-foreground">{exp.role}</h3>
-                    <div className="text-lg font-medium text-muted-foreground mt-1">{exp.company}</div>
+                    <h3 className="text-base sm:text-xl font-bold text-foreground leading-tight">{exp.role}</h3>
+                    <div className="text-sm sm:text-lg font-medium text-muted-foreground mt-1">{exp.company}</div>
                   </div>
-                  <div className="inline-flex items-center px-3 py-1 rounded-full bg-background border border-border text-xs font-mono text-muted-foreground whitespace-nowrap">
+                  <div className="inline-flex items-center px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-background border border-border text-[10px] sm:text-xs font-mono text-muted-foreground whitespace-nowrap self-start md:self-auto">
                     {exp.period}
                   </div>
                 </div>
 
-                <p className="text-muted-foreground leading-relaxed mb-6">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6">
                   {exp.description}
                 </p>
 
                 <div className="flex flex-wrap gap-2 mt-auto">
                   {exp.tags.map(tag => (
-                    <span key={tag} className="px-2.5 py-1 text-xs font-mono rounded-md bg-background border border-border text-muted-foreground">
+                    <span key={tag} className="px-2 py-0.5 sm:px-2.5 sm:py-1 text-[10px] sm:text-xs font-mono rounded-md bg-background border border-border text-muted-foreground">
                       {tag}
                     </span>
                   ))}

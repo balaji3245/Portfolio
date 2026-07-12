@@ -49,12 +49,12 @@ export function DevOpsDeployment() {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">DevOps & Deployment</h2>
           <div className="w-20 h-1.5 bg-primary rounded-full mx-auto mb-8" />
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
             Code isn't done until it's running reliably in production. I handle the full lifecycle from Git push to containerized deployment.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {cards.map((card, idx) => (
             <motion.div 
               key={card.title}
@@ -62,17 +62,17 @@ export function DevOpsDeployment() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="bg-background rounded-2xl p-6 border border-border hover:border-primary/50 transition-colors shadow-sm"
+              className="bg-background rounded-2xl p-4 sm:p-6 border border-border hover:border-primary/50 transition-colors shadow-sm flex flex-col"
             >
-              <div className="mb-6 p-4 inline-block rounded-xl bg-muted border border-border">
-                {card.icon}
+              <div className="mb-3 sm:mb-6 p-2 sm:p-4 inline-block rounded-xl bg-muted border border-border self-start">
+                <div className="scale-75 sm:scale-100">{card.icon}</div>
               </div>
-              <h3 className="text-xl font-bold mb-4">{card.title}</h3>
-              <ul className="space-y-3">
+              <h3 className="text-sm sm:text-xl font-bold mb-2 sm:mb-4 leading-tight">{card.title}</h3>
+              <ul className="space-y-2 sm:space-y-3 mt-auto">
                 {card.items.map((item, i) => (
-                  <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="text-primary mt-1 text-[10px]">▶</span>
-                    <span className="leading-relaxed">{item}</span>
+                  <li key={i} className="text-[10px] sm:text-sm text-muted-foreground flex items-start gap-1.5 sm:gap-2">
+                    <span className="text-primary mt-0.5 sm:mt-1 text-[8px] sm:text-[10px]">▶</span>
+                    <span className="leading-tight sm:leading-relaxed">{item}</span>
                   </li>
                 ))}
               </ul>

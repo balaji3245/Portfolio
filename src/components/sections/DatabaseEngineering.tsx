@@ -30,29 +30,39 @@ export function DatabaseEngineering() {
   return (
     <section className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="mb-16 text-center">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Database Engineering</h2>
+            <div className="w-20 h-1.5 bg-primary rounded-full mx-auto mb-8" />
+            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              The database is the heart of any backend application. I specialize in PostgreSQL and Redis, focusing on schema design, query optimization, and data consistency under high concurrency.
+            </p>
+          </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Database Engineering</h2>
-            <div className="w-20 h-1.5 bg-primary rounded-full mb-8" />
-            <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-              The database is the heart of any backend application. I specialize in PostgreSQL and Redis, focusing on schema design, query optimization, and data consistency under high concurrency.
-            </p>
 
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {focuses.map((item, idx) => (
-                <div key={idx} className="flex gap-4 p-4 rounded-xl hover:bg-muted/50 transition-colors border border-transparent hover:border-border">
-                  <div className="mt-1 bg-background p-2 rounded-lg border border-border">
-                    {item.icon}
+                <div key={idx} className="flex gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl hover:bg-muted/50 transition-colors border border-transparent hover:border-border">
+                  <div className="mt-1 bg-background p-1.5 sm:p-2 rounded-lg border border-border">
+                    <div className="scale-75 sm:scale-100">{item.icon}</div>
                   </div>
                   <div>
-                    <h3 className="font-bold mb-1">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <h3 className="font-bold text-base sm:text-lg mb-0.5 sm:mb-1">{item.title}</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -60,23 +70,28 @@ export function DatabaseEngineering() {
           </motion.div>
 
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.95, y: 0 }}
             whileInView={{ opacity: 1, scale: 1 }}
+            animate={{ y: [0, -10, 0] }}
+            transition={{ 
+              opacity: { duration: 0.5, delay: 0.2 },
+              scale: { duration: 0.5, delay: 0.2 },
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+            }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
             className="relative"
           >
-             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl blur-xl" />
-             <div className="relative bg-muted/30 border border-border rounded-2xl p-6 shadow-xl backdrop-blur-sm">
-                <div className="flex items-center justify-between mb-6 pb-4 border-b border-border">
-                  <div className="flex items-center gap-2">
-                    <Database className="w-5 h-5 text-blue-400" />
-                    <span className="font-mono font-bold text-sm">db_schema.sql</span>
+             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl blur-2xl" />
+             <div className="relative bg-muted/30 border border-border rounded-2xl p-4 sm:p-6 shadow-2xl backdrop-blur-sm">
+                <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-border">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <Database className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
+                    <span className="font-mono font-bold text-xs sm:text-sm">db_schema.sql</span>
                   </div>
-                  <span className="text-xs font-mono text-muted-foreground">PostgreSQL</span>
+                  <span className="text-[10px] sm:text-xs font-mono text-muted-foreground">PostgreSQL</span>
                 </div>
                 
-                <div className="font-mono text-sm space-y-4 text-muted-foreground">
+                <div className="font-mono text-[9px] sm:text-xs space-y-3 sm:space-y-4 text-muted-foreground overflow-x-auto">
                   <div>
                     <span className="text-purple-400">CREATE TABLE</span> <span className="text-blue-300">users</span> (
                     <div className="pl-4">id <span className="text-yellow-300">UUID PRIMARY KEY</span>,</div>
