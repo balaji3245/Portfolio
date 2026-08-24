@@ -1,98 +1,115 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { 
+  Code2, 
+  Layout, 
+  Server, 
+  Database, 
+  Cloud, 
+  ShieldCheck, 
+  Wrench, 
+  BrainCircuit,
+  Terminal
+} from "lucide-react"
 
 export function TechnicalSkillsMatrix() {
-  const categories = [
+  const skillCategories = [
     {
-      name: "Backend",
-      skills: [
-        { name: "Python", level: 95 },
-        { name: "FastAPI", level: 90 },
-        { name: "Django", level: 85 },
-        { name: "Flask", level: 80 },
-        { name: "Node.js", level: 70 },
-      ]
+      category: "Languages & Frameworks",
+      icon: <Terminal className="w-4 h-4 text-blue-600 dark:text-blue-400" />,
+      skills: ["TypeScript", "JavaScript (ES6+)", "Python", "SQL", "Java", "HTML5 / CSS3"],
     },
     {
-      name: "Databases",
-      skills: [
-        { name: "PostgreSQL", level: 90 },
-        { name: "MongoDB", level: 80 },
-        { name: "Redis", level: 85 },
-        { name: "MySQL", level: 75 },
-      ]
+      category: "Frontend & UI/UX",
+      icon: <Layout className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />,
+      skills: ["React.js", "Next.js (App Router)", "Tailwind CSS", "Server Components", "Responsive UI/UX"],
     },
     {
-      name: "DevOps & Cloud",
-      skills: [
-        { name: "Docker", level: 85 },
-        { name: "AWS", level: 75 },
-        { name: "Linux / Nginx", level: 80 },
-        { name: "GitHub Actions", level: 85 },
-      ]
+      category: "Backend & REST APIs",
+      icon: <Server className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />,
+      skills: ["Node.js", "NestJS", "RESTful APIs", "API Architecture", "Middleware Pipelines"],
     },
     {
-      name: "Tools & Testing",
-      skills: [
-        { name: "Git", level: 90 },
-        { name: "PyTest", level: 85 },
-        { name: "Postman / Swagger", level: 95 },
-        { name: "Celery", level: 75 },
-      ]
-    }
+      category: "Databases & ORM",
+      icon: <Database className="w-4 h-4 text-purple-600 dark:text-purple-400" />,
+      skills: ["PostgreSQL", "Prisma ORM", "MongoDB", "Supabase", "Schema Normalization"],
+    },
+    {
+      category: "Cloud & Linux Hosting",
+      icon: <Cloud className="w-4 h-4 text-amber-600 dark:text-amber-400" />,
+      skills: ["AWS", "VPS Hosting", "Linux (Ubuntu/Debian)", "Nginx Reverse Proxy", "PM2 Supervision"],
+    },
+    {
+      category: "Security & Protocols",
+      icon: <ShieldCheck className="w-4 h-4 text-rose-600 dark:text-rose-400" />,
+      skills: ["JWT", "HttpOnly Cookies", "RBAC", "Bcrypt Hashing", "Account Lockout Protection"],
+    },
+    {
+      category: "DevOps & Tools",
+      icon: <Wrench className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />,
+      skills: ["Git", "GitHub", "Deployment Automation", "Postman", "PM2 Clustering"],
+    },
+    {
+      category: "Data Science & ML",
+      icon: <BrainCircuit className="w-4 h-4 text-teal-600 dark:text-teal-400" />,
+      skills: ["Python", "Pandas", "NumPy", "Scikit-learn", "Matplotlib / Seaborn", "SQL Analysis", "Power BI", "Tableau"],
+    },
   ]
 
   return (
-    <section id="skills" className="py-24 bg-muted/30 border-y border-border">
+    <section id="skills" className="py-16 sm:py-20 bg-background border-b border-border/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Technical Skills Matrix</h2>
-          <div className="w-20 h-1.5 bg-primary rounded-full mb-8" />
-          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
-            A comprehensive overview of my technical expertise, categorized by domain. Proficiency is indicated by the proficiency bars based on years of active usage and project complexity.
-          </p>
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div>
+            <div className="text-xs font-mono font-semibold uppercase tracking-widest text-muted-foreground mb-2 flex items-center gap-2">
+              <span className="w-6 h-px bg-foreground/40" />
+              Capabilities & Stack
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+              Technical Skills Matrix
+            </h2>
+          </div>
+
+        
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:gap-8 lg:gap-12">
-          {categories.map((category, idx) => (
-            <motion.div 
-              key={category.name}
-              initial={{ opacity: 0, y: 20 }}
+        {/* Compact 4x2 Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {skillCategories.map((cat, idx) => (
+            <motion.div
+              key={cat.category}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="bg-background rounded-2xl p-4 sm:p-8 border border-border shadow-sm"
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: idx * 0.04 }}
+              className="editorial-card rounded-xl p-4 flex flex-col justify-between"
             >
-              <h3 className="text-sm sm:text-xl font-bold mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 leading-tight">
-                <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-mono text-xs sm:text-sm">
-                  0{idx + 1}
-                </span>
-                {category.name}
-              </h3>
-              
-              <div className="space-y-4 sm:space-y-6">
-                {category.skills.map((skill) => (
-                  <div key={skill.name}>
-                    <div className="flex justify-between items-center mb-1 sm:mb-2">
-                      <span className="font-medium text-[10px] sm:text-sm leading-tight">{skill.name}</span>
-                      <span className="text-[9px] sm:text-xs text-muted-foreground font-mono">{skill.level}%</span>
-                    </div>
-                    <div className="h-1.5 sm:h-2 w-full bg-muted rounded-full overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                        className="h-full bg-gradient-to-r from-primary to-blue-400 rounded-full"
-                      />
-                    </div>
-                  </div>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="p-1.5 rounded-lg bg-muted border border-border">
+                  {cat.icon}
+                </div>
+                <h3 className="font-bold text-xs sm:text-sm text-foreground">
+                  {cat.category}
+                </h3>
+              </div>
+
+              <div className="flex flex-wrap gap-1 pt-2 border-t border-border/60">
+                {cat.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="px-2 py-0.5 rounded bg-muted text-foreground/80 font-mono text-[10px] font-medium border border-border/50"
+                  >
+                    {skill}
+                  </span>
                 ))}
               </div>
             </motion.div>
           ))}
         </div>
+
       </div>
     </section>
   )

@@ -1,141 +1,164 @@
 "use client"
 
-import { useState } from "react"
 import { motion } from "framer-motion"
-import { Award, ExternalLink, ShieldCheck, ChevronDown, ChevronUp } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { GraduationCap, Award, ExternalLink, ShieldCheck, Languages, ArrowUpRight } from "lucide-react"
 
 export function Certifications() {
-  const [showAll, setShowAll] = useState(false)
-
   const certifications = [
     {
-      id: 1,
+      id: "yj-cert",
       title: "Frontend Developer Internship",
       issuer: "YJ Developers Pvt. Ltd.",
       date: "July 2026",
-      credentialUrl: "/yj-internship-certificate.pdf"
+      credentialUrl: "/yj-internship-certificate.pdf",
     },
     {
-      id: 2,
-      title: "Python (Basic) Certification",
+      id: "python-hackerrank",
+      title: "Python (Basic) Certificate",
       issuer: "HackerRank",
-      date: "2026",
-      credentialUrl: "/python-basic-certificate.pdf"
+      date: "Verified",
+      credentialUrl: "/python-basic-certificate.pdf",
     },
     {
-      id: 3,
-      title: "JavaScript (Intermediate) Certification",
+      id: "js-cert",
+      title: "JavaScript (Intermediate)",
       issuer: "HackerRank",
-      date: "2026",
-      credentialUrl: "/javascript-intermediate-certificate.pdf"
+      date: "Verified",
+      credentialUrl: "/javascript-intermediate-certificate.pdf",
     },
     {
-      id: 4,
+      id: "css-cert",
       title: "CSS Certification",
       issuer: "HackerRank",
-      date: "2026",
-      credentialUrl: "/css-certificate.pdf"
+      date: "Verified",
+      credentialUrl: "/css-certificate.pdf",
     },
-    {
-      id: 5,
-      title: "Additional Certification 1",
-      issuer: "Various",
-      date: "2026",
-      credentialUrl: "/certificate-1.jpg"
-    },
-    {
-      id: 6,
-      title: "Additional Certification 2",
-      issuer: "Various",
-      date: "2026",
-      credentialUrl: "/certificate-2.jpg"
-    },
-    {
-      id: 7,
-      title: "Additional Certification 3",
-      issuer: "Various",
-      date: "2026",
-      credentialUrl: "/certificate-3.jpg"
-    },
-    {
-      id: 8,
-      title: "Additional Certification 4",
-      issuer: "Various",
-      date: "2026",
-      credentialUrl: "/certificate-4.jpg"
-    }
+  ]
+
+  const languageProficiency = [
+    { lang: "Marathi", level: "Native" },
+    { lang: "Hindi", level: "Fluent" },
+    { lang: "English", level: "Professional" },
   ]
 
   return (
-    <section id="certifications" className="py-24 bg-muted/10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 whitespace-nowrap sm:whitespace-normal">Licenses & Certifications</h2>
-          <div className="w-20 h-1.5 bg-primary rounded-full mx-auto mb-8" />
-          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
-            Professional credentials validating my expertise in cloud architecture, data engineering, and container orchestration.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
-          {(showAll ? certifications : certifications.slice(0, 4)).map((cert, idx) => (
-            <motion.div
-              key={cert.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="bg-background border border-border rounded-2xl p-4 sm:p-6 hover:shadow-md hover:border-primary/30 transition-all group flex flex-col"
-            >
-              <div className="flex items-start justify-between mb-3 sm:mb-4">
-                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                  <ShieldCheck className="w-4 h-4 sm:w-6 sm:h-6" />
-                </div>
-                <Award className="w-4 h-4 sm:w-6 sm:h-6 text-muted-foreground/30 group-hover:text-primary/20 transition-colors" />
-              </div>
-              
-              <h3 className="font-bold text-sm sm:text-lg mb-1 sm:mb-2 text-foreground group-hover:text-primary transition-colors leading-tight line-clamp-2">
-                {cert.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
-                {cert.issuer}
-              </p>
-              
-              <div className="flex flex-row items-center justify-between mt-auto pt-3 sm:pt-4 border-t border-border/50 w-full">
-                <span className="text-[10px] sm:text-xs font-medium text-muted-foreground">
-                  Issued: {cert.date}
-                </span>
-                <a 
-                  href={cert.credentialUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-[10px] sm:text-xs font-medium text-primary hover:underline ml-auto"
-                >
-                  <span className="hidden sm:inline">Show Credential</span>
-                  <span className="sm:hidden">View</span>
-                  <ExternalLink className="w-3 h-3 ml-1" />
-                </a>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {certifications.length > 4 && (
-          <div className="mt-8 flex justify-center">
-            <Button 
-              variant="outline" 
-              onClick={() => setShowAll(!showAll)}
-              className="group h-7 px-3 text-xs rounded-full"
-            >
-              {showAll ? (
-                <>View Less <ChevronUp className="w-4 h-4 ml-2 group-hover:-translate-y-1 transition-transform" /></>
-              ) : (
-                <>View More <ChevronDown className="w-4 h-4 ml-2 group-hover:translate-y-1 transition-transform" /></>
-              )}
-            </Button>
+    <section id="education" className="py-16 sm:py-20 bg-muted/20 border-b border-border/60">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div>
+            <div className="text-xs font-mono font-semibold uppercase tracking-widest text-muted-foreground mb-2 flex items-center gap-2">
+              <span className="w-6 h-px bg-foreground/40" />
+              Credentials & Foundation
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+              Education & Verified Certifications
+            </h2>
           </div>
-        )}
+
+          
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          {/* Degree & Languages Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.35 }}
+            className="lg:col-span-5 editorial-card rounded-2xl p-6 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2.5 rounded-xl bg-muted border border-border">
+                  <GraduationCap className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-mono font-semibold uppercase text-muted-foreground">
+                    Academic Degree
+                  </span>
+                  <h3 className="text-lg font-bold text-foreground">
+                    Bachelor of Computer Science (BCS)
+                  </h3>
+                </div>
+              </div>
+
+              <div className="space-y-1 text-xs sm:text-sm text-muted-foreground mb-4">
+                <div className="font-semibold text-foreground">Swami Vivekanand Mahavidyalaya, Latur</div>
+                <div>Latur, Maharashtra, India</div>
+              </div>
+
+              <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold mb-6">
+                <ShieldCheck className="w-4 h-4" />
+                <span>Graduated in Computer Science</span>
+              </div>
+            </div>
+
+            {/* Language Strip */}
+            <div className="pt-4 border-t border-border/70">
+              <div className="text-[11px] font-mono font-semibold text-muted-foreground uppercase mb-2">
+                Languages
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {languageProficiency.map((l) => (
+                  <span
+                    key={l.lang}
+                    className="px-2.5 py-1 rounded-md bg-muted text-foreground text-xs font-medium border border-border/60"
+                  >
+                    <span className="font-semibold">{l.lang}</span>{" "}
+                    <span className="text-muted-foreground font-mono text-[10px]">({l.level})</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 4 Compact Certifications Grid */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {certifications.map((cert, idx) => (
+              <motion.div
+                key={cert.id}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: idx * 0.05 }}
+                className="editorial-card rounded-xl p-4 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] font-mono text-muted-foreground font-semibold uppercase">
+                      {cert.issuer}
+                    </span>
+                    <Award className="w-3.5 h-3.5 text-muted-foreground/60" />
+                  </div>
+
+                  <h4 className="font-bold text-xs sm:text-sm text-foreground mb-1 leading-snug">
+                    {cert.title}
+                  </h4>
+                </div>
+
+                <div className="pt-3 border-t border-border/60 flex items-center justify-between mt-3">
+                  <span className="text-[10px] font-mono text-muted-foreground">
+                    {cert.date}
+                  </span>
+                  <a
+                    href={cert.credentialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  >
+                    <span>View Credential</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+        </div>
+
       </div>
     </section>
   )
