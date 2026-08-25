@@ -58,26 +58,24 @@ export function TechnicalSkillsMatrix() {
   ]
 
   return (
-    <section id="skills" className="py-16 sm:py-20 bg-background border-b border-border/60">
+    <section id="skills" className="py-10 sm:py-14 bg-background border-b border-border/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-6 sm:mb-8">
           <div>
-            <div className="text-xs font-mono font-semibold uppercase tracking-widest text-muted-foreground mb-2 flex items-center gap-2">
-              <span className="w-6 h-px bg-foreground/40" />
+            <div className="text-[10px] font-mono font-semibold uppercase tracking-widest text-muted-foreground mb-1 flex items-center gap-1.5">
+              <span className="w-4 h-px bg-foreground/40" />
               Capabilities & Stack
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+            <h2 className="text-lg sm:text-2xl font-extrabold text-foreground tracking-tight">
               Technical Skills Matrix
             </h2>
           </div>
-
-        
         </div>
 
-        {/* Compact 4x2 Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Compact 2-Column on Mobile, 4-Column on Desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
           {skillCategories.map((cat, idx) => (
             <motion.div
               key={cat.category}
@@ -85,22 +83,22 @@ export function TechnicalSkillsMatrix() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: idx * 0.04 }}
-              className="editorial-card rounded-xl p-4 flex flex-col justify-between"
+              className="p-2.5 sm:p-3.5 rounded-xl bg-muted/30 border border-border/40 hover:border-border/80 transition-colors flex flex-col justify-between"
             >
-              <div className="flex items-center gap-2 mb-3">
-                <div className="p-1.5 rounded-lg bg-muted border border-border">
+              <div className="flex items-center gap-1.5 sm:gap-2 mb-2">
+                <div className="p-1.5 rounded-md bg-muted border border-border/60 flex-shrink-0">
                   {cat.icon}
                 </div>
-                <h3 className="font-bold text-xs sm:text-sm text-foreground">
+                <h3 className="font-bold text-xs sm:text-sm text-foreground leading-tight">
                   {cat.category}
                 </h3>
               </div>
 
-              <div className="flex flex-wrap gap-1 pt-2 border-t border-border/60">
+              <div className="flex flex-wrap gap-1 pt-2 border-t border-border/40">
                 {cat.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-2 py-0.5 rounded bg-muted text-foreground/80 font-mono text-[10px] font-medium border border-border/50"
+                    className="px-1.5 py-0.2 rounded bg-muted text-foreground/80 font-mono text-[9px] font-medium border border-border/30"
                   >
                     {skill}
                   </span>

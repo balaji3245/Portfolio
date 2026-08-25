@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { ArrowRight, FileText, CheckCircle2, MapPin } from "lucide-react"
+import { ArrowRight, FileText, CheckCircle2 } from "lucide-react"
 import { FaGithub as Github, FaLinkedin as Linkedin, FaInstagram as Instagram } from "react-icons/fa"
 
 export function Hero() {
@@ -37,86 +37,78 @@ export function Hero() {
             transition={{ duration: 0.45 }}
             className="order-2 lg:order-1 lg:col-span-7 flex flex-col items-start"
           >
-            {/* Status Indicator */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-muted border border-border text-xs font-mono text-muted-foreground mb-4 shadow-sm">
-              <span className="text-foreground font-medium flex items-center gap-1">
-                <MapPin className="w-3 h-3 text-muted-foreground text-red-500" />
-                Latur, Maharashtra, India
-              </span>
-            </div>
-
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground leading-tight mb-2">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground leading-tight mb-1.5">
               Chaughule Balaji
             </h1>
-            <div className="text-base sm:text-xl font-semibold tracking-tight text-muted-foreground mb-4 font-mono">
+            <div className="text-xs sm:text-base lg:text-xl font-semibold tracking-tight text-muted-foreground mb-3 font-mono">
               Full-Stack Developer | Data Scientist
             </div>
 
             {/* Concise Subtitle */}
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl mb-6">
+            <p className="text-xs sm:text-sm lg:text-base text-muted-foreground leading-relaxed max-w-xl mb-5">
               I am <span className="font-semibold text-foreground">Chaughule Balaji</span>, leading full-stack engineering at <span className="font-semibold text-foreground">YJ Developers</span>. I specialize in designing high-performance e-commerce and SaaS architectures across Next.js, TypeScript, Node.js, NestJS, PostgreSQL, and AWS.
             </p>
 
-            {/* 4 Core Pillars Pills */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full mb-6">
+            {/* 4 Core Pillars Pills (2-Column Grid on Mobile & Desktop) */}
+            <div className="grid grid-cols-2 gap-2 sm:gap-2.5 w-full mb-6">
               {coreDisciplines.map((item) => (
-                <div key={item} className="flex items-center gap-2 text-xs text-foreground/90 font-medium">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                  <span>{item}</span>
+                <div key={item} className="flex items-start sm:items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-foreground/90 font-medium">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5 sm:mt-0" />
+                  <span className="leading-tight">{item}</span>
                 </div>
               ))}
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+            {/* Action Buttons (Linear Single-Line Row) */}
+            <div className="flex items-center gap-1.5 sm:gap-2.5 w-full flex-nowrap overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
               <a
                 href="#projects"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-foreground text-background font-semibold text-xs sm:text-sm hover:opacity-90 transition-opacity shadow-sm"
+                className="inline-flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-foreground text-background font-semibold text-[11px] sm:text-xs whitespace-nowrap hover:opacity-90 transition-opacity shadow-sm flex-shrink-0"
               >
-                View Projects
-                <ArrowRight className="w-4 h-4" />
+                <span>View Projects</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </a>
 
               <a
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-background border border-border hover:bg-muted text-foreground font-semibold text-xs sm:text-sm transition-colors shadow-sm"
+                className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-xl bg-background border border-border hover:bg-muted text-foreground font-semibold text-[11px] sm:text-xs whitespace-nowrap transition-colors shadow-sm flex-shrink-0"
               >
                 <FileText className="w-3.5 h-3.5 text-muted-foreground" />
-                View CV
+                <span>View CV</span>
               </a>
 
-              <div className="flex items-center gap-1.5 ml-auto sm:ml-2">
-                <a
-                  href="https://github.com/balaji3245"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub"
-                  className="p-2.5 rounded-xl bg-background border border-border hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Github className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://linkedin.com/in/balaji-chaughule-47b33a3a1"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn"
-                  className="p-2.5 rounded-xl bg-background border border-border hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Linkedin className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://www.instagram.com/chaughule_balaji_/"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Instagram"
-                  className="p-2.5 rounded-xl bg-background border border-border hover:bg-muted text-muted-foreground hover:text-pink-500 transition-colors"
-                >
-                  <Instagram className="w-4 h-4" />
-                </a>
-              </div>
+              <a
+                href="https://github.com/balaji3245"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+                className="p-2 sm:p-2.5 rounded-xl bg-background border border-border hover:bg-muted text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
+              >
+                <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </a>
+
+              <a
+                href="https://linkedin.com/in/balaji-chaughule-47b33a3a1"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="p-2 sm:p-2.5 rounded-xl bg-background border border-border hover:bg-muted text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
+              >
+                <Linkedin className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </a>
+
+              <a
+                href="https://www.instagram.com/chaughule_balaji_/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="p-2 sm:p-2.5 rounded-xl bg-background border border-border hover:bg-muted text-muted-foreground hover:text-pink-500 transition-colors flex-shrink-0"
+              >
+                <Instagram className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </a>
             </div>
           </motion.div>
 
@@ -150,26 +142,18 @@ export function Hero() {
                   />
                 </div>
               </div>
-
-              {/* Floating Minimal Badge overlapping the circle boundary */}
-              <div className="absolute -bottom-3 px-3.5 py-1.5 rounded-full bg-black/85 backdrop-blur-md border border-white/20 text-white shadow-xl flex items-center gap-2 z-10">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs font-semibold tracking-tight text-white">Chaughule Balaji</span>
-                <span className="text-white/40">|</span>
-                <span className="text-[11px] font-mono text-white/90">Team Leader</span>
-              </div>
             </div>
           </motion.div>
 
         </div>
 
-        {/* Bottom Key Facts Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-10 pt-6 border-t border-border/70">
+        {/* Bottom Key Facts Bar (Compact on Mobile) */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 mt-6 sm:mt-10 pt-4 sm:pt-6 border-t border-border/70">
           {keyFacts.map((fact) => (
-            <div key={fact.label} className="p-3 rounded-xl bg-muted/40 border border-border/60">
-              <div className="text-[10px] font-mono font-medium text-muted-foreground uppercase">{fact.label}</div>
-              <div className="text-sm font-bold text-foreground mt-0.5 tracking-tight">{fact.value}</div>
-              <div className="text-[11px] text-muted-foreground mt-0.5">{fact.detail}</div>
+            <div key={fact.label} className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-muted/40 border border-border/60">
+              <div className="text-[9px] sm:text-[10px] font-mono font-medium text-muted-foreground uppercase tracking-wider">{fact.label}</div>
+              <div className="text-[11px] sm:text-sm font-bold text-foreground mt-0.5 tracking-tight leading-tight">{fact.value}</div>
+              <div className="text-[9.5px] sm:text-[11px] text-muted-foreground mt-0.5 leading-tight">{fact.detail}</div>
             </div>
           ))}
         </div>

@@ -1,9 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
+import { useState, useEffect, useCallback } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { 
-  ExternalLink, 
   ShoppingBag, 
   Building2, 
   Globe, 
@@ -11,24 +10,181 @@ import {
   ArrowRight,
   ArrowUpRight,
   CheckCircle2,
-  Cpu,
-  Lock,
-  Database
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown
 } from "lucide-react"
-import { FaGithub as Github } from "react-icons/fa"
 import { DetailModal } from "@/components/ui/detail-modal"
+
+interface ProjectImage {
+  url: string
+  local: string
+  caption: string
+}
+
+interface ProjectData {
+  id: string
+  title: string
+  subtitle: string
+  category: string
+  featured: boolean
+  images: ProjectImage[]
+  shortDesc: string
+  fullOverview: string
+  architecture: string
+  engineeringHighlights: string[]
+  techStack: string[]
+  github: string
+  live: string
+  icon: React.ReactNode
+}
+
+// Reusable Auto-Scrolling 3-Image Carousel Component
+function ProjectImageSlider({ 
+  images, 
+  title, 
+  autoPlayInterval = 3200,
+  showControls = true,
+  aspectClass = "aspect-video"
+}: { 
+  images: ProjectImage[]
+  title: string
+  autoPlayInterval?: number
+  showControls?: boolean
+  aspectClass?: string
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % images.length)
+  }, [images.length])
+
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
+  }, [images.length])
+
+  useEffect(() => {
+    if (isPaused || images.length <= 1) return
+    const timer = setInterval(() => {
+      nextSlide()
+    }, autoPlayInterval)
+    return () => clearInterval(timer)
+  }, [isPaused, nextSlide, autoPlayInterval, images.length])
+
+  return (
+    <div 
+      className={`relative ${aspectClass} w-full overflow-hidden bg-muted/80 select-none group/slider`}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* Sliding Image Transition */}
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={currentIndex}
+          src={images[currentIndex].url}
+          onError={(e: any) => {
+            if (e.currentTarget.src !== images[currentIndex].local) {
+              e.currentTarget.src = images[currentIndex].local
+            }
+          }}
+          alt={`${title} - ${images[currentIndex].caption}`}
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.98 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="w-full h-full object-cover object-top"
+        />
+      </AnimatePresence>
+
+      {/* Dark Gradient Overlay for Readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
+
+      {/* Slide Caption Badge */}
+      <div className="absolute bottom-3 left-3 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md border border-white/15 text-[10px] font-mono text-white/90 shadow-sm pointer-events-none">
+        {images[currentIndex].caption}
+      </div>
+
+      {/* Left/Right Arrow Navigation Buttons */}
+      {showControls && images.length > 1 && (
+        <>
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              prevSlide()
+            }}
+            aria-label="Previous Slide"
+            className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 opacity-0 group-hover/slider:opacity-100 transition-opacity hover:bg-black/80 shadow-md"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              nextSlide()
+            }}
+            aria-label="Next Slide"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 opacity-0 group-hover/slider:opacity-100 transition-opacity hover:bg-black/80 shadow-md"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </>
+      )}
+
+      {/* Bottom Pagination Dots */}
+      {images.length > 1 && (
+        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 z-10">
+          {images.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={(e) => {
+                e.stopPropagation()
+                setCurrentIndex(idx)
+              }}
+              aria-label={`Go to slide ${idx + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                idx === currentIndex
+                  ? "w-5 bg-white shadow-sm"
+                  : "w-1.5 bg-white/40 hover:bg-white/70"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 export function FeaturedProjects() {
   const [modalOpen, setModalOpen] = useState(false)
-  const [selectedProject, setSelectedProject] = useState<any>(null)
+  const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null)
+  const [showAll, setShowAll] = useState(false)
 
-  const projects = [
+  const projects: ProjectData[] = [
     {
       id: "bharat-cart",
       title: "Bharat Cart",
       subtitle: "Large-Scale Multi-Vendor E-Commerce Platform",
       category: "Flagship Full-Stack System",
       featured: true,
+      images: [
+        {
+          url: "/projects/bharat-cart/1.png",
+          local: "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1200&auto=format&fit=crop",
+          caption: "Storefront & Catalog",
+        },
+        {
+          url: "/projects/bharat-cart/2.png",
+          local: "https://images.unsplash.com/photo-1556742049-0a67e55722c6?q=80&w=1200&auto=format&fit=crop",
+          caption: "Checkout & Payments",
+        },
+        {
+          url: "/projects/bharat-cart/3.png",
+          local: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+          caption: "Vendor Analytics",
+        },
+      ],
       shortDesc:
         "Engineered the full architecture for a large-scale e-commerce platform with PostgreSQL/Prisma variant modeling, Supabase storage, and JWT/RBAC security.",
       fullOverview:
@@ -55,7 +211,7 @@ export function FeaturedProjects() {
       ],
       github: "https://github.com/balaji3245",
       live: "https://chaughulebalaji.tech",
-      icon: <ShoppingBag className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
+      icon: <ShoppingBag className="w-4 h-4 text-blue-600 dark:text-blue-400" />,
     },
     {
       id: "shree-sai-creation",
@@ -63,6 +219,23 @@ export function FeaturedProjects() {
       subtitle: "Full-Featured Commercial E-Commerce Platform",
       category: "Commercial Client Delivery",
       featured: false,
+      images: [
+        {
+          url: "/projects/shree-sai/1.png",
+          local: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
+          caption: "Product Showcase",
+        },
+        {
+          url: "/projects/shree-sai/2.png",
+          local: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1200&auto=format&fit=crop",
+          caption: "Boutique Collection",
+        },
+        {
+          url: "/projects/shree-sai/3.png",
+          local: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=1200&auto=format&fit=crop",
+          caption: "Cart & Order Flow",
+        },
+      ],
       shortDesc:
         "Commercial e-commerce platform delivering seamless customer journeys from product discovery and cart operations through checkout and wishlist.",
       fullOverview:
@@ -85,7 +258,7 @@ export function FeaturedProjects() {
       ],
       github: "https://github.com/balaji3245",
       live: "https://chaughulebalaji.tech",
-      icon: <Layers className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />,
+      icon: <Layers className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />,
     },
     {
       id: "chandigarh-consultancy",
@@ -93,6 +266,23 @@ export function FeaturedProjects() {
       subtitle: "Business & Informational Digital Platform",
       category: "Business Platform",
       featured: false,
+      images: [
+        {
+          url: "/projects/chandigarh/1.png",
+          local: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop",
+          caption: "Corporate Portal",
+        },
+        {
+          url: "/projects/chandigarh/2.png",
+          local: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+          caption: "Consulting Services",
+        },
+        {
+          url: "/projects/chandigarh/3.png",
+          local: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop",
+          caption: "Advisory Team",
+        },
+      ],
       shortDesc:
         "High-performance business platform with responsive component architecture, optimized page speeds, and technical SEO structure.",
       fullOverview:
@@ -114,7 +304,7 @@ export function FeaturedProjects() {
       ],
       github: "https://github.com/balaji3245",
       live: "https://chaughulebalaji.tech",
-      icon: <Building2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />,
+      icon: <Building2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />,
     },
     {
       id: "yj-developers-portfolio",
@@ -122,6 +312,23 @@ export function FeaturedProjects() {
       subtitle: "Corporate Agency Portfolio Platform",
       category: "Corporate Platform",
       featured: false,
+      images: [
+        {
+          url: "/projects/yj-developers/1.png",
+          local: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop",
+          caption: "Agency Overview",
+        },
+        {
+          url: "/projects/yj-developers/2.png",
+          local: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1200&auto=format&fit=crop",
+          caption: "Engineering Services",
+        },
+        {
+          url: "/projects/yj-developers/3.png",
+          local: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop",
+          caption: "Digital Showcases",
+        },
+      ],
       shortDesc:
         "Official company portfolio platform highlighting agency engineering capabilities, services, client showcases, and lead workflows.",
       fullOverview:
@@ -143,14 +350,16 @@ export function FeaturedProjects() {
       ],
       github: "https://github.com/balaji3245",
       live: "https://chaughulebalaji.tech",
-      icon: <Globe className="w-5 h-5 text-purple-600 dark:text-purple-400" />,
+      icon: <Globe className="w-4 h-4 text-purple-600 dark:text-purple-400" />,
     },
   ]
 
-  const handleOpenProject = (project: any) => {
+  const handleOpenProject = (project: ProjectData) => {
     setSelectedProject(project)
     setModalOpen(true)
   }
+
+  const visibleProjects = showAll ? projects : projects.slice(0, 2)
 
   return (
     <section id="projects" className="py-16 sm:py-20 bg-background border-b border-border/60">
@@ -167,59 +376,68 @@ export function FeaturedProjects() {
               Featured Case Studies
             </h2>
           </div>
-
-          
         </div>
 
-        {/* 2x2 Clean Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projects.map((project, idx) => (
+        {/* Project Grid with 3-Image Auto-Scrolling Showcases */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          {visibleProjects.map((project, idx) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: idx * 0.08 }}
-              className={`editorial-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between ${
+              className={`editorial-card rounded-2xl overflow-hidden flex flex-col justify-between group ${
                 project.featured ? "border-slate-300 dark:border-slate-700" : ""
               }`}
             >
               <div>
-                {/* Meta Top */}
-                <div className="flex items-center justify-between gap-3 mb-4">
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-muted border border-border">
+                {/* 3-Image Auto-Scrolling Slider */}
+                <div className="relative border-b border-border/70">
+                  <ProjectImageSlider
+                    images={project.images}
+                    title={project.title}
+                    autoPlayInterval={3400 + idx * 300}
+                  />
+
+                  {/* Top Floating Badge */}
+                  <div className="absolute top-3 left-3 flex items-center gap-2 z-10 pointer-events-none">
+                    <span className="px-2.5 py-1 rounded-full bg-background/90 dark:bg-black/80 backdrop-blur-md border border-border/80 text-[10px] font-mono font-semibold text-foreground shadow-sm flex items-center gap-1.5">
                       {project.icon}
-                    </div>
-                    <div>
-                      <span className="text-[10px] font-mono font-semibold uppercase text-muted-foreground tracking-wider">
-                        {project.category}
-                      </span>
-                      <h3 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
-                        {project.title}
-                      </h3>
-                    </div>
+                      <span>{project.category}</span>
+                    </span>
                   </div>
 
-                  {project.featured && (
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
-                      Flagship
-                    </span>
-                  )}
+                  {/* Top Right Flagship Badge */}
+                  <div className="absolute top-3 right-3 flex items-center gap-1.5 z-10 pointer-events-none">
+                    {project.featured && (
+                      <span className="px-2.5 py-1 rounded-full bg-blue-600/90 backdrop-blur-md text-white text-[10px] font-mono font-semibold shadow-sm">
+                        Flagship
+                      </span>
+                    )}
+                  </div>
                 </div>
 
-                <div className="text-xs font-mono text-muted-foreground mb-3">
-                  &gt; {project.subtitle}
-                </div>
+                {/* Content Area */}
+                <div className="p-5 sm:p-6">
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <h3 className="text-lg sm:text-xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors">
+                      {project.title}
+                    </h3>
+                  </div>
 
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-5">
-                  {project.shortDesc}
-                </p>
+                  <div className="text-xs font-mono text-muted-foreground mb-3">
+                    &gt; {project.subtitle}
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-4">
+                    {project.shortDesc}
+                  </p>
+                </div>
               </div>
 
-              <div>
+              <div className="px-5 pb-5 sm:px-6 sm:pb-6">
                 {/* Tech Pills */}
-                <div className="flex flex-wrap gap-1 mb-5 pt-3 border-t border-border/60">
+                <div className="flex flex-wrap gap-1 mb-4 pt-3 border-t border-border/60">
                   {project.techStack.slice(0, 4).map((tech) => (
                     <span
                       key={tech}
@@ -235,45 +453,48 @@ export function FeaturedProjects() {
                   )}
                 </div>
 
-                {/* Actions */}
-                <div className="flex items-center justify-between pt-2 border-t border-border/60">
+                {/* Action Buttons */}
+                <div className="flex items-center justify-between pt-3 border-t border-border/60">
                   <button
                     onClick={() => handleOpenProject(project)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-foreground text-background text-xs font-semibold hover:opacity-90 transition-opacity"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-foreground text-background text-xs font-semibold hover:opacity-90 transition-opacity shadow-sm"
                   >
                     <span>Know More</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
 
-                  <div className="flex items-center gap-2">
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="GitHub Code"
-                      className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-                    >
-                      <Github className="w-3.5 h-3.5" />
-                    </a>
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="Live Demo"
-                      className="p-1.5 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-                    >
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Live Demo"
+                    className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-lg border border-border bg-muted/40 hover:bg-muted text-foreground text-xs font-semibold transition-colors"
+                  >
+                    <span>Live Site</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground" />
+                  </a>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
+        {/* View More / Show Less Toggle Button */}
+        {projects.length > 2 && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-muted/70 hover:bg-muted border border-border text-foreground font-semibold text-xs sm:text-sm transition-all shadow-sm group hover:scale-[1.02]"
+            >
+              <span>{showAll ? "Show Less Projects" : `View More Projects (+${projects.length - 2})`}</span>
+              <ChevronDown className={`w-4 h-4 text-muted-foreground group-hover:text-foreground transition-transform duration-300 ${showAll ? "rotate-180" : ""}`} />
+            </button>
+          </div>
+        )}
+
       </div>
 
-      {/* Case Study Detail Modal */}
+      {/* Case Study Detail Modal with Full 3-Image Slider */}
       {selectedProject && (
         <DetailModal
           open={modalOpen}
@@ -282,29 +503,29 @@ export function FeaturedProjects() {
           title={selectedProject.title}
           subtitle={selectedProject.subtitle}
           footer={
-            <div className="flex items-center justify-between w-full">
-              <a
-                href={selectedProject.github}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground"
-              >
-                <Github className="w-4 h-4" />
-                <span>View Source Code</span>
-              </a>
-
+            <div className="flex items-center justify-end w-full">
               <a
                 href={selectedProject.live}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-foreground text-background text-xs font-semibold hover:opacity-90 transition-opacity"
+                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl bg-foreground text-background text-xs font-semibold hover:opacity-90 transition-opacity w-full sm:w-auto shadow-sm"
               >
-                <span>Live Project Overview</span>
+                <span>Visit Live Platform</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
             </div>
           }
         >
+          {/* Modal Auto-Scrolling Carousel Banner */}
+          <div className="rounded-xl overflow-hidden border border-border/70 mb-4 shadow-sm">
+            <ProjectImageSlider
+              images={selectedProject.images}
+              title={selectedProject.title}
+              autoPlayInterval={3600}
+              aspectClass="aspect-[16/9]"
+            />
+          </div>
+
           {/* Overview */}
           <div>
             <h4 className="text-xs font-mono font-semibold uppercase text-muted-foreground tracking-wider mb-1.5">
