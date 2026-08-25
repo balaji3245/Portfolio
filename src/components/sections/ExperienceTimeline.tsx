@@ -51,7 +51,7 @@ export function ExperienceTimeline() {
       role: "Frontend Developer Intern",
       company: "YJ Developers Pvt. Ltd.",
       type: "Internship (6 Months)",
-      period: "7 February 2026 – 7 July 2026",
+      period: "7 Feb – 7 July 2026",
       location: "Maharashtra, India",
       shortSummary:
         "Completed a 6-month professional internship delivering responsive web applications, component libraries, and API integrations with Next.js & React.",
@@ -85,7 +85,7 @@ export function ExperienceTimeline() {
   return (
     <section id="experience" className="py-10 sm:py-14 bg-muted/20 border-b border-border/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-6 sm:mb-8">
           <div>
