@@ -210,7 +210,7 @@ export function FeaturedProjects() {
         "Linux / VPS",
       ],
       github: "https://github.com/balaji3245",
-      live: "https://chaughulebalaji.tech",
+      live: "https://bhartcarts.com",
       icon: <ShoppingBag className="w-4 h-4 text-blue-600 dark:text-blue-400" />,
     },
     {
@@ -257,7 +257,7 @@ export function FeaturedProjects() {
         "VPS / Linux",
       ],
       github: "https://github.com/balaji3245",
-      live: "https://chaughulebalaji.tech",
+      live: "https://shreesaicreation.com/",
       icon: <Layers className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />,
     },
     {
@@ -303,7 +303,7 @@ export function FeaturedProjects() {
         "VPS",
       ],
       github: "https://github.com/balaji3245",
-      live: "https://chaughulebalaji.tech",
+      live: "https://www.chandigarhconsultancy.com/",
       icon: <Building2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />,
     },
     {
@@ -349,7 +349,7 @@ export function FeaturedProjects() {
         "PM2 / Linux",
       ],
       github: "https://github.com/balaji3245",
-      live: "https://chaughulebalaji.tech",
+      live: "https://yjdeveloper.com/",
       icon: <Globe className="w-4 h-4 text-purple-600 dark:text-purple-400" />,
     },
   ]
