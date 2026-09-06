@@ -45,7 +45,12 @@ export const metadata: Metadata = {
       "Engineering scalable web applications, e-commerce architectures, and robust cloud systems.",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/profile.png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/profile.png",
+    apple: "/profile.png",
   },
 };
 
