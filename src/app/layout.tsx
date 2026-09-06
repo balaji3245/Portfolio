@@ -45,10 +45,7 @@ export const metadata: Metadata = {
       "Engineering scalable web applications, e-commerce architectures, and robust cloud systems.",
   },
   icons: {
-    icon: [
-      { url: "/profile.png" },
-      { url: "/favicon.ico" },
-    ],
+    icon: "/profile.png",
     shortcut: "/profile.png",
     apple: "/profile.png",
   },
@@ -61,6 +58,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark scroll-smooth">
+      <head>
+        <link rel="icon" type="image/png" href="/profile.png" />
+        <link rel="shortcut icon" type="image/png" href="/profile.png" />
+        <link rel="apple-touch-icon" href="/profile.png" />
+      </head>
       <body
         className="min-h-screen bg-background text-foreground antialiased selection:bg-blue-600 selection:text-white"
         suppressHydrationWarning
